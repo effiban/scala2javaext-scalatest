@@ -1,2 +1,2 @@
-# scala2javaext-scalatest2junit
+# scala2javaext-scalatest
 A Scala2Java Extension for translating ScalaTest into JUnit
