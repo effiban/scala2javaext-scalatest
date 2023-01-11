@@ -10,4 +10,8 @@ class ScalaTest2JUnitPredicatesTest extends UnitTestSuite {
   test("importerExcludedPredicate() should return ScalaTestImporterExcludedPredicate") {
     importerExcludedPredicate() shouldBe ScalaTestImporterExcludedPredicate
   }
+
+  test("templateInitExcludedPredicate() should return ScalaTestTemplateInitExcludedPredicate") {
+    templateInitExcludedPredicate() shouldBe ScalaTestTemplateInitExcludedPredicate
+  }
 }

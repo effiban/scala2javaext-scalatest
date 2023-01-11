@@ -5,4 +5,6 @@ import io.github.effiban.scala2java.spi.predicates.{ExtendedPredicates, Importer
 trait ScalaTest2JUnitPredicates extends ExtendedPredicates {
 
   override def importerExcludedPredicate(): ImporterExcludedPredicate = ScalaTestImporterExcludedPredicate
+
+  override def templateInitExcludedPredicate(): TemplateInitExcludedPredicate = ScalaTestTemplateInitExcludedPredicate
 }
