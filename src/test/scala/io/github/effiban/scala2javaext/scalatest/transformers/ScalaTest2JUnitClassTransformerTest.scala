@@ -6,15 +6,18 @@ import org.mockito.ArgumentMatchersSugar.eqTo
 
 import scala.meta.{XtensionQuasiquoteInit, XtensionQuasiquoteTerm}
 
-class ScalaTest2JUnitFileNameTransformerTest extends UnitTestSuite {
+class ScalaTest2JUnitClassTransformerTest extends UnitTestSuite {
 
   private val classNameTransformer = mock[ClassNameTransformer]
 
-  private val fileNameTransformer = new ScalaTest2JUnitFileNameTransformer(classNameTransformer)
+  private val classTransformer = new ScalaTest2JUnitClassTransformer(classNameTransformer)
 
   test("transform") {
+    val defnClass = q"class MySpec extends AnyFunSpec"
+    val expectedDefnClass = q"class MyTest extends AnyFunSpec"
+
     when(classNameTransformer.transform(eqTo("MySpec"), eqTreeList(List(init"AnyFunSpec")))).thenReturn("MyTest")
 
-    fileNameTransformer.transform("MySpec", List(init"AnyFunSpec")) shouldBe "MyTest"
+    classTransformer.transform(defnClass).structure shouldBe expectedDefnClass.structure
   }
 }
