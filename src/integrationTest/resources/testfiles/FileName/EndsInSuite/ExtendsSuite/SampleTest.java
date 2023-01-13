@@ -9,9 +9,9 @@ import java.util.stream.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Assertions.*;
 
-public class SampleSuite {
+public class SampleTest {
     private final int x = 3;
 
-    public SampleSuite() {
+    public SampleTest() {
     }
 }
