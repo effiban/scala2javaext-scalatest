@@ -10,4 +10,12 @@ class ScalaTest2JUnitTransformersTest extends UnitTestSuite {
   test("fileNameTransformer") {
     fileNameTransformer() shouldBe ScalaTest2JUnitFileNameTransformer
   }
+
+  test("classTransformer") {
+    classTransformer() shouldBe ScalaTest2JUnitClassTransformer
+  }
+
+  test("defnDefTransformer") {
+    defnDefTransformer() shouldBe ScalaTest2JUnitDefnDefTransformer
+  }
 }
