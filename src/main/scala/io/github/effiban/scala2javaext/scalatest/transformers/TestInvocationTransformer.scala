@@ -8,7 +8,7 @@ private[transformers] trait TestInvocationTransformer {
   def transform(args: List[Term])(body: Term): Option[Defn.Def]
 }
 
-private[transformers] class TestInvocationTransformerImpl(javaIdentifierNormalizer: JavaIdentifierNormalizer) extends TestInvocationTransformer {
+private[transformers] class TestInvocationTransformerImpl(identifierNormalizer: IdentifierNormalizer) extends TestInvocationTransformer {
 
   override def transform(args: List[Term])(body: Term): Option[Defn.Def] = {
     args match {
@@ -21,7 +21,7 @@ private[transformers] class TestInvocationTransformerImpl(javaIdentifierNormaliz
   private def transform(name: String, tagNames: List[String] = Nil)(body: Term) =
     Defn.Def(
       mods = List(annotationOf(TestAnnotationType), displayNameAnnotationWith(name)) ++ tagAnnotationsWith(tagNames),
-      name = Term.Name(javaIdentifierNormalizer.toMemberName(name)),
+      name = Term.Name(identifierNormalizer.toMemberName(name)),
       tparams = Nil,
       paramss = List(Nil),
       decltpe = Some(t"Unit"),
@@ -42,4 +42,4 @@ private[transformers] class TestInvocationTransformerImpl(javaIdentifierNormaliz
   }
 }
 
-object TestInvocationTransformer extends TestInvocationTransformerImpl(JavaIdentifierNormalizer)
+object TestInvocationTransformer extends TestInvocationTransformerImpl(IdentifierNormalizer)
