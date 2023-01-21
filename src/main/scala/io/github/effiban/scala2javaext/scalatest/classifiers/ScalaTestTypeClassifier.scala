@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.ScalaTestTestSuperclasses
+import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.TestSuperclasses
 
 import scala.meta.Type
 
@@ -10,7 +10,7 @@ trait ScalaTestTypeClassifier {
 
 object ScalaTestTypeClassifier extends ScalaTestTypeClassifier {
 
-  private val allTestSuperclasses = ScalaTestTestSuperclasses ++ ScalaTestTestSuperclasses.map(_.name)
+  private val allTestSuperclasses = TestSuperclasses ++ TestSuperclasses.map(_.name)
 
   override def isTestSuperclass(tpe: Type): Boolean = {
     allTestSuperclasses.exists(_.structure == tpe.structure)

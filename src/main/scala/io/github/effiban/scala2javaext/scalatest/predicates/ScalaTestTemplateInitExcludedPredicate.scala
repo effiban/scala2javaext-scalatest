@@ -1,7 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.predicates
 
 import io.github.effiban.scala2java.spi.predicates.TemplateInitExcludedPredicate
-import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.{ScalaTestTestSuperclasses, ScalaTestRootPackage}
+import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.{TestSuperclasses, RootPackage}
 
 import scala.meta.{Init, Term, Type, XtensionQuasiquoteType}
 
@@ -10,7 +10,7 @@ object ScalaTestTemplateInitExcludedPredicate extends TemplateInitExcludedPredic
 
   // Although long it is by no means an exhaustive set - I tried to choose the most common ones
   // besides the superclass (which are exhaustive)
-  private val CommonExtensibleTypeNames = ScalaTestTestSuperclasses.map(_.name) ++
+  private val CommonExtensibleTypeNames = TestSuperclasses.map(_.name) ++
     Set(
       t"AnyFeatureSpecLike",
       t"AnyFlatSpecLike",
@@ -86,6 +86,6 @@ object ScalaTestTemplateInitExcludedPredicate extends TemplateInitExcludedPredic
 
   private def isUnderScalaTestPackage(tpe: Type): Boolean = {
     tpe.collect { case termSelect: Term.Select => termSelect }
-      .exists(_.structure == ScalaTestRootPackage.structure)
+      .exists(_.structure == RootPackage.structure)
   }
 }
