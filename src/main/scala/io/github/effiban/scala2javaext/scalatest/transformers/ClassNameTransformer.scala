@@ -2,8 +2,8 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.spi.transformers.SameTypeTransformer1
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalaTestTypeClassifier
-import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.JUnitTestClassSuffix
-import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.ScalaTestTestClassSuffixes
+import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants
+import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants
 
 import scala.meta.Init
 
@@ -27,12 +27,12 @@ private[transformers] class ClassNameTransformerImpl(scalaTestTypeClassifier: Sc
   }
 
   private def stripScalaTestTestClassSuffix(fileName: String) = {
-    ScalaTestTestClassSuffixes.find(fileName.endsWith)
+    ScalaTestConstants.TestClassSuffixes.find(fileName.endsWith)
       .map(scalaTestTestClassSuffix => s"${fileName.stripSuffix(scalaTestTestClassSuffix)}")
       .getOrElse(fileName)
   }
 
-  private def appendJUnitTestClassSuffix(fileName: String) = s"${fileName.stripSuffix(JUnitTestClassSuffix)}$JUnitTestClassSuffix"
+  private def appendJUnitTestClassSuffix(fileName: String) = s"${fileName.stripSuffix(JUnitConstants.TestClassSuffix)}${JUnitConstants.TestClassSuffix}"
 }
 
 object ClassNameTransformer extends ClassNameTransformerImpl(ScalaTestTypeClassifier)

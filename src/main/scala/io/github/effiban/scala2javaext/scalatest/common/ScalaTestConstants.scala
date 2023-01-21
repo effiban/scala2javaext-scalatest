@@ -4,9 +4,9 @@ import scala.meta.{Term, Type, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
 object ScalaTestConstants {
 
-  val ScalaTestRootPackage: Term.Select = q"org.scalatest"
+  val RootPackage: Term.Select = q"org.scalatest"
 
-  val ScalaTestTestSuperclasses: Set[Type.Select] = Set(
+  val TestSuperclasses: Set[Type.Select] = Set(
     t"org.scalatest.featurespec.AnyFeatureSpec",
     t"org.scalatest.featurespec.AsyncFeatureSpec",
     t"org.scalatest.featurespec.FixtureAnyFeatureSpec",
@@ -37,5 +37,5 @@ object ScalaTestConstants {
     t"org.scalatest.wordspec.FixtureAsyncWordSpec"
   )
 
-  val ScalaTestTestClassSuffixes: Set[String] = Set("Spec", "Suite")
+  val TestClassSuffixes: Set[String] = Set("Spec", "Suite")
 }
