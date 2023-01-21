@@ -6,9 +6,9 @@ import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class TestInvocationTransformerImplTest extends UnitTestSuite {
 
-  private val javaIdentifierNormalizer = mock[JavaIdentifierNormalizer]
+  private val identifierNormalizer = mock[IdentifierNormalizer]
 
-  private val testInvocationTransformer = new TestInvocationTransformerImpl(javaIdentifierNormalizer)
+  private val testInvocationTransformer = new TestInvocationTransformerImpl(identifierNormalizer)
 
 
   test("transform when valid and has no tags") {
@@ -21,7 +21,7 @@ class TestInvocationTransformerImplTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(javaIdentifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
+    when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
 
     testInvocationTransformer.transform(List(Lit.String(testName)))(q"doCheck()").value.structure shouldBe expectedJUnitTestMethod.structure
   }
@@ -38,7 +38,7 @@ class TestInvocationTransformerImplTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(javaIdentifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
+    when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
 
     testInvocationTransformer.transform(List(Lit.String(testName), q"""Tag("tag1")""", q"""Tag("tag2")"""))(q"doCheck()").value.structure shouldBe
       expectedJUnitTestMethod.structure

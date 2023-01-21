@@ -2,7 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
-class JavaIdentifierNormalizerTest extends UnitTestSuite {
+class IdentifierNormalizerTest extends UnitTestSuite {
 
   private val ToMemberNameScenarios = Table(
     ("Identifier", "MemberName"),
@@ -15,7 +15,7 @@ class JavaIdentifierNormalizerTest extends UnitTestSuite {
 
   forAll(ToMemberNameScenarios) { case (identifier: String, normalizedIdentifier: String) =>
     test(s"The identifier '$identifier' should be nmormalized to '$normalizedIdentifier'") {
-      JavaIdentifierNormalizer.toMemberName(identifier) shouldBe normalizedIdentifier
+      IdentifierNormalizer.toMemberName(identifier) shouldBe normalizedIdentifier
     }
   }
 }

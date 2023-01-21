@@ -1,11 +1,11 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
-trait JavaIdentifierNormalizer {
+trait IdentifierNormalizer {
 
   def toMemberName(identifier: String): String
 }
 
-object JavaIdentifierNormalizer extends JavaIdentifierNormalizer {
+object IdentifierNormalizer extends IdentifierNormalizer {
 
   override def toMemberName(identifier: String): String = {
     identifier.split("\\s")
