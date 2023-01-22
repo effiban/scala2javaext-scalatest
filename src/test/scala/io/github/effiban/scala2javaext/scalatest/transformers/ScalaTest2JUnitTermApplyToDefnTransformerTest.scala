@@ -8,12 +8,12 @@ import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class ScalaTest2JUnitTermApplyToDefnTransformerTest extends UnitTestSuite {
 
-  private val testInvocationTransformer = mock[TestInvocationTransformer]
+  private val testRegistrationTransformer = mock[TestRegistrationTransformer]
 
-  private val termApplyToDefnTransformer = new ScalaTest2JUnitTermApplyToDefnTransformer(testInvocationTransformer)
+  private val termApplyToDefnTransformer = new ScalaTest2JUnitTermApplyToDefnTransformer(testRegistrationTransformer)
 
   test("transform() valid 'test' invocation should return equivalent JUnit '@Test' method") {
-    val testInvocation =
+    val testRegistration =
       q"""
       test("check me") {
           doCheck()
@@ -35,32 +35,32 @@ class ScalaTest2JUnitTermApplyToDefnTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(testInvocationTransformer.transform(eqTreeList(args))(eqTree(body))).thenReturn(Some(junitTestMethod))
+    when(testRegistrationTransformer.transform(eqTreeList(args))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
-    termApplyToDefnTransformer.transform(testInvocation).value.structure shouldBe junitTestMethod.structure
+    termApplyToDefnTransformer.transform(testRegistration).value.structure shouldBe junitTestMethod.structure
   }
 
   test("transform() 'test' invocation with two bodies should return None") {
-    val testInvocation =
+    val testRegistration =
       q"""test("check me")(body1, body2)"""
 
-    termApplyToDefnTransformer.transform(testInvocation) shouldBe None
+    termApplyToDefnTransformer.transform(testRegistration) shouldBe None
   }
 
   test("transform() 'test' invocation without body should return None") {
-    val testInvocation = q"""test("check me")"""
+    val testRegistration = q"""test("check me")"""
 
-    termApplyToDefnTransformer.transform(testInvocation) shouldBe None
+    termApplyToDefnTransformer.transform(testRegistration) shouldBe None
   }
 
   test("transform() 'bla' invocation should return None") {
-    val testInvocation =
+    val testRegistration =
       q"""
       bla("check me") {
         doCheck()
       }
       """
 
-    termApplyToDefnTransformer.transform(testInvocation) shouldBe None
+    termApplyToDefnTransformer.transform(testRegistration) shouldBe None
   }
 }

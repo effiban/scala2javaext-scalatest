@@ -14,7 +14,7 @@ class IdentifierNormalizerTest extends UnitTestSuite {
   )
 
   forAll(ToMemberNameScenarios) { case (identifier: String, normalizedIdentifier: String) =>
-    test(s"The identifier '$identifier' should be nmormalized to '$normalizedIdentifier'") {
+    test(s"The identifier '$identifier' should be normalized to '$normalizedIdentifier'") {
       IdentifierNormalizer.toMemberName(identifier) shouldBe normalizedIdentifier
     }
   }
