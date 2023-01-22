@@ -6,11 +6,11 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
-class ScalaTest2JUnitTermApplyToDefnTransformerTest extends UnitTestSuite {
+class ScalatestTemplateTermApplyToDefnTransformerTest extends UnitTestSuite {
 
   private val testRegistrationTransformer = mock[TestRegistrationTransformer]
 
-  private val termApplyToDefnTransformer = new ScalaTest2JUnitTermApplyToDefnTransformer(testRegistrationTransformer)
+  private val termApplyToDefnTransformer = new ScalatestTemplateTermApplyToDefnTransformer(testRegistrationTransformer)
 
   test("transform() valid 'test' invocation should return equivalent JUnit '@Test' method") {
     val testRegistration =

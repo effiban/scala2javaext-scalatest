@@ -5,7 +5,7 @@ import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTran
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Defn, Term}
 
-class ScalaTest2JUnitTermApplyToDefnTransformer(testRegistrationTransformer: TestRegistrationTransformer)
+class ScalatestTemplateTermApplyToDefnTransformer(testRegistrationTransformer: TestRegistrationTransformer)
   extends TemplateTermApplyToDefnTransformer {
 
   override def transform(termApply: Term.Apply): Option[Defn] = {
@@ -16,4 +16,4 @@ class ScalaTest2JUnitTermApplyToDefnTransformer(testRegistrationTransformer: Tes
   }
 }
 
-object ScalaTest2JUnitTermApplyToDefnTransformer extends ScalaTest2JUnitTermApplyToDefnTransformer(TestRegistrationTransformer)
+object ScalatestTemplateTermApplyToDefnTransformer extends ScalatestTemplateTermApplyToDefnTransformer(TestRegistrationTransformer)

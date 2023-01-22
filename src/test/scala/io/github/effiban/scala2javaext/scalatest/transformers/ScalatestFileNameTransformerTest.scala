@@ -4,13 +4,13 @@ import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeL
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import org.mockito.ArgumentMatchersSugar.eqTo
 
-import scala.meta.{XtensionQuasiquoteInit, XtensionQuasiquoteTerm}
+import scala.meta.XtensionQuasiquoteInit
 
-class ScalaTest2JUnitFileNameTransformerTest extends UnitTestSuite {
+class ScalatestFileNameTransformerTest extends UnitTestSuite {
 
   private val classNameTransformer = mock[ClassNameTransformer]
 
-  private val fileNameTransformer = new ScalaTest2JUnitFileNameTransformer(classNameTransformer)
+  private val fileNameTransformer = new ScalatestFileNameTransformer(classNameTransformer)
 
   test("transform") {
     when(classNameTransformer.transform(eqTo("MySpec"), eqTreeList(List(init"AnyFunSpec")))).thenReturn("MyTest")

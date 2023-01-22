@@ -6,11 +6,11 @@ import org.mockito.ArgumentMatchersSugar.eqTo
 
 import scala.meta.{XtensionQuasiquoteInit, XtensionQuasiquoteTerm}
 
-class ScalaTest2JUnitClassTransformerTest extends UnitTestSuite {
+class ScalatestClassTransformerTest extends UnitTestSuite {
 
   private val classNameTransformer = mock[ClassNameTransformer]
 
-  private val classTransformer = new ScalaTest2JUnitClassTransformer(classNameTransformer)
+  private val classTransformer = new ScalatestClassTransformer(classNameTransformer)
 
   test("transform") {
     val defnClass = q"class MySpec extends AnyFunSpec"

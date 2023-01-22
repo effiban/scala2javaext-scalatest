@@ -2,7 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.common
 
 import scala.meta.{Term, Type, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
-object ScalaTestConstants {
+object ScalatestConstants {
 
   val RootPackage: Term.Select = q"org.scalatest"
 

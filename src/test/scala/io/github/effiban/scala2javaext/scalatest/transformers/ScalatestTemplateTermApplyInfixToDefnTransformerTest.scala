@@ -5,11 +5,11 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.XtensionQuasiquoteTerm
 
-class ScalaTest2JUnitTermApplyInfixToDefnTransformerTest extends UnitTestSuite {
+class ScalatestTemplateTermApplyInfixToDefnTransformerTest extends UnitTestSuite {
 
   private val flatSpecRegistrationTransformer = mock[FlatSpecRegistrationTransformer]
 
-  private val termApplyInfixToDefnTransformer = new ScalaTest2JUnitTermApplyInfixToDefnTransformer(flatSpecRegistrationTransformer)
+  private val termApplyInfixToDefnTransformer = new ScalatestTemplateTermApplyInfixToDefnTransformer(flatSpecRegistrationTransformer)
 
   test("transform() when has FlatSpec syntax and FlatSpec registration transformer returns a value") {
     val flatSpecRegistration =

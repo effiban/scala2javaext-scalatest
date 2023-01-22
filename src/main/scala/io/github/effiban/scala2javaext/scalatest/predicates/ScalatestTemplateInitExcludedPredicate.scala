@@ -1,12 +1,12 @@
 package io.github.effiban.scala2javaext.scalatest.predicates
 
 import io.github.effiban.scala2java.spi.predicates.TemplateInitExcludedPredicate
-import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.{TestSuperclasses, RootPackage}
+import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.{TestSuperclasses, RootPackage}
 
 import scala.meta.{Init, Term, Type, XtensionQuasiquoteType}
 
 
-object ScalaTestTemplateInitExcludedPredicate extends TemplateInitExcludedPredicate {
+object ScalatestTemplateInitExcludedPredicate extends TemplateInitExcludedPredicate {
 
   // Although long it is by no means an exhaustive set - I tried to choose the most common ones
   // besides the superclass (which are exhaustive)
