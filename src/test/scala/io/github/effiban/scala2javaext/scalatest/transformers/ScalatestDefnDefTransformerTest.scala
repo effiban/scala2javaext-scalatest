@@ -1,10 +1,10 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.ScalaTest2JUnitDefnDefTransformer.transform
+import io.github.effiban.scala2javaext.scalatest.transformers.ScalatestDefnDefTransformer.transform
 
 import scala.meta.{Defn, Mod, XtensionQuasiquoteMod, XtensionQuasiquoteTerm}
-class ScalaTest2JUnitDefnDefTransformerTest extends UnitTestSuite {
+class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val InputBeforeEach =
     q"""

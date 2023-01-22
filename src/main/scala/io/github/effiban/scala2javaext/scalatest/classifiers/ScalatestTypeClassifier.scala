@@ -1,14 +1,14 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.common.ScalaTestConstants.TestSuperclasses
+import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.TestSuperclasses
 
 import scala.meta.Type
 
-trait ScalaTestTypeClassifier {
+trait ScalatestTypeClassifier {
   def isTestSuperclass(tpe: Type): Boolean
 }
 
-object ScalaTestTypeClassifier extends ScalaTestTypeClassifier {
+object ScalatestTypeClassifier extends ScalatestTypeClassifier {
 
   private val allTestSuperclasses = TestSuperclasses ++ TestSuperclasses.map(_.name)
 

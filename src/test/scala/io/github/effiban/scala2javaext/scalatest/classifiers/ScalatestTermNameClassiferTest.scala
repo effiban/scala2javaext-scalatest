@@ -1,11 +1,11 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalaTestTermNameClassifier.isSpecVerb
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier.isSpecVerb
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Term, XtensionQuasiquoteTerm}
 
-class ScalaTestTermNameClassifierTest extends UnitTestSuite {
+class ScalatestTermNameClassiferTest extends UnitTestSuite {
 
   private val Scenarios = Table(
     ("Term Name", "IsSpecVerb"),

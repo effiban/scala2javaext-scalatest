@@ -4,10 +4,10 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.XtensionQuasiquoteTerm
 
-class ScalaTest2JUnitExtensionTest extends UnitTestSuite {
+class ScalatestExtensionTest extends UnitTestSuite {
 
-  private val scalatest2JunitExtension = new ScalaTest2JUnitExtension
-  import scalatest2JunitExtension._
+  private val scalatestExtension = new ScalatestExtension
+  import scalatestExtension._
 
   test("shouldBeAppliedIfContains() for 'org.scalatest' should return true") {
     shouldBeAppliedIfContains(q"org.scalatest") shouldBe true

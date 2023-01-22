@@ -4,7 +4,7 @@ import io.github.effiban.scala2java.spi.transformers.ClassTransformer
 
 import scala.meta.{Defn, Type}
 
-class ScalaTest2JUnitClassTransformer(classNameTransformer: ClassNameTransformer) extends ClassTransformer {
+class ScalatestClassTransformer(classNameTransformer: ClassNameTransformer) extends ClassTransformer {
 
   override def transform(defnClass: Defn.Class): Defn.Class = {
     import defnClass._
@@ -13,4 +13,4 @@ class ScalaTest2JUnitClassTransformer(classNameTransformer: ClassNameTransformer
   }
 }
 
-object ScalaTest2JUnitClassTransformer extends ScalaTest2JUnitClassTransformer(ClassNameTransformer)
+object ScalatestClassTransformer extends ScalatestClassTransformer(ClassNameTransformer)

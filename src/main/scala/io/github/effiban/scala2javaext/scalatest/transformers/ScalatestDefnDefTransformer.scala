@@ -4,7 +4,7 @@ import io.github.effiban.scala2java.spi.transformers.DefnDefTransformer
 
 import scala.meta.{Defn, Mod, XtensionQuasiquoteMod, XtensionQuasiquoteTerm}
 
-object ScalaTest2JUnitDefnDefTransformer extends DefnDefTransformer {
+object ScalatestDefnDefTransformer extends DefnDefTransformer {
 
   override def transform(defnDef: Defn.Def): Defn.Def = {
     defnDef.name match {

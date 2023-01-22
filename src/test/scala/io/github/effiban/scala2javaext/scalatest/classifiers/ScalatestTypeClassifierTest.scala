@@ -1,11 +1,11 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalaTestTypeClassifier.isTestSuperclass
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTypeClassifier.isTestSuperclass
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Type, XtensionQuasiquoteType}
 
-class ScalaTestTypeClassifierTest extends UnitTestSuite {
+class ScalatestTypeClassifierTest extends UnitTestSuite {
 
   private val Scenarios = Table(
     ("Type", "ExpectedResult"),

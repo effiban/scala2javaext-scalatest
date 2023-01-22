@@ -4,7 +4,7 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Init, Name, Type, XtensionQuasiquoteType}
 
-class ScalaTestTemplateInitExcludedPredicateTest extends UnitTestSuite {
+class ScalatestTemplateInitExcludedPredicateTest extends UnitTestSuite {
 
   private val Scenarios = Table(
     ("Type Name", "ExpectedExcluded"),
@@ -108,7 +108,7 @@ class ScalaTestTemplateInitExcludedPredicateTest extends UnitTestSuite {
   forAll(Scenarios) { case (tpe: Type, expectedExcluded: Boolean) =>
     test(s"$tpe should ${if (expectedExcluded) "be" else "not be"} excluded") {
       val init = Init(tpe, Name.Anonymous(), List(Nil))
-      ScalaTestTemplateInitExcludedPredicate(init) shouldBe expectedExcluded
+      ScalatestTemplateInitExcludedPredicate(init) shouldBe expectedExcluded
     }
   }
 

@@ -4,7 +4,7 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Importer, XtensionQuasiquoteImporter}
 
-class ScalaTestImporterExcludedPredicateTest extends UnitTestSuite {
+class ScalatestImporterExcludedPredicateTest extends UnitTestSuite {
 
   private val ImporterScenarios = Table(
     ("Importer", "ExpectedExcluded"),
@@ -19,7 +19,7 @@ class ScalaTestImporterExcludedPredicateTest extends UnitTestSuite {
 
   forAll(ImporterScenarios) { case (importer: Importer, expectedExcluded: Boolean) =>
     test(s"$importer should ${if (expectedExcluded) "be" else "not be"} excluded") {
-      ScalaTestImporterExcludedPredicate(importer) shouldBe expectedExcluded
+      ScalatestImporterExcludedPredicate(importer) shouldBe expectedExcluded
     }
   }
 }

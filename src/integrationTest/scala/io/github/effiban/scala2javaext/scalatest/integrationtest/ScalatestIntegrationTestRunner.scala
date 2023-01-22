@@ -5,6 +5,6 @@ import org.scalatest.funsuite.AnyFunSuite
 
 import java.nio.file.{Path, Paths}
 
-class ScalaTest2JUnitIntegrationTestRunner extends AnyFunSuite with IntegrationTestRunner {
+class ScalatestIntegrationTestRunner extends AnyFunSuite with IntegrationTestRunner {
   override protected def resolveTestFilesBasePath(): Path = Paths.get(getClass.getClassLoader.getResource("testfiles").toURI)
 }

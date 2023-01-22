@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.extractors
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalaTestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
 
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Lit, Term}
@@ -10,7 +10,7 @@ trait FlatSpecTestNameExtractor {
   def extract(nameClause: Term.ApplyInfix): Option[Lit.String]
 }
 
-private[extractors] class FlatSpecTestNameExtractorImpl(termNameClassifier: ScalaTestTermNameClassifier) extends FlatSpecTestNameExtractor {
+private[extractors] class FlatSpecTestNameExtractorImpl(termNameClassifier: ScalatestTermNameClassifier) extends FlatSpecTestNameExtractor {
 
   def extract(nameClause: Term.ApplyInfix): Option[Lit.String] = nameClause match {
     case Term.ApplyInfix(subject, verb: Term.Name, Nil, (expectation: Lit.String) :: Nil) if isSpecVerb(verb) =>
@@ -28,4 +28,4 @@ private[extractors] class FlatSpecTestNameExtractorImpl(termNameClassifier: Scal
   }
 }
 
-object FlatSpecTestNameExtractor extends FlatSpecTestNameExtractorImpl(ScalaTestTermNameClassifier)
+object FlatSpecTestNameExtractor extends FlatSpecTestNameExtractorImpl(ScalatestTermNameClassifier)
