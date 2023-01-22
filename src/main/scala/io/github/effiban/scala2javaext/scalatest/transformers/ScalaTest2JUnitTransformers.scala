@@ -10,5 +10,7 @@ trait ScalaTest2JUnitTransformers extends ExtendedTransformers {
 
   override def defnDefTransformer(): DefnDefTransformer = ScalaTest2JUnitDefnDefTransformer
 
+  override def templateTermApplyInfixToDefnTransformer(): TemplateTermApplyInfixToDefnTransformer = ScalaTest2JUnitTermApplyInfixToDefnTransformer
+
   override def templateTermApplyToDefnTransformer(): TemplateTermApplyToDefnTransformer = ScalaTest2JUnitTermApplyToDefnTransformer
 }

@@ -4,11 +4,12 @@ import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.{DisplayA
 
 import scala.meta.{Defn, Init, Lit, Mod, Name, Term, Type, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
-private[transformers] trait TestInvocationTransformer {
+private[transformers] trait TestRegistrationTransformer {
+
   def transform(args: List[Term])(body: Term): Option[Defn.Def]
 }
 
-private[transformers] class TestInvocationTransformerImpl(identifierNormalizer: IdentifierNormalizer) extends TestInvocationTransformer {
+private[transformers] class TestRegistrationTransformerImpl(identifierNormalizer: IdentifierNormalizer) extends TestRegistrationTransformer {
 
   override def transform(args: List[Term])(body: Term): Option[Defn.Def] = {
     args match {
@@ -29,7 +30,10 @@ private[transformers] class TestInvocationTransformerImpl(identifierNormalizer: 
     )
 
   private def tagNamesOf(tags: List[Term]): List[String] = {
-    tags.collect { case Term.Apply(q"Tag", List(Lit.String(tagName))) => tagName }
+    tags.collect {
+      case Term.Apply(q"Tag", List(Lit.String(tagName))) => tagName
+      case tag: Term.Name => tag.value
+    }
   }
 
   private def displayNameAnnotationWith(name: String): Mod.Annot = annotationOf(DisplayAnnotationType, Some(name))
@@ -42,4 +46,4 @@ private[transformers] class TestInvocationTransformerImpl(identifierNormalizer: 
   }
 }
 
-object TestInvocationTransformer extends TestInvocationTransformerImpl(IdentifierNormalizer)
+object TestRegistrationTransformer extends TestRegistrationTransformerImpl(IdentifierNormalizer)

@@ -4,15 +4,17 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
-class TestInvocationTransformerImplTest extends UnitTestSuite {
+class TestRegistrationTransformerImplTest extends UnitTestSuite {
 
   private val identifierNormalizer = mock[IdentifierNormalizer]
 
-  private val testInvocationTransformer = new TestInvocationTransformerImpl(identifierNormalizer)
+  private val testRegistrationTransformer = new TestRegistrationTransformerImpl(identifierNormalizer)
 
 
   test("transform when valid and has no tags") {
     val testName = "check me"
+    val args = List(Lit.String(testName))
+    val body = q"doCheck()"
 
     val expectedJUnitTestMethod =
       q"""
@@ -23,11 +25,13 @@ class TestInvocationTransformerImplTest extends UnitTestSuite {
 
     when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
 
-    testInvocationTransformer.transform(List(Lit.String(testName)))(q"doCheck()").value.structure shouldBe expectedJUnitTestMethod.structure
+    testRegistrationTransformer.transform(args)(body).value.structure shouldBe expectedJUnitTestMethod.structure
   }
 
   test("transform when valid and has tags") {
     val testName = "check me"
+    val args = List(Lit.String(testName), q"""Tag("tag1")""", q"""Tag("tag2")""")
+    val body = q"doCheck()"
 
     val expectedJUnitTestMethod =
       q"""
@@ -37,14 +41,12 @@ class TestInvocationTransformerImplTest extends UnitTestSuite {
       @Tag("tag2")
       def checkMe(): Unit = doCheck()
       """
-
     when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
 
-    testInvocationTransformer.transform(List(Lit.String(testName), q"""Tag("tag1")""", q"""Tag("tag2")"""))(q"doCheck()").value.structure shouldBe
-      expectedJUnitTestMethod.structure
+    testRegistrationTransformer.transform(args)(body).value.structure shouldBe expectedJUnitTestMethod.structure
   }
 
   test("transform when test name is not a literal string, should return None") {
-    testInvocationTransformer.transform(List(q"generateName()"))(q"check()") shouldBe None
+    testRegistrationTransformer.transform(List(q"generateName()"))(q"check()") shouldBe None
   }
 }
