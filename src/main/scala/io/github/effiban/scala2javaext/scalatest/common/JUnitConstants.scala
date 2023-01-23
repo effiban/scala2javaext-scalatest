@@ -7,6 +7,6 @@ object JUnitConstants {
   val TestClassSuffix: String = "Test"
 
   val TestAnnotationType: Type.Name = t"Test"
-  val DisplayAnnotationType: Type.Name = t"DisplayName"
+  val DisplayNameAnnotationType: Type.Name = t"DisplayName"
   val TagAnnotationType: Type.Name = t"Tag"
 }

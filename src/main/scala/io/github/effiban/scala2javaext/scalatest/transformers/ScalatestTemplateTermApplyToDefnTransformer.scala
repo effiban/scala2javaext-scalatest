@@ -1,19 +1,13 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
-import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTransformer
+import io.github.effiban.scala2java.spi.transformers.{DifferentTypeTransformer0, TemplateTermApplyToDefnTransformer}
 
-import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Defn, Term}
 
-class ScalatestTemplateTermApplyToDefnTransformer(testRegistrationTransformer: TestRegistrationTransformer)
-  extends TemplateTermApplyToDefnTransformer {
+object ScalatestTemplateTermApplyToDefnTransformer extends CompositeTermToDefnTransformer[Term.Apply] with TemplateTermApplyToDefnTransformer {
 
-  override def transform(termApply: Term.Apply): Option[Defn] = {
-    termApply match {
-      case Term.Apply(Term.Apply(q"test", args), body :: Nil) => testRegistrationTransformer.transform(args)(body)
-      case _ => None
-    }
-  }
+  override protected val transformers: List[DifferentTypeTransformer0[Term.Apply, Defn]] =
+    List(
+      FunSuiteTestRegistrationTransformer
+    )
 }
-
-object ScalatestTemplateTermApplyToDefnTransformer extends ScalatestTemplateTermApplyToDefnTransformer(TestRegistrationTransformer)

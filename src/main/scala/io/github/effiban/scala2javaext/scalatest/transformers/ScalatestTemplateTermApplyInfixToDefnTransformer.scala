@@ -1,17 +1,14 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
-import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyInfixToDefnTransformer
+import io.github.effiban.scala2java.spi.transformers.{DifferentTypeTransformer0, TemplateTermApplyInfixToDefnTransformer}
 
-import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Defn, Term}
 
-class ScalatestTemplateTermApplyInfixToDefnTransformer(flatSpecRegistrationTransformer: FlatSpecRegistrationTransformer)
-  extends TemplateTermApplyInfixToDefnTransformer {
+object ScalatestTemplateTermApplyInfixToDefnTransformer extends CompositeTermToDefnTransformer[Term.ApplyInfix]
+  with TemplateTermApplyInfixToDefnTransformer {
 
-  override def transform(termApplyInfix: Term.ApplyInfix): Option[Defn] = termApplyInfix match {
-      case Term.ApplyInfix(description: Term.ApplyInfix, q"in", Nil, body :: Nil) => flatSpecRegistrationTransformer.transform(description)(body)
-      case _ => None
-    }
+  override protected val transformers: List[DifferentTypeTransformer0[Term.ApplyInfix, Defn]] =
+    List(
+      FlatSpecTestRegistrationTransformer
+    )
 }
-
-object ScalatestTemplateTermApplyInfixToDefnTransformer extends ScalatestTemplateTermApplyInfixToDefnTransformer(FlatSpecRegistrationTransformer)
