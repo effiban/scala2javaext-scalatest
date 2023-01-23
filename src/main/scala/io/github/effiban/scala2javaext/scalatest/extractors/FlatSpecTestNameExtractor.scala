@@ -7,12 +7,12 @@ import scala.meta.{Lit, Term}
 
 trait FlatSpecTestNameExtractor {
 
-  def extract(nameClause: Term.ApplyInfix): Option[Lit.String]
+  def extract(spec: Term.ApplyInfix): Option[Lit.String]
 }
 
 private[extractors] class FlatSpecTestNameExtractorImpl(termNameClassifier: ScalatestTermNameClassifier) extends FlatSpecTestNameExtractor {
 
-  def extract(nameClause: Term.ApplyInfix): Option[Lit.String] = nameClause match {
+  def extract(spec: Term.ApplyInfix): Option[Lit.String] = spec match {
     case Term.ApplyInfix(subject, verb: Term.Name, Nil, (expectation: Lit.String) :: Nil) if isSpecVerb(verb) =>
       extractSubjectName(subject).map(subjectName => Lit.String(s"$subjectName ${verb.value} ${expectation.value}"))
 
