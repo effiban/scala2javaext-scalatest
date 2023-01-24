@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
-import io.github.effiban.scala2javaext.scalatest.generators.JUnitAnnotationGenerator.{displayNameAnnotationWith, tagAnnotationsWith, testAnnotation}
+import io.github.effiban.scala2javaext.scalatest.generators.JUnitAnnotationGenerator.{displayNameAnnotationWith, nestedAnnotation, tagAnnotationsWith, testAnnotation}
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.XtensionQuasiquoteMod
@@ -9,6 +9,10 @@ class JUnitAnnotationGeneratorTest extends UnitTestSuite {
 
   test("testAnnotation") {
     testAnnotation().structure shouldBe mod"@Test".structure
+  }
+
+  test("nestedAnnotation") {
+    nestedAnnotation().structure shouldBe mod"@Nested".structure
   }
 
   test("tagAnnotationsWith") {
