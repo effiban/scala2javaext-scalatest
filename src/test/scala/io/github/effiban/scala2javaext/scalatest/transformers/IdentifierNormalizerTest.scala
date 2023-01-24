@@ -1,21 +1,39 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
+import io.github.effiban.scala2javaext.scalatest.transformers.IdentifierNormalizer.{toClassName, toMemberName}
 
 class IdentifierNormalizerTest extends UnitTestSuite {
 
   private val ToMemberNameScenarios = Table(
     ("Identifier", "MemberName"),
     ("abc", "abc"),
-    ("abc123", "abc123"),
     ("Abc", "abc"),
-    ("abc def ghi", "abcDefGhi"),
+    ("ABC", "abc"),
+    ("abc123", "abc123"),
+    ("abC dEf Ghi", "abcDefGhi"),
     ("abc 'def' %%&&^^", "abcDef"),
   )
 
+  private val ToClassNameScenarios = Table(
+    ("Identifier", "ClassName"),
+    ("Abc", "Abc"),
+    ("ABC", "Abc"),
+    ("abc", "Abc"),
+    ("abc123", "Abc123"),
+    ("abC dEf ghI", "AbcDefGhi"),
+    ("abc 'def' %%&&^^", "AbcDef"),
+  )
+
   forAll(ToMemberNameScenarios) { case (identifier: String, normalizedIdentifier: String) =>
-    test(s"The identifier '$identifier' should be normalized to '$normalizedIdentifier'") {
-      IdentifierNormalizer.toMemberName(identifier) shouldBe normalizedIdentifier
+    test(s"The identifier '$identifier' should be normalized to member name '$normalizedIdentifier'") {
+      toMemberName(identifier) shouldBe normalizedIdentifier
+    }
+  }
+
+  forAll(ToClassNameScenarios) { case (identifier: String, normalizedIdentifier: String) =>
+    test(s"The identifier '$identifier' should be normalized to class name '$normalizedIdentifier'") {
+      toClassName(identifier) shouldBe normalizedIdentifier
     }
   }
 }

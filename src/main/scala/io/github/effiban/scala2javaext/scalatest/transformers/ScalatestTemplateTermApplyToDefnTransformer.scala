@@ -8,6 +8,7 @@ object ScalatestTemplateTermApplyToDefnTransformer extends CompositeTermToDefnTr
 
   override protected val transformers: List[DifferentTypeTransformer0[Term.Apply, Defn]] =
     List(
-      FunSuiteTestRegistrationTransformer
+      TermApplyTestRegistrationTransformer,
+      TermApplyNestedTestRegistrationTransformer
     )
 }
