@@ -22,6 +22,8 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
     (q"test", true),
     (q"Scenario", true),
     (q"scenario", true),
+    (q"it", true),
+    (q"they", true),
     (q"Feature", false),
     (q"should", false)
   )
@@ -30,6 +32,7 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
     ("Term Name", "IsNestedTestRegistrationWord"),
     (q"Feature", true),
     (q"feature", true),
+    (q"describe", true),
     (q"Scenario", false),
     (q"test", false)
   )

@@ -21,12 +21,12 @@ object ScalatestTermNameClassifier extends ScalatestTermNameClassifier {
   }
 
   def isTestRegistrationWord(word: Term.Name): Boolean = word match {
-    case q"test" | q"Scenario" | q"scenario" => true
+    case q"test" | q"Scenario" | q"scenario" | q"it" | q"they" => true
     case _ => false
   }
 
   def isNestedTestRegistrationWord(word: Term.Name): Boolean = word match {
-    case q"Feature" | q"feature" => true
+    case q"Feature" | q"feature" | q"describe" => true
     case _ => false
   }
 }
