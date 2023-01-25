@@ -4,7 +4,7 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Lit, Term, XtensionQuasiquoteTerm}
 
-class FlatSpecTestNameExtractorImplTest extends UnitTestSuite {
+class FlatSpecNameExtractorTest extends UnitTestSuite {
 
   private val ValidScenarios = Table(
     ("Name Clause", "Name"),
@@ -29,13 +29,13 @@ class FlatSpecTestNameExtractorImplTest extends UnitTestSuite {
 
   forAll(ValidScenarios) { case (nameClause: Term.ApplyInfix, name: String) =>
     test(s"""For name clause: <$nameClause> the name: "$name" should be extracted""") {
-      FlatSpecTestNameExtractor.extract(nameClause).value.structure shouldBe Lit.String(name).structure
+      FlatSpecNameExtractor.extract(nameClause).value.structure shouldBe Lit.String(name).structure
     }
   }
 
   forAll(InvalidScenarios) { nameClause: Term.ApplyInfix =>
     test(s"Should fail to extract a name for the clause: <$nameClause>") {
-      FlatSpecTestNameExtractor.extract(nameClause) shouldBe None
+      FlatSpecNameExtractor.extract(nameClause) shouldBe None
     }
   }
 }
