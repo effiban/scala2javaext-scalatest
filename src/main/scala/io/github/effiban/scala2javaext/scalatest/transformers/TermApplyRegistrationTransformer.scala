@@ -4,11 +4,10 @@ import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTran
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitTestMethodGenerator
 
-import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Defn, Term}
 
-private[transformers] class TermApplyTestRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
-                                                                 junitTestMethodGenerator: JUnitTestMethodGenerator)
+private[transformers] class TermApplyRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
+                                                             junitTestMethodGenerator: JUnitTestMethodGenerator)
   extends TemplateTermApplyToDefnTransformer {
 
   override def transform(termApply: Term.Apply): Option[Defn.Def] = {
@@ -16,13 +15,13 @@ private[transformers] class TermApplyTestRegistrationTransformer(scalatestTermNa
     import junitTestMethodGenerator._
 
     termApply match {
-      case Term.Apply(Term.Apply(word: Term.Name, args), body :: Nil) if isTestRegistrationWord(word) => generate(args)(body)
+      case Term.Apply(Term.Apply(word: Term.Name, args), body :: Nil) if isTermApplyRegistrator(word) => generate(args)(body)
       case _ => None
     }
   }
 }
 
-private[transformers] object TermApplyTestRegistrationTransformer extends TermApplyTestRegistrationTransformer(
+private[transformers] object TermApplyRegistrationTransformer extends TermApplyRegistrationTransformer(
   ScalatestTermNameClassifier,
   JUnitTestMethodGenerator
 )

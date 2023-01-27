@@ -2,25 +2,25 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.extractors.TermApplyInfixSpecNameExtractor
+import io.github.effiban.scala2javaext.scalatest.extractors.{InfixSpecNameExtractor, TermSpecNameExtractor}
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitTestMethodGenerator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.XtensionQuasiquoteTerm
 
-class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
+class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
 
-  private val termApplyInfixSpecNameExtractor = mock[TermApplyInfixSpecNameExtractor]
+  private val termSpecNameExtractor = mock[TermSpecNameExtractor]
   private val junitTestMethodGenerator = mock[JUnitTestMethodGenerator]
 
-  private val termApplyInfixSpecRegistrationTransformer = new TermApplyInfixTestRegistrationTransformer(
-    termApplyInfixSpecNameExtractor,
+  private val termApplyInfixSpecRegistrationTransformer = new TermApplyInfixRegistrationTransformer(
+    termSpecNameExtractor,
     junitTestMethodGenerator
   )
 
 
   test("transform valid with name only") {
-    val testRegistration =
+    val registration =
       q"""
       it should "succeed" in {
         doSomething()
@@ -45,14 +45,14 @@ class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
     val name = q""""it should succeed""""
 
 
-    when(termApplyInfixSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
+    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
     when(junitTestMethodGenerator.generate(eqTreeList(List(name)))(eqTree(body))).thenReturn(Some(junitMethod))
 
-    termApplyInfixSpecRegistrationTransformer.transform(testRegistration).value.structure shouldBe junitMethod.structure
+    termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
   }
 
   test("transform valid with name and tags") {
-    val testRegistration =
+    val registration =
       q"""
       it should "succeed" taggedAs(Tag("tag1"), Tag("tag2")) in {
         doSomething()
@@ -79,13 +79,13 @@ class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
       """
     val name = q""""it should succeed""""
 
-    when(termApplyInfixSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
+    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
     when(junitTestMethodGenerator.generate(eqTreeList(name :: tags))(eqTree(body))).thenReturn(Some(junitMethod))
 
-    termApplyInfixSpecRegistrationTransformer.transform(testRegistration).value.structure shouldBe junitMethod.structure
+    termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
   }
 
-  test("transform when registration clause is invalid should return None") {
+  test("transform when registrator word is invalid should return None") {
     val invalidRegistration =
       q"""
       it should "succeed" blabla {
@@ -95,7 +95,7 @@ class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None
 
-    verifyNoMoreInteractions(termApplyInfixSpecNameExtractor, junitTestMethodGenerator)
+    verifyNoMoreInteractions(termSpecNameExtractor, junitTestMethodGenerator)
   }
 
   test("transform when spec is invalid should return None") {
@@ -107,7 +107,7 @@ class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
       """
     val spec = q"""it blabla "succeed""""
 
-    when(termApplyInfixSpecNameExtractor.extract(eqTree(spec))).thenReturn(None)
+    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(None)
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None
 
@@ -131,7 +131,7 @@ class TermApplyInfixTestRegistrationTransformerTest extends UnitTestSuite {
     val name = q""""it should succeed""""
 
 
-    when(termApplyInfixSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
+    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
     when(junitTestMethodGenerator.generate(eqTreeList(List(name)))(eqTree(body))).thenReturn(None)
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None

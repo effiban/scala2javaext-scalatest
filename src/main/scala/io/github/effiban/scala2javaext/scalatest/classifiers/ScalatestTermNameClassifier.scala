@@ -6,27 +6,36 @@ import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 
 trait ScalatestTermNameClassifier {
 
-  def isSpecVerb(verb: Term.Name): Boolean
+  def isTermApplyRegistrator(termName: Term.Name): Boolean
 
-  def isTestRegistrationWord(word: Term.Name): Boolean
+  def isTermApplyNestedRegistrator(termName: Term.Name): Boolean
 
-  def isNestedTestRegistrationWord(word: Term.Name): Boolean
+  def isTermApplyInfixNestedRegistrator(termName: Term.Name): Boolean
+
+  def isSpecVerb(termName: Term.Name): Boolean
+
 }
 
 object ScalatestTermNameClassifier extends ScalatestTermNameClassifier {
 
-  def isSpecVerb(verb: Term.Name): Boolean = verb match {
-    case q"should" | q"must" | q"can" => true
-    case _ => false
-  }
-
-  def isTestRegistrationWord(word: Term.Name): Boolean = word match {
+  def isTermApplyRegistrator(termName: Term.Name): Boolean = termName match {
     case q"test" | q"Scenario" | q"scenario" | q"it" | q"they" => true
     case _ => false
   }
 
-  def isNestedTestRegistrationWord(word: Term.Name): Boolean = word match {
+  def isTermApplyNestedRegistrator(termName: Term.Name): Boolean = termName match {
     case q"Feature" | q"feature" | q"describe" => true
+    case _ => false
+  }
+
+  def isTermApplyInfixNestedRegistrator(termName: Term.Name): Boolean = termName match {
+    case aTermName if isSpecVerb(aTermName) => true
+    case q"when" | q"which" => true
+    case _ => false
+  }
+
+  def isSpecVerb(termName: Term.Name): Boolean = termName match {
+    case q"should" | q"must" | q"can" => true
     case _ => false
   }
 }
