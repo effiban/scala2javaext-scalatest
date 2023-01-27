@@ -6,8 +6,8 @@ import io.github.effiban.scala2javaext.scalatest.generators.JUnitNestedTestClass
 
 import scala.meta.{Defn, Lit, Term}
 
-private[transformers] class TermApplyNestedTestRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
-                                                                       junitNestedTestClassGenerator: JUnitNestedTestClassGenerator)
+private[transformers] class TermApplyNestedRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
+                                                                   junitNestedTestClassGenerator: JUnitNestedTestClassGenerator)
   extends TemplateTermApplyToDefnTransformer {
 
   override def transform(termApply: Term.Apply): Option[Defn.Class] = {
@@ -16,13 +16,13 @@ private[transformers] class TermApplyNestedTestRegistrationTransformer(scalatest
 
     termApply match {
       case Term.Apply(Term.Apply(word: Term.Name, (name: Lit.String) :: Nil), (registrationBlock: Term.Block) :: Nil)
-        if isNestedTestRegistrationWord(word) => Some(generate(name, registrationBlock.stats))
+        if isTermApplyNestedRegistrator(word) => Some(generate(name = name, nestedRegistrations = registrationBlock.stats))
       case _ => None
     }
   }
 }
 
-private[transformers] object TermApplyNestedTestRegistrationTransformer extends TermApplyNestedTestRegistrationTransformer(
+private[transformers] object TermApplyNestedRegistrationTransformer extends TermApplyNestedRegistrationTransformer(
   ScalatestTermNameClassifier,
   JUnitNestedTestClassGenerator
 )

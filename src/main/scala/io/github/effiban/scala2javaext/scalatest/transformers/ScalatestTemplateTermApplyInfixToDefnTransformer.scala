@@ -9,6 +9,7 @@ object ScalatestTemplateTermApplyInfixToDefnTransformer extends CompositeTermToD
 
   override protected val transformers: List[DifferentTypeTransformer0[Term.ApplyInfix, Defn]] =
     List(
-      TermApplyInfixTestRegistrationTransformer
+      TermApplyInfixRegistrationTransformer,
+      TermApplyInfixNestedRegistrationTransformer
     )
 }

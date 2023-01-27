@@ -1,14 +1,15 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
-import io.github.effiban.scala2javaext.scalatest.transformers.IdentifierNormalizer
+import io.github.effiban.scala2javaext.scalatest.transformers.{IdentifierNormalizer, InfixRegistrationSubjectModifier}
 
-import scala.meta.{Ctor, Defn, Lit, Name, Self, Stat, Template, Type}
+import scala.meta.{Ctor, Defn, Lit, Name, Self, Stat, Template, Term, Type}
 
 trait JUnitNestedTestClassGenerator {
-  def generate(name: Lit.String, nestedRegistrations: List[Stat]): Defn.Class
+  def generate(name: Lit.String, nestedPrefix: Lit.String = Lit.String(""), nestedRegistrations: List[Stat]): Defn.Class
 }
 
-private[generators] class JUnitNestedTestClassGeneratorImpl(junitAnnotationGenerator: JUnitAnnotationGenerator,
+private[generators] class JUnitNestedTestClassGeneratorImpl(infixRegistrationSubjectModifier: InfixRegistrationSubjectModifier,
+                                                            junitAnnotationGenerator: JUnitAnnotationGenerator,
                                                             identifierNormalizer: IdentifierNormalizer) extends JUnitNestedTestClassGenerator {
 
   private val EmptyCtorPrimary = Ctor.Primary(
@@ -20,9 +21,15 @@ private[generators] class JUnitNestedTestClassGeneratorImpl(junitAnnotationGener
   private val EmptySelf = Self(Name.Anonymous(), None)
 
 
-  override def generate(name: Lit.String, nestedRegistrations: List[Stat]): Defn.Class = {
+  override def generate(name: Lit.String, nestedPrefix: Lit.String, nestedRegistrations: List[Stat]): Defn.Class = {
+    import infixRegistrationSubjectModifier._
     import junitAnnotationGenerator._
     import identifierNormalizer._
+
+    val nestedRegistrationsWithPrefix = nestedRegistrations.map {
+      case infixRegistration: Term.ApplyInfix => prepend(infixRegistration, nestedPrefix)
+      case registration => registration
+    }
 
     val mods = List(nestedAnnotation(), displayNameAnnotationWith(name.value))
     val className = Type.Name(toClassName(name.value))
@@ -36,13 +43,14 @@ private[generators] class JUnitNestedTestClassGeneratorImpl(junitAnnotationGener
         early = Nil,
         inits = Nil,
         self = EmptySelf,
-        stats = nestedRegistrations
+        stats = nestedRegistrationsWithPrefix
       )
     )
   }
 }
 
 object JUnitNestedTestClassGenerator extends JUnitNestedTestClassGeneratorImpl(
+  InfixRegistrationSubjectModifier,
   JUnitAnnotationGenerator,
   IdentifierNormalizer
 )

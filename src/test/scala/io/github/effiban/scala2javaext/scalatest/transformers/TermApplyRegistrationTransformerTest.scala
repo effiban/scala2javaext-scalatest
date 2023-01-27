@@ -8,12 +8,12 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
-class TermApplyTestRegistrationTransformerTest extends UnitTestSuite {
+class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
   private val scalatestTermNameClassifier = mock[ScalatestTermNameClassifier]
   private val junitTestMethodGenerator = mock[JUnitTestMethodGenerator]
 
-  private val transformer = new TermApplyTestRegistrationTransformer(scalatestTermNameClassifier, junitTestMethodGenerator)
+  private val transformer = new TermApplyRegistrationTransformer(scalatestTermNameClassifier, junitTestMethodGenerator)
 
   test("transform() when valid with one argument should return equivalent JUnit '@Test' method") {
     val testRegistration =
@@ -39,7 +39,7 @@ class TermApplyTestRegistrationTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(scalatestTermNameClassifier.isTestRegistrationWord(eqTree(registrationWord))).thenReturn(true)
+    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrationWord))).thenReturn(true)
     when(junitTestMethodGenerator.generate(eqTreeList(args))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
     transformer.transform(testRegistration).value.structure shouldBe junitTestMethod.structure
@@ -70,7 +70,7 @@ class TermApplyTestRegistrationTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(scalatestTermNameClassifier.isTestRegistrationWord(eqTree(registrationWord))).thenReturn(true)
+    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrationWord))).thenReturn(true)
     when(junitTestMethodGenerator.generate(eqTreeList(args))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
     transformer.transform(testRegistration).value.structure shouldBe junitTestMethod.structure
@@ -104,7 +104,7 @@ class TermApplyTestRegistrationTransformerTest extends UnitTestSuite {
 
     val registrationWord = q"bla"
 
-    when(scalatestTermNameClassifier.isTestRegistrationWord(eqTree(registrationWord))).thenReturn(false)
+    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrationWord))).thenReturn(false)
 
     transformer.transform(testRegistration) shouldBe None
   }
