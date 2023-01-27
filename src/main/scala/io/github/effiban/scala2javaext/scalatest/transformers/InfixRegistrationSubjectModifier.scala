@@ -16,6 +16,6 @@ object InfixRegistrationSubjectModifier extends InfixRegistrationSubjectModifier
   }
 
   private def prepend(subjectName: Lit.String, subjectPrefix: Lit.String) = {
-    Lit.String(s"${subjectPrefix.value} ${subjectName.value}")
+    Lit.String(s"${subjectPrefix.value} ${subjectName.value}".trim)
   }
 }

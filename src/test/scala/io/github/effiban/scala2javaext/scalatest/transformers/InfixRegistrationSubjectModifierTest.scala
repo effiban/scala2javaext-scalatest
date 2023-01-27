@@ -3,11 +3,11 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.InfixRegistrationSubjectModifier.prepend
 
-import scala.meta.XtensionQuasiquoteTerm
+import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class InfixRegistrationSubjectModifierTest extends UnitTestSuite {
 
-  test("prepend() when has a subject string which is not nested, should prepend the prefix") {
+  test("prepend() when has a subject string which is not empty and not nested, should prepend the prefix") {
     val registration =
       q"""
       "return three items" in {
@@ -27,7 +27,7 @@ class InfixRegistrationSubjectModifierTest extends UnitTestSuite {
     prepend(registration, prefix).structure shouldBe modifiedRegistration.structure
   }
 
-  test("prepend() when has a subject string which is nested, should prepend the prefix") {
+  test("prepend() when has a subject string which is not empty and nested, should prepend the prefix") {
     val registration =
       q"""
       "return three items" taggedAs(MyTag) in {
@@ -45,6 +45,19 @@ class InfixRegistrationSubjectModifierTest extends UnitTestSuite {
       """
 
     prepend(registration, prefix).structure shouldBe modifiedRegistration.structure
+  }
+
+  test("prepend() when the prefix is empty, should leave it unchanged") {
+    val registration =
+      q"""
+      "should return three items" in {
+         verifyNumItems()
+      }
+      """
+
+    val prefix = Lit.String("")
+
+    prepend(registration, prefix).structure shouldBe registration.structure
   }
 
   test("prepend() when has a subject which is a non-literal word, should leave it unchanged") {

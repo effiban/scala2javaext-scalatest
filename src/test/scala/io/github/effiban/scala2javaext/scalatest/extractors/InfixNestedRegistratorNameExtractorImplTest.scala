@@ -4,7 +4,7 @@ import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
-import scala.meta.XtensionQuasiquoteTerm
+import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class InfixNestedRegistratorNameExtractorImplTest extends UnitTestSuite {
 
@@ -25,5 +25,11 @@ class InfixNestedRegistratorNameExtractorImplTest extends UnitTestSuite {
     when(scalatestTermNameClassifier.isTermApplyInfixNestedRegistrator(eqTree(word))).thenReturn(false)
 
     extractor.extract(word) shouldBe None
+  }
+
+  test("extract() when word is the wildcard '-' should return an empty literal string") {
+    val word = q"-"
+
+    extractor.extract(word).value.structure shouldBe Lit.String("").structure
   }
 }
