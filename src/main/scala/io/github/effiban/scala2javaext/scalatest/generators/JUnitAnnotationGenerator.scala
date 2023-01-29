@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
-import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.{DisplayNameAnnotationType, NestedAnnotationType, TagAnnotationType, TestAnnotationType}
+import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.{DisplayNameAnnotationType, DisabledAnnotationType, NestedAnnotationType, TagAnnotationType, TestAnnotationType}
 
 import scala.meta.{Init, Lit, Mod, Name, Type}
 
@@ -13,6 +13,8 @@ trait JUnitAnnotationGenerator {
   def displayNameAnnotationWith(name: String): Mod.Annot
 
   def tagAnnotationsWith(tagNames: List[String]): List[Mod.Annot]
+
+  def disabledAnnotation(): Mod.Annot
 }
 
 object JUnitAnnotationGenerator extends JUnitAnnotationGenerator {
@@ -29,4 +31,6 @@ object JUnitAnnotationGenerator extends JUnitAnnotationGenerator {
     val args = maybeArg.map(arg => List(List(Lit.String(arg)))).getOrElse(Nil)
     Mod.Annot(Init(annotType, Name.Anonymous(), args))
   }
+
+  override def disabledAnnotation(): Mod.Annot = annotationOf(DisabledAnnotationType)
 }

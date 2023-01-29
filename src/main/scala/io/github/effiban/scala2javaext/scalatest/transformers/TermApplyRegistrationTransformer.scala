@@ -15,7 +15,8 @@ private[transformers] class TermApplyRegistrationTransformer(scalatestTermNameCl
     import junitTestMethodGenerator._
 
     termApply match {
-      case Term.Apply(Term.Apply(word: Term.Name, args), body :: Nil) if isTermApplyRegistrator(word) => generate(args)(body)
+      case Term.Apply(Term.Apply(registrator: Term.Name, args), body :: Nil) if isTermApplyRegistrator(registrator) =>
+        generate(args, isIgnore(registrator))(body)
       case _ => None
     }
   }

@@ -10,4 +10,5 @@ object JUnitConstants {
   val NestedAnnotationType: Type.Name = t"Nested"
   val DisplayNameAnnotationType: Type.Name = t"DisplayName"
   val TagAnnotationType: Type.Name = t"Tag"
+  val DisabledAnnotationType: Type.Name = t"Disabled"
 }
