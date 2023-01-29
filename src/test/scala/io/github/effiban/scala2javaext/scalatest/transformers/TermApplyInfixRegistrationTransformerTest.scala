@@ -2,24 +2,29 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.extractors.{InfixSpecNameExtractor, TermSpecNameExtractor}
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.entities.SpecInfo
+import io.github.effiban.scala2javaext.scalatest.extractors.TermSpecInfoExtractor
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitTestMethodGenerator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
+import org.mockito.ArgumentMatchersSugar.eqTo
 
 import scala.meta.XtensionQuasiquoteTerm
 
 class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
 
-  private val termSpecNameExtractor = mock[TermSpecNameExtractor]
+  private val scalatestTermNameClassifier = mock[ScalatestTermNameClassifier]
+  private val termSpecInfoExtractor = mock[TermSpecInfoExtractor]
   private val junitTestMethodGenerator = mock[JUnitTestMethodGenerator]
 
   private val termApplyInfixSpecRegistrationTransformer = new TermApplyInfixRegistrationTransformer(
-    termSpecNameExtractor,
+    scalatestTermNameClassifier,
+    termSpecInfoExtractor,
     junitTestMethodGenerator
   )
 
 
-  test("transform valid with name only") {
+  test("transform when valid, not ignored, and has name only") {
     val registration =
       q"""
       it should "succeed" in {
@@ -27,6 +32,7 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
       }
       """
     val spec = q"""it should "succeed""""
+    val registrator = q"in"
     val body =
       q"""
       {
@@ -45,13 +51,87 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
     val name = q""""it should succeed""""
 
 
-    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
-    when(junitTestMethodGenerator.generate(eqTreeList(List(name)))(eqTree(body))).thenReturn(Some(junitMethod))
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(Some(SpecInfo(name)))
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(junitTestMethodGenerator.generate(eqTreeList(List(name)), disabled = eqTo(false))(eqTree(body))).thenReturn(Some(junitMethod))
 
     termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
   }
 
-  test("transform valid with name and tags") {
+  test("transform when valid, ignored by registrator word, and has name only") {
+    val registration =
+      q"""
+      it should "succeed" ignore {
+        doSomething()
+      }
+      """
+    val spec = q"""it should "succeed""""
+    val registrator = q"ignore"
+    val body =
+      q"""
+      {
+        doSomething()
+      }
+      """
+
+    val junitMethod =
+      q"""
+      @Test
+      @DisplayName("it should succeed")
+      @Disabled
+      def itShouldSucceed(): Unit = {
+          doSomething();
+      }
+      """
+    val name = q""""it should succeed""""
+
+
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(Some(SpecInfo(name)))
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(true)
+    when(junitTestMethodGenerator.generate(eqTreeList(List(name)), disabled = eqTo(true))(eqTree(body))).thenReturn(Some(junitMethod))
+
+    termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
+  }
+
+  test("transform when valid, ignored by subject word, and has name only") {
+    val registration =
+      q"""
+      ignore should "succeed" in {
+        doSomething()
+      }
+      """
+    val spec = q"""ignore should "succeed""""
+    val registrator = q"in"
+    val body =
+      q"""
+      {
+        doSomething()
+      }
+      """
+
+    val junitMethod =
+      q"""
+      @Test
+      @DisplayName("it should succeed")
+      @Disabled
+      def itShouldSucceed(): Unit = {
+          doSomething();
+      }
+      """
+    val name = q""""it should succeed""""
+
+
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(Some(SpecInfo(name, ignored = true)))
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(junitTestMethodGenerator.generate(eqTreeList(List(name)), disabled = eqTo(true))(eqTree(body))).thenReturn(Some(junitMethod))
+
+    termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
+  }
+
+  test("transform when valid, with name and tags") {
     val registration =
       q"""
       it should "succeed" taggedAs(Tag("tag1"), Tag("tag2")) in {
@@ -60,6 +140,7 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
       """
     val spec = q"""it should "succeed""""
     val tags = List(q"""Tag("tag1")""", q"""Tag("tag2")""")
+    val registrator = q"in"
     val body =
       q"""
       {
@@ -79,8 +160,10 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
       """
     val name = q""""it should succeed""""
 
-    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
-    when(junitTestMethodGenerator.generate(eqTreeList(name :: tags))(eqTree(body))).thenReturn(Some(junitMethod))
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(Some(SpecInfo(name)))
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(junitTestMethodGenerator.generate(eqTreeList(name :: tags), disabled = eqTo(false))(eqTree(body))).thenReturn(Some(junitMethod))
 
     termApplyInfixSpecRegistrationTransformer.transform(registration).value.structure shouldBe junitMethod.structure
   }
@@ -95,7 +178,7 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None
 
-    verifyNoMoreInteractions(termSpecNameExtractor, junitTestMethodGenerator)
+    verifyNoMoreInteractions(termSpecInfoExtractor, junitTestMethodGenerator)
   }
 
   test("transform when spec is invalid should return None") {
@@ -106,8 +189,11 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
       }
       """
     val spec = q"""it blabla "succeed""""
+    val registrator = q"in"
 
-    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(None)
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(None)
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None
 
@@ -122,6 +208,7 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
       }
       """
     val spec = q"""it should "succeed""""
+    val registrator = q"in"
     val body =
       q"""
       {
@@ -131,11 +218,13 @@ class TermApplyInfixRegistrationTransformerTest extends UnitTestSuite {
     val name = q""""it should succeed""""
 
 
-    when(termSpecNameExtractor.extract(eqTree(spec))).thenReturn(Some(name))
-    when(junitTestMethodGenerator.generate(eqTreeList(List(name)))(eqTree(body))).thenReturn(None)
+    when(scalatestTermNameClassifier.isTermApplyInfixRegistrator(eqTree(registrator))).thenReturn(true)
+    when(termSpecInfoExtractor.extract(eqTree(spec))).thenReturn(Some(SpecInfo(name)))
+    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(junitTestMethodGenerator.generate(eqTreeList(List(name)), disabled = eqTo(false))(eqTree(body))).thenReturn(None)
 
     termApplyInfixSpecRegistrationTransformer.transform(invalidRegistration) shouldBe None
 
-    verify(junitTestMethodGenerator).generate(eqTreeList(List(name)))(eqTree(body))
+    verify(junitTestMethodGenerator).generate(eqTreeList(List(name)), disabled = eqTo(false))(eqTree(body))
   }
 }

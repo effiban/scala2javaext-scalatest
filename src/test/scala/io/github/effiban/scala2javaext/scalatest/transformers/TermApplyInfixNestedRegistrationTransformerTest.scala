@@ -2,7 +2,8 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.extractors.{InfixNestedRegistratorNameExtractor, SubjectNameExtractor}
+import io.github.effiban.scala2javaext.scalatest.entities.SpecInfo
+import io.github.effiban.scala2javaext.scalatest.extractors.{InfixNestedRegistratorNameExtractor, SubjectInfoExtractor}
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitNestedTestClassGenerator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
@@ -11,12 +12,12 @@ import scala.meta.XtensionQuasiquoteTerm
 class TermApplyInfixNestedRegistrationTransformerTest extends UnitTestSuite {
 
   private val infixNestedRegistratorNameExtractor = mock[InfixNestedRegistratorNameExtractor]
-  private val subjectNameExtractor = mock[SubjectNameExtractor]
+  private val subjectInfoExtractor = mock[SubjectInfoExtractor]
   private val junitNestedTestClassGenerator = mock[JUnitNestedTestClassGenerator]
 
   private val transformer = new TermApplyInfixNestedRegistrationTransformer(
     infixNestedRegistratorNameExtractor,
-    subjectNameExtractor,
+    subjectInfoExtractor,
     junitNestedTestClassGenerator
   )
 
@@ -81,7 +82,7 @@ class TermApplyInfixNestedRegistrationTransformerTest extends UnitTestSuite {
       """
 
 
-    when(subjectNameExtractor.extract(eqTree(subject))).thenReturn(Some(subjectName))
+    when(subjectInfoExtractor.extract(eqTree(subject))).thenReturn(Some(SpecInfo(subjectName)))
     when(infixNestedRegistratorNameExtractor.extract(eqTree(registratorWord))).thenReturn(Some(registratorName))
     when(junitNestedTestClassGenerator.generate(eqTree(subjectName), eqTree(registratorName), eqTreeList(nestedRegistrations))).thenReturn(junitNestedTestClass)
 
@@ -101,7 +102,7 @@ class TermApplyInfixNestedRegistrationTransformerTest extends UnitTestSuite {
       }
       """
 
-    when(subjectNameExtractor.extract(eqTree(q""""car""""))).thenReturn(Some(q""""car""""))
+    when(subjectInfoExtractor.extract(eqTree(q""""car""""))).thenReturn(Some(SpecInfo(q""""car"""")))
     when(infixNestedRegistratorNameExtractor.extract(eqTree(invalidRegistratorWord))).thenReturn(None)
 
     transformer.transform(invalidInfixRegistration) shouldBe None
@@ -120,7 +121,7 @@ class TermApplyInfixNestedRegistrationTransformerTest extends UnitTestSuite {
       }
       """
 
-    when(subjectNameExtractor.extract(eqTree(invalidSubject))).thenReturn(None)
+    when(subjectInfoExtractor.extract(eqTree(invalidSubject))).thenReturn(None)
 
     transformer.transform(invalidInfixRegistration) shouldBe None
   }

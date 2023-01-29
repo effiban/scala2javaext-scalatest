@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier.{isSpecVerb, isTermApplyNestedRegistrator, isTermApplyRegistrator, isTermApplyInfixNestedRegistrator}
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier.{isIgnore, isSpecVerb, isTermApplyInfixNestedRegistrator, isTermApplyNestedRegistrator, isTermApplyRegistrator}
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Term, XtensionQuasiquoteTerm}
@@ -48,6 +48,13 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
     (q"want", false)
   )
 
+  private val IsIgnoreScenarios = Table(
+    ("Term Name", "IsIgnore"),
+    (q"ignore", true),
+    (q"Ignore", false),
+    (q"in", false)
+  )
+
   forAll(IsTermApplyRegistratorScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
     test(s"'$termName' is ${if (expectedResult) "" else "not "} a Term.Apply registrator") {
       isTermApplyRegistrator(termName) shouldBe expectedResult
@@ -69,6 +76,12 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
   forAll(IsSpecVerbScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
     test(s"'$termName' is ${if (expectedResult) "" else "not "} a spec verb") {
       isSpecVerb(termName) shouldBe expectedResult
+    }
+  }
+
+  forAll(IsIgnoreScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
+    test(s"'$termName' is ${if (expectedResult) "" else "not "} the 'ignore' indicator") {
+      isIgnore(termName) shouldBe expectedResult
     }
   }
 }

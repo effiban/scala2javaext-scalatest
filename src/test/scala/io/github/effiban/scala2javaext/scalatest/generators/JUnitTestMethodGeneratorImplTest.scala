@@ -13,7 +13,7 @@ class JUnitTestMethodGeneratorImplTest extends UnitTestSuite {
   private val junitTestMethodGenerator = new JUnitTestMethodGeneratorImpl(junitAnnotationGenerator, identifierNormalizer)
 
 
-  test("transform when valid and has no tags") {
+  test("transform when valid, enabled, and has no tags") {
     val testName = "check me"
     val args = List(Lit.String(testName))
     val body = q"doCheck()"
@@ -31,6 +31,28 @@ class JUnitTestMethodGeneratorImplTest extends UnitTestSuite {
     when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
 
     junitTestMethodGenerator.generate(args)(body).value.structure shouldBe expectedJUnitTestMethod.structure
+  }
+
+  test("transform when valid, disabled, and has no tags") {
+    val testName = "check me"
+    val args = List(Lit.String(testName))
+    val body = q"doCheck()"
+
+    val expectedJUnitTestMethod =
+      q"""
+      @Test
+      @DisplayName("check me")
+      @Disabled
+      def checkMe(): Unit = doCheck()
+      """
+
+    when(junitAnnotationGenerator.testAnnotation()).thenReturn(mod"@Test")
+    when(junitAnnotationGenerator.displayNameAnnotationWith("check me")).thenReturn(mod"""@DisplayName("check me")""")
+    when(junitAnnotationGenerator.tagAnnotationsWith(Nil)).thenReturn(Nil)
+    when(junitAnnotationGenerator.disabledAnnotation()).thenReturn(mod"@Disabled")
+    when(identifierNormalizer.toMemberName(testName)).thenReturn("checkMe")
+
+    junitTestMethodGenerator.generate(args, disabled = true)(body).value.structure shouldBe expectedJUnitTestMethod.structure
   }
 
   test("transform when valid and has tags") {

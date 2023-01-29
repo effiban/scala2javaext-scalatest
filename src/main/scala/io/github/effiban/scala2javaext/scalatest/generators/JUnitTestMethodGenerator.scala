@@ -6,31 +6,36 @@ import scala.meta.{Defn, Lit, Term, XtensionQuasiquoteTerm, XtensionQuasiquoteTy
 
 trait JUnitTestMethodGenerator {
 
-  def generate(args: List[Term])(body: Term): Option[Defn.Def]
+  def generate(args: List[Term], disabled: Boolean = false)(body: Term): Option[Defn.Def]
 }
 
 private[generators] class JUnitTestMethodGeneratorImpl(junitAnnotationGenerator: JUnitAnnotationGenerator,
                                                        identifierNormalizer: IdentifierNormalizer) extends JUnitTestMethodGenerator {
 
-  override def generate(args: List[Term])(body: Term): Option[Defn.Def] = {
+  override def generate(args: List[Term], disabled: Boolean = false)(body: Term): Option[Defn.Def] = {
     args match {
-      case Lit.String(name) :: Nil => Some(generate(name)(body))
-      case Lit.String(name) :: tags => Some(generate(name, tagNamesOf(tags))(body))
+      case Lit.String(name) :: Nil => Some(generate(name, Nil, disabled = disabled)(body))
+      case Lit.String(name) :: tags => Some(generate(name, tagNamesOf(tags), disabled)(body))
       case _ => None
     }
   }
 
-  private def generate(name: String, tagNames: List[String] = Nil)(body: Term) = {
-    import junitAnnotationGenerator._
-
+  private def generate(name: String, tagNames: List[String], disabled: Boolean)(body: Term) = {
     Defn.Def(
-      mods = List(testAnnotation(), displayNameAnnotationWith(name)) ++ tagAnnotationsWith(tagNames),
+      mods = generateAnnotations(name, tagNames, disabled),
       name = Term.Name(identifierNormalizer.toMemberName(name)),
       tparams = Nil,
       paramss = List(Nil),
       decltpe = Some(t"Unit"),
       body = body
     )
+  }
+
+  private def generateAnnotations(name: String, tagNames: List[String], disabled: Boolean) = {
+    import junitAnnotationGenerator._
+    val mandatoryAnnotations = List(testAnnotation(), displayNameAnnotationWith(name)) ++ tagAnnotationsWith(tagNames)
+    val maybeDisabledAnnotation = if (disabled) Some(disabledAnnotation()) else None
+    mandatoryAnnotations ++ maybeDisabledAnnotation
   }
 
   private def tagNamesOf(tags: List[Term]): List[String] = {
