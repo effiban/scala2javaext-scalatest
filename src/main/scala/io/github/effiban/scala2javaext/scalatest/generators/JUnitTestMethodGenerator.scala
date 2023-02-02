@@ -21,13 +21,19 @@ private[generators] class JUnitTestMethodGeneratorImpl(junitAnnotationGenerator:
   }
 
   private def generate(name: String, tagNames: List[String], disabled: Boolean)(body: Term) = {
+    val innerBody = body match {
+      case Term.Block(Term.Function(_, aBody) :: Nil) => aBody
+      case Term.Block(Term.AnonymousFunction(aBody) :: Nil) => aBody
+      case aBody => aBody
+    }
+
     Defn.Def(
       mods = generateAnnotations(name, tagNames, disabled),
       name = Term.Name(identifierNormalizer.toMemberName(name)),
       tparams = Nil,
       paramss = List(Nil),
       decltpe = Some(t"Unit"),
-      body = body
+      body = innerBody
     )
   }
 
