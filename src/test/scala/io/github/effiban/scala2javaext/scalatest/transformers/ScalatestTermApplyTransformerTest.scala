@@ -11,12 +11,12 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
 
   private val assertTransformer = mock[AssertTransformer]
   private val assertResultTransformer = mock[AssertResultTransformer]
-  private val assertThrowsTransformer = mock[AssertThrowsTransformer]
+  private val assertExpectedExceptionTransformer = mock[AssertExpectedExceptionTransformer]
 
   private val scalatestTermApplyTransformer = new ScalatestTermApplyTransformer(
     assertTransformer,
     assertResultTransformer,
-    assertThrowsTransformer
+    assertExpectedExceptionTransformer
   )
 
   test("transform() for assert() without clue") {
@@ -64,7 +64,7 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
     scalatestTermApplyTransformer.transform(assertResultInvocation).structure shouldBe expectedOutput.structure
   }
 
-  test("transform() for assertThrows() should return a Try.recover") {
+  test("transform() for assertThrows[...]() should return a Try{}.recover()") {
     val assertThrowsInvocation = q"assertThrows[IllegalStateException] { doSomethingIllegal() }"
     val assertThrowsBody = q"{ doSomethingIllegal() }"
     val exceptionType = t"IllegalStateException"
@@ -72,15 +72,48 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
       q"""
       Try {
         doSomethingIllegal()
-        fail()
-      }.recover {
-        case _: IllegalStateException =>
+        fail("Should have thrown an IllegalStateException")
+      }.recover { e =>
+        e match {
+          case _: IllegalStateException =>
+          case _ => fail("Should have thrown an IllegalStateException")
+        }
       }
       """
 
-    when(assertThrowsTransformer.transform(eqTree(exceptionType), eqTree(assertThrowsBody))).thenReturn(expectedOutput)
+    when(assertExpectedExceptionTransformer.transform(
+      eqTree(exceptionType),
+      eqTree(assertThrowsBody),
+      eqTo(false)
+    )).thenReturn(expectedOutput)
 
     scalatestTermApplyTransformer.transform(assertThrowsInvocation).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() for intercept[...]() should return a Try{}.recover().get()") {
+    val interceptInvocation = q"intercept[IllegalStateException] { doSomethingIllegal() }"
+    val interceptBody = q"{ doSomethingIllegal() }"
+    val exceptionType = t"IllegalStateException"
+    val expectedOutput =
+      q"""
+      Try {
+        doSomethingIllegal()
+        fail("Should have thrown an IllegalStateException")
+      }.recover { e =>
+        e match {
+          case ex: IllegalStateException => ex
+          case _ => fail("Should have thrown an IllegalStateException")
+        }
+      }.get()
+      """
+
+    when(assertExpectedExceptionTransformer.transform(
+      eqTree(exceptionType),
+      eqTree(interceptBody),
+      eqTo(true)
+    )).thenReturn(expectedOutput)
+
+    scalatestTermApplyTransformer.transform(interceptInvocation).structure shouldBe expectedOutput.structure
   }
 
   test("transform() for unrecognized invocation should return it unchanged") {

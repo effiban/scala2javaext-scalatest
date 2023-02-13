@@ -17,18 +17,16 @@ public class SampleTest {
     }
 
     public void dummy() {
-        Try.ofSupplier(() ->  {
-                doSomethingLegal();
+        final var exception = Try.ofSupplier(() ->  {
                 doSomethingIllegal();
                 fail("Should have thrown an IllegalStateException");
             }
             )
         .recover(e -> switch (e) {
-                case IllegalStateException __ ->  {
-                }
-                ;
+                case IllegalStateException ex -> ex;
                 default -> fail("Should have thrown an IllegalStateException");
             }
-            );
+            )
+        .get();
     }
 }
