@@ -3,16 +3,16 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.Fail
 
 import scala.meta.Term.Block
-import scala.meta.{Case, Lit, Pat, Term, Type, XtensionQuasiquoteCaseOrPattern, XtensionQuasiquoteTerm}
+import scala.meta.{Case, Lit, Pat, Term, Type, XtensionQuasiquoteCaseOrPattern, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
 trait AssertExpectedExceptionTransformer {
 
-  def transform(exceptionType: Type, body: Term, returnException: Boolean = false): Term.Apply
+  def transform(exceptionType: Type = t"Throwable", body: Term, returnException: Boolean = false): Term.Apply
 }
 
 object AssertExpectedExceptionTransformer extends AssertExpectedExceptionTransformer {
 
-  override def transform(exceptionType: Type, body: Term, returnException: Boolean = false): Term.Apply = {
+  override def transform(exceptionType: Type = t"Throwable", body: Term, returnException: Boolean = false): Term.Apply = {
     val tryAndRecover = generateTryAndRecover(exceptionType, body, returnException)
    if (returnException) Term.Apply(Term.Select(tryAndRecover, q"get"), Nil) else tryAndRecover
   }
