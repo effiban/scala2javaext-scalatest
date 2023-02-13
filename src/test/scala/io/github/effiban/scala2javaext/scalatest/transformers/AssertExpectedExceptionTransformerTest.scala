@@ -7,7 +7,26 @@ import scala.meta.{XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
 class AssertExpectedExceptionTransformerTest extends UnitTestSuite {
 
-  test("transform() when not returning the exception") {
+  test("transform() without an explicit type, and not returning the exception") {
+    val exceptionType = t"Throwable"
+    val body = q"{ doSomethingIllegal() }"
+    val expectedOutput =
+      q"""
+      Try {
+        doSomethingIllegal()
+        fail("Should have thrown an Throwable")
+      }.recover(e =>
+        e match {
+          case _: Throwable =>
+          case _ => fail("Should have thrown an Throwable")
+        }
+      )
+      """
+
+    transform(exceptionType, body).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() with an explicit type, and not returning the exception") {
     val exceptionType = t"IllegalStateException"
     val body = q"{ doSomethingIllegal() }"
     val expectedOutput =
@@ -26,7 +45,26 @@ class AssertExpectedExceptionTransformerTest extends UnitTestSuite {
     transform(exceptionType, body).structure shouldBe expectedOutput.structure
   }
 
-  test("transform() when returning the exception") {
+  test("transform() without an explicit type, and returning the exception") {
+    val exceptionType = t"Throwable"
+    val body = q"{ doSomethingIllegal() }"
+    val expectedOutput =
+      q"""
+    Try {
+      doSomethingIllegal()
+      fail("Should have thrown an Throwable")
+    }.recover(e =>
+      e match {
+        case ex: Throwable => ex
+        case _ => fail("Should have thrown an Throwable")
+      }
+    ).get()
+    """
+
+    transform(exceptionType, body, returnException = true).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() with explicit type, and returning the exception") {
     val exceptionType = t"IllegalStateException"
     val body = q"{ doSomethingIllegal() }"
     val expectedOutput =
