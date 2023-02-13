@@ -5,15 +5,18 @@ import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import org.mockito.ArgumentMatchersSugar.eqTo
 
-import scala.meta.XtensionQuasiquoteTerm
+import scala.meta.{XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
 class ScalatestTermApplyTransformerTest extends UnitTestSuite {
 
   private val assertTransformer = mock[AssertTransformer]
   private val assertResultTransformer = mock[AssertResultTransformer]
+  private val assertThrowsTransformer = mock[AssertThrowsTransformer]
 
   private val scalatestTermApplyTransformer = new ScalatestTermApplyTransformer(
-    assertTransformer, assertResultTransformer
+    assertTransformer,
+    assertResultTransformer,
+    assertThrowsTransformer
   )
 
   test("transform() for assert() without clue") {
@@ -59,6 +62,25 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
       .thenReturn(expectedOutput)
 
     scalatestTermApplyTransformer.transform(assertResultInvocation).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() for assertThrows() should return a Try.recover") {
+    val assertThrowsInvocation = q"assertThrows[IllegalStateException] { doSomethingIllegal() }"
+    val assertThrowsBody = q"{ doSomethingIllegal() }"
+    val exceptionType = t"IllegalStateException"
+    val expectedOutput =
+      q"""
+      Try {
+        doSomethingIllegal()
+        fail()
+      }.recover {
+        case _: IllegalStateException =>
+      }
+      """
+
+    when(assertThrowsTransformer.transform(eqTree(exceptionType), eqTree(assertThrowsBody))).thenReturn(expectedOutput)
+
+    scalatestTermApplyTransformer.transform(assertThrowsInvocation).structure shouldBe expectedOutput.structure
   }
 
   test("transform() for unrecognized invocation should return it unchanged") {
