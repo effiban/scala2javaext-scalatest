@@ -6,7 +6,7 @@ import scala.meta.{Term, XtensionQuasiquoteTerm}
 
 class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
                                     assertResultTransformer: AssertResultTransformer,
-                                    assertExpectedExceptionTransformer: AssertExpectedExceptionTransformer) extends TermApplyTransformer {
+                                    assertThrowsTransformer: AssertThrowsTransformer) extends TermApplyTransformer {
 
   override def transform(termApply: Term.Apply): Term.Apply = termApply match {
     case Term.Apply(q"assert", List(condition)) => assertTransformer.transform(condition)
@@ -15,12 +15,9 @@ class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
       assertResultTransformer.transform(expected = expected, actual = actual)
     case Term.Apply(Term.Apply(q"assertResult", List(expected, clue)), List(actual)) =>
       assertResultTransformer.transform(expected, Some(clue), actual)
-    case Term.Apply(q"assertThrows", List(body)) => assertExpectedExceptionTransformer.transform(body = body)
-    case Term.Apply(Term.ApplyType(q"assertThrows", List(exceptionType)), List(body)) =>
-      assertExpectedExceptionTransformer.transform(exceptionType, body)
-    case Term.Apply(q"intercept", List(body)) => assertExpectedExceptionTransformer.transform(body = body, returnException = true)
-    case Term.Apply(Term.ApplyType(q"intercept", List(exceptionType)), List(body)) =>
-      assertExpectedExceptionTransformer.transform(exceptionType, body, returnException = true)
+    case Term.Apply(q"assertThrows" | q"intercept", List(body)) => assertThrowsTransformer.transform(body = body)
+    case Term.Apply(Term.ApplyType(q"assertThrows" | q"intercept", List(exceptionType)), List(body)) =>
+      assertThrowsTransformer.transform(exceptionType, body)
     case other => other
   }
 }
@@ -28,5 +25,5 @@ class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
 object ScalatestTermApplyTransformer extends ScalatestTermApplyTransformer(
   AssertTransformer,
   AssertResultTransformer,
-  AssertExpectedExceptionTransformer
+  AssertThrowsTransformer
 )

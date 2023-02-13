@@ -11,6 +11,7 @@ class JUnitImportersProviderTest extends UnitTestSuite {
     val expectedImporters = List(
       importer"org.junit.jupiter.api._",
       importer"org.junit.jupiter.api.Assertions._",
+      importer"org.junit.jupiter.api.Function._",
       importer"org.hamcrest.Matchers._",
       importer"org.hamcrest.MatcherAssert._"
     )
