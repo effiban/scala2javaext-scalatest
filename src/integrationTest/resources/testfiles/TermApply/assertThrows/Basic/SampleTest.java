@@ -19,13 +19,14 @@ public class SampleTest {
     public void dummy() {
         Try.ofSupplier(() ->  {
                 doSomethingIllegal();
-                fail();
+                fail("Should have thrown an IllegalStateException");
             }
             )
-        .recover(arg -> switch (arg) {
+        .recover(e -> switch (e) {
                 case IllegalStateException __ ->  {
                 }
                 ;
+                default -> fail("Should have thrown an IllegalStateException");
             }
             );
     }
