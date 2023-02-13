@@ -7,7 +7,7 @@ plugins {
 }
 
 project.ext.scalaMajorVersion = "2.13"
-project.ext.scala2javaVersion = "6.1.0"
+project.ext.scala2javaVersion = "6.3.0"
 
 java {
     toolchain {

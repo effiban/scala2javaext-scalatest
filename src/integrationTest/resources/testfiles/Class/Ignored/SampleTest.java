@@ -8,6 +8,8 @@ import java.util.function.*;
 import java.util.stream.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Assertions.*;
+import org.hamcrest.Matchers.*;
+import org.hamcrest.MatcherAssert.*;
 
 @Disabled
 public class SampleTest {

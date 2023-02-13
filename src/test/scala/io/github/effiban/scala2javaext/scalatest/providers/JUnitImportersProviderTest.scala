@@ -7,10 +7,12 @@ import scala.meta.XtensionQuasiquoteImporter
 
 class JUnitImportersProviderTest extends UnitTestSuite {
 
-  test("provide() should return wildcard imports of JUnit 5 core and assertions") {
+  test("provide() should return wildcard imports of JUnit 5 and Hamcrest") {
     val expectedImporters = List(
       importer"org.junit.jupiter.api._",
-      importer"org.junit.jupiter.api.Assertions._"
+      importer"org.junit.jupiter.api.Assertions._",
+      importer"org.hamcrest.Matchers._",
+      importer"org.hamcrest.MatcherAssert._"
     )
     provide().structure shouldBe expectedImporters.structure
   }
