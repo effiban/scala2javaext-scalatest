@@ -12,11 +12,13 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
   private val assertTransformer = mock[AssertTransformer]
   private val assertResultTransformer = mock[AssertResultTransformer]
   private val assertThrowsTransformer = mock[AssertThrowsTransformer]
+  private val withClueTransformer = mock[WithClueTransformer]
 
   private val scalatestTermApplyTransformer = new ScalatestTermApplyTransformer(
     assertTransformer,
     assertResultTransformer,
-    assertThrowsTransformer
+    assertThrowsTransformer,
+    withClueTransformer
   )
 
   test("transform() for assert() without clue") {
@@ -106,6 +108,57 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
     when(assertThrowsTransformer.transform(eqTree(exceptionType), eqTree(interceptBody))).thenReturn(expectedOutput)
 
     scalatestTermApplyTransformer.transform(interceptInvocation).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() for withClue() without a type") {
+    val invocation =
+      q"""
+      withClue("special clue") {
+       doSomething()
+      }
+      """
+
+    val clue = q""""special clue""""
+    val body = q"{ doSomething() }"
+    val expectedOutput =
+      q"""
+      Try {
+        doSomething()
+      }.recover(e => e match {
+        case ex: AssertionFailedError => fail("special clue", ex)
+        case ex => throw ex
+      })
+      """
+
+    when(withClueTransformer.transform(eqTo(None), eqTree(clue), eqTree(body))).thenReturn(expectedOutput)
+
+    scalatestTermApplyTransformer.transform(invocation).structure shouldBe expectedOutput.structure
+  }
+
+  test("transform() for withClue() with a type") {
+    val invocation =
+      q"""
+      withClue[Int]("special clue") {
+        doSomething()
+      }
+      """
+
+    val clue = q""""special clue""""
+    val body = q"{ doSomething() }"
+    val expectedOutput =
+      q"""
+      Try[Int] {
+        doSomething()
+      }.recover(e => e match {
+        case ex: AssertionFailedError => fail("special clue", ex)
+        case ex => throw ex
+      })
+      .get()
+      """
+
+    when(withClueTransformer.transform(eqSomeTree(t"Int"), eqTree(clue), eqTree(body))).thenReturn(expectedOutput)
+
+    scalatestTermApplyTransformer.transform(invocation).structure shouldBe expectedOutput.structure
   }
 
   test("transform() for unrecognized invocation should return it unchanged") {
