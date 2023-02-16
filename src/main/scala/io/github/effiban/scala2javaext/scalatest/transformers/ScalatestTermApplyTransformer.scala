@@ -6,7 +6,8 @@ import scala.meta.{Term, XtensionQuasiquoteTerm}
 
 class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
                                     assertResultTransformer: AssertResultTransformer,
-                                    assertThrowsTransformer: AssertThrowsTransformer) extends TermApplyTransformer {
+                                    assertThrowsTransformer: AssertThrowsTransformer,
+                                    withClueTransformer: WithClueTransformer) extends TermApplyTransformer {
 
   override def transform(termApply: Term.Apply): Term.Apply = termApply match {
     case Term.Apply(q"assert", List(condition)) => assertTransformer.transform(condition)
@@ -18,6 +19,9 @@ class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
     case Term.Apply(q"assertThrows" | q"intercept", List(body)) => assertThrowsTransformer.transform(body = body)
     case Term.Apply(Term.ApplyType(q"assertThrows" | q"intercept", List(exceptionType)), List(body)) =>
       assertThrowsTransformer.transform(exceptionType, body)
+    case Term.Apply(Term.Apply(q"withClue", List(clue)), List(body)) => withClueTransformer.transform(clue = clue, body = body)
+    case Term.Apply(Term.Apply(Term.ApplyType(q"withClue", List(returnType)), List(clue)), List(body)) =>
+      withClueTransformer.transform(Some(returnType), clue, body)
     case other => other
   }
 }
@@ -25,5 +29,6 @@ class ScalatestTermApplyTransformer(assertTransformer: AssertTransformer,
 object ScalatestTermApplyTransformer extends ScalatestTermApplyTransformer(
   AssertTransformer,
   AssertResultTransformer,
-  AssertThrowsTransformer
+  AssertThrowsTransformer,
+  WithClueTransformer
 )
