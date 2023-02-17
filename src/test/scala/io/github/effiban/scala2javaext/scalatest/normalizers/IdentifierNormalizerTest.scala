@@ -1,7 +1,7 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.normalizers
 
+import io.github.effiban.scala2javaext.scalatest.normalizers.IdentifierNormalizer.{toClassName, toMemberName}
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.IdentifierNormalizer.{toClassName, toMemberName}
 
 class IdentifierNormalizerTest extends UnitTestSuite {
 

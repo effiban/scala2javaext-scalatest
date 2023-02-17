@@ -1,4 +1,4 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree

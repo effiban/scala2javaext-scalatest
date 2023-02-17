@@ -1,4 +1,4 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTransformer
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier

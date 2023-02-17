@@ -1,6 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
-import io.github.effiban.scala2javaext.scalatest.transformers.{IdentifierNormalizer, InfixRegistrationSubjectModifier}
+import io.github.effiban.scala2javaext.scalatest.normalizers.IdentifierNormalizer
+import io.github.effiban.scala2javaext.scalatest.transformers.testregistrations.InfixRegistrationSubjectModifier
 
 import scala.meta.{Ctor, Defn, Lit, Name, Self, Stat, Template, Term, Type}
 
@@ -22,9 +23,9 @@ private[generators] class JUnitNestedTestClassGeneratorImpl(infixRegistrationSub
 
 
   override def generate(name: Lit.String, nestedPrefix: Lit.String, nestedRegistrations: List[Stat]): Defn.Class = {
+    import identifierNormalizer._
     import infixRegistrationSubjectModifier._
     import junitAnnotationGenerator._
-    import identifierNormalizer._
 
     val nestedRegistrationsWithPrefix = nestedRegistrations.map {
       case infixRegistration: Term.ApplyInfix => prepend(infixRegistration, nestedPrefix)

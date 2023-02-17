@@ -1,7 +1,7 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic
 
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.WithClueTransformer.transform
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic.WithClueTransformer.transform
 
 import scala.meta.{XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 

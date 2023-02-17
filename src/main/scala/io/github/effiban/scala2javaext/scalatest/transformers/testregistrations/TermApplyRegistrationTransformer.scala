@@ -1,4 +1,4 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTransformer
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
@@ -11,8 +11,8 @@ private[transformers] class TermApplyRegistrationTransformer(scalatestTermNameCl
   extends TemplateTermApplyToDefnTransformer {
 
   override def transform(termApply: Term.Apply): Option[Defn.Def] = {
-    import scalatestTermNameClassifier._
     import junitTestMethodGenerator._
+    import scalatestTermNameClassifier._
 
     termApply match {
       case Term.Apply(Term.Apply(registrator: Term.Name, args), body :: Nil) if isTermApplyRegistrator(registrator) =>

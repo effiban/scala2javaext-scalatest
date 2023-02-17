@@ -1,7 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
+import io.github.effiban.scala2javaext.scalatest.normalizers.IdentifierNormalizer
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.IdentifierNormalizer
 
 import scala.meta.{Lit, XtensionQuasiquoteMod, XtensionQuasiquoteTerm}
 

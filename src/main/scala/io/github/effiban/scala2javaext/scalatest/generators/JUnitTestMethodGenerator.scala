@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
-import io.github.effiban.scala2javaext.scalatest.transformers.IdentifierNormalizer
+import io.github.effiban.scala2javaext.scalatest.normalizers.IdentifierNormalizer
 
 import scala.meta.{Defn, Lit, Term, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 

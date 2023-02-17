@@ -1,7 +1,7 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.InfixRegistrationSubjectModifier.prepend
+import io.github.effiban.scala2javaext.scalatest.transformers.testregistrations.InfixRegistrationSubjectModifier.prepend
 
 import scala.meta.{Lit, XtensionQuasiquoteTerm}
 

@@ -1,6 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.spi.transformers.{DifferentTypeTransformer0, TemplateTermApplyToDefnTransformer}
+import io.github.effiban.scala2javaext.scalatest.transformers.testregistrations.{TermApplyNestedRegistrationTransformer, TermApplyRegistrationTransformer}
 
 import scala.meta.{Defn, Term}
 

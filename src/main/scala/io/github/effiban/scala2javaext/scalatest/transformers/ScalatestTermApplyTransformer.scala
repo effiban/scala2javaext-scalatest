@@ -1,6 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.spi.transformers.TermApplyTransformer
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic.{AssertResultTransformer, AssertThrowsTransformer, AssertTransformer, WithClueTransformer}
 
 import scala.meta.{Term, XtensionQuasiquoteTerm}
 
