@@ -1,8 +1,9 @@
 package io.github.effiban.scala2javaext.scalatest.generators
 
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
+import io.github.effiban.scala2javaext.scalatest.normalizers.IdentifierNormalizer
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import io.github.effiban.scala2javaext.scalatest.transformers.{IdentifierNormalizer, InfixRegistrationSubjectModifier}
+import io.github.effiban.scala2javaext.scalatest.transformers.testregistrations.InfixRegistrationSubjectModifier
 import org.mockito.ArgumentMatchersSugar.any
 
 import scala.meta.{Lit, Term, XtensionQuasiquoteMod, XtensionQuasiquoteTerm}

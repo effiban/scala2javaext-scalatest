@@ -3,7 +3,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.MatcherAssertionTransformer
 
 import scala.meta.XtensionQuasiquoteTerm
 

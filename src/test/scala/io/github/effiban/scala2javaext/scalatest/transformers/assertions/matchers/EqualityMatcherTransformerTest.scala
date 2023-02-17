@@ -1,4 +1,4 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers
 
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier

@@ -3,6 +3,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqSomeTree
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic.{AssertResultTransformer, AssertThrowsTransformer, AssertTransformer, WithClueTransformer}
 import org.mockito.ArgumentMatchersSugar.eqTo
 
 import scala.meta.{XtensionQuasiquoteTerm, XtensionQuasiquoteType}

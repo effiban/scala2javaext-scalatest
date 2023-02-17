@@ -2,6 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.spi.transformers.TermApplyInfixToTermApplyTransformer
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.MatcherAssertionTransformer
 
 import scala.meta.Term
 

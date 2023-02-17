@@ -1,6 +1,6 @@
-package io.github.effiban.scala2javaext.scalatest.transformers
+package io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic
 
-import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.{HamcrestAssertThat, HamcrestIs, HamcrestIsTrue}
+import io.github.effiban.scala2javaext.scalatest.common.JUnitConstants.{HamcrestAssertThat, HamcrestIs}
 
 import scala.meta.Term
 
