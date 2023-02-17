@@ -26,4 +26,8 @@ class ScalatestTransformersTest extends UnitTestSuite {
   test("templateTermApplyToDefnTransformer") {
     templateTermApplyToDefnTransformer() shouldBe ScalatestTemplateTermApplyToDefnTransformer
   }
+
+  test("termApplyInfixToTermApplyTransformer") {
+    termApplyInfixToTermApplyTransformer() shouldBe ScalatestTermApplyInfixToTermApplyTransformer
+  }
 }
