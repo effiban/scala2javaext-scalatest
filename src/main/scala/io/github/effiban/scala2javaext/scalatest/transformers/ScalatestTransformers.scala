@@ -14,5 +14,7 @@ trait ScalatestTransformers extends ExtendedTransformers {
 
   override def templateTermApplyToDefnTransformer(): TemplateTermApplyToDefnTransformer = ScalatestTemplateTermApplyToDefnTransformer
 
+  override def termApplyInfixToTermApplyTransformer(): TermApplyInfixToTermApplyTransformer = ScalatestTermApplyInfixToTermApplyTransformer
+
   override def termApplyTransformer(): TermApplyTransformer = ScalatestTermApplyTransformer
 }
