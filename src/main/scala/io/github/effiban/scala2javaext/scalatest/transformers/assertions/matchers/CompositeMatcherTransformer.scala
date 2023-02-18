@@ -13,6 +13,6 @@ private[transformers] class CompositeMatcherTransformer(matcherTransformers: Lis
 
 object CompositeMatcherTransformer extends CompositeMatcherTransformer(
   List(
-    EqualityMatcherTransformer
+    EqualMatcherTransformer
   )
 )
