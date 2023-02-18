@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.common
 
-import scala.meta.{Term, Type, XtensionQuasiquoteTerm, XtensionQuasiquoteType}
+import scala.meta.{Type, XtensionQuasiquoteType}
 
 object JUnitConstants {
 
@@ -11,8 +11,4 @@ object JUnitConstants {
   val DisplayNameAnnotationType: Type.Name = t"DisplayName"
   val TagAnnotationType: Type.Name = t"Tag"
   val DisabledAnnotationType: Type.Name = t"Disabled"
-
-  val HamcrestAssertThat: Term.Name = q"assertThat"
-  val HamcrestIsTrue: Term.Apply = q"is(true)"
-  val HamcrestIs: Term.Name = q"is"
 }
