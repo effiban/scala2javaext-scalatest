@@ -27,5 +27,10 @@ private[transformers] class MatcherAssertionTransformerImpl(assertionWordClassif
 
 object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(
   ScalatestAssertionWordClassifier,
-  CompositeMatcherTransformer
+  new CompositeMatcherTransformer(
+    List(
+      EqualMatcherTransformer,
+      BeMatcherTransformer
+    )
+  )
 )
