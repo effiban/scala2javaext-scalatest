@@ -2,8 +2,9 @@ package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matche
 
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
 import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.AssertThat
+import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.Equal
 
-import scala.meta.{Term, XtensionQuasiquoteTerm}
+import scala.meta.Term
 
 trait MatcherAssertionTransformer {
 
@@ -17,7 +18,7 @@ private[transformers] class MatcherAssertionTransformerImpl(termNameClassifier: 
   override def transform(actual: Term, verb: Term.Name, matcher: Term): Option[Term.Apply] = {
     import termNameClassifier._
 
-    val adjustedMatcher = if (isEqualityMatcherVerb(verb)) Term.Apply(q"equal", List(matcher)) else matcher
+    val adjustedMatcher = if (isEqualityMatcherVerb(verb)) Term.Apply(Equal, List(matcher)) else matcher
 
     matcherTransformer.transform(adjustedMatcher)
       .map(hamcrestMatcher => Term.Apply(AssertThat, List(actual, hamcrestMatcher)))
