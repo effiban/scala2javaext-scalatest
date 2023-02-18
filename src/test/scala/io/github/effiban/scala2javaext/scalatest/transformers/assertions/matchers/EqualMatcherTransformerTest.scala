@@ -6,28 +6,28 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.XtensionQuasiquoteTerm
 
-class EqualityMatcherTransformerTest extends UnitTestSuite {
+class EqualMatcherTransformerTest extends UnitTestSuite {
 
   private val matcherOperatorClassifier = mock[ScalatestMatcherWordClassifier]
 
-  private val equalityMatcherTransformer = new EqualityMatcherTransformer(matcherOperatorClassifier)
+  private val equalityMatcherTransformer = new EqualMatcherTransformer(matcherOperatorClassifier)
 
 
-  test("transform() when has correct format and operator is an equality operator, should return the Hamcrest equivalent") {
+  test("transform() when has correct format and matcher word is an 'equal' word, should return the Hamcrest equivalent") {
     val matcherWord = q"equal"
     val matcher = q"equal(3)"
     val expectedHamcrestMatcher = q"is(3)"
 
-    when(matcherOperatorClassifier.isEqualsWord(eqTree(matcherWord))).thenReturn(true)
+    when(matcherOperatorClassifier.isEqualWord(eqTree(matcherWord))).thenReturn(true)
 
     equalityMatcherTransformer.transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
   }
 
-  test("transform() when has correct format but operator is not an equality operator, should return None") {
+  test("transform() when has correct format but matcher word is not an 'equal' word, should return None") {
     val matcherWord = q"bla"
     val matcher = q"bla(3)"
 
-    when(matcherOperatorClassifier.isEqualsWord(eqTree(matcherWord))).thenReturn(false)
+    when(matcherOperatorClassifier.isEqualWord(eqTree(matcherWord))).thenReturn(false)
 
     equalityMatcherTransformer.transform(matcher) shouldBe None
   }

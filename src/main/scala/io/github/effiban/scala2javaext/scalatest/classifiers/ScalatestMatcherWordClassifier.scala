@@ -5,13 +5,13 @@ import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 
 trait ScalatestMatcherWordClassifier {
 
-  def isEqualsWord(word: Term.Name): Boolean
+  def isEqualWord(word: Term.Name): Boolean
 }
 
 object ScalatestMatcherWordClassifier extends ScalatestMatcherWordClassifier {
 
-  override def isEqualsWord(word: Term.Name): Boolean = word match {
-    case q"equal" | q"===" | q"be" => true
+  override def isEqualWord(word: Term.Name): Boolean = word match {
+    case q"equal" | q"===" => true
     case _ => false
   }
 }
