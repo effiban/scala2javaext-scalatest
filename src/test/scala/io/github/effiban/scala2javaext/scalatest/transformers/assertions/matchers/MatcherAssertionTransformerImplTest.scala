@@ -13,41 +13,55 @@ class MatcherAssertionTransformerImplTest extends UnitTestSuite {
 
   private val matcherAssertionTransformer = new MatcherAssertionTransformerImpl(assertionWordClassifier, matcherTransformer)
 
-  test("transform() when the assertion is an equality assertion, and matcher is transformed") {
+  test("transform() when assertion word is an 'equal' word, and matcher is transformed") {
     val actual = q"x"
-    val assertion = q"shouldBe"
+    val assertionWord = q"shouldEqual"
     val matcher = q"3"
     val expectedAdjustedMatcher = q"equal(3)"
     val expectedHamcrestMatcher = q"is(3)"
     val expectedAssertion = q"assertThat(x, is(3))"
 
-    when(assertionWordClassifier.isEqualityAssertionWord(eqTree(assertion))).thenReturn(true)
+    when(assertionWordClassifier.isEqualAssertionWord(eqTree(assertionWord))).thenReturn(true)
     when(matcherTransformer.transform(eqTree(expectedAdjustedMatcher))).thenReturn(Some(expectedHamcrestMatcher))
 
-    matcherAssertionTransformer.transform(actual, assertion, matcher).value.structure shouldBe expectedAssertion.structure
+    matcherAssertionTransformer.transform(actual, assertionWord, matcher).value.structure shouldBe expectedAssertion.structure
   }
 
-  test("transform() when assertion is not an equality assertion, and matcher is transformed") {
+  test("transform() when assertion word is a 'be' word, and matcher is transformed") {
     val actual = q"x"
-    val assertion = q"should"
+    val assertionWord = q"shouldBe"
+    val matcher = q"3"
+    val expectedAdjustedMatcher = q"be(3)"
+    val expectedHamcrestMatcher = q"is(3)"
+    val expectedAssertion = q"assertThat(x, is(3))"
+
+    when(assertionWordClassifier.isBeAssertionWord(eqTree(assertionWord))).thenReturn(true)
+    when(matcherTransformer.transform(eqTree(expectedAdjustedMatcher))).thenReturn(Some(expectedHamcrestMatcher))
+
+    matcherAssertionTransformer.transform(actual, assertionWord, matcher).value.structure shouldBe expectedAssertion.structure
+  }
+
+  test("transform() when assertion word is basic, and matcher is transformed") {
+    val actual = q"x"
+    val assertionWord = q"should"
     val matcher = q"equal(3)"
     val expectedHamcrestMatcher = q"is(3)"
     val expectedAssertion = q"assertThat(x, is(3))"
 
-    when(assertionWordClassifier.isEqualityAssertionWord(eqTree(assertion))).thenReturn(false)
+    when(assertionWordClassifier.isEqualAssertionWord(eqTree(assertionWord))).thenReturn(false)
     when(matcherTransformer.transform(eqTree(matcher))).thenReturn(Some(expectedHamcrestMatcher))
 
-    matcherAssertionTransformer.transform(actual, assertion, matcher).value.structure shouldBe expectedAssertion.structure
+    matcherAssertionTransformer.transform(actual, assertionWord, matcher).value.structure shouldBe expectedAssertion.structure
   }
 
   test("transform() when matcher is not transformed should return None") {
     val actual = q"x"
-    val assertion = q"should"
+    val assertionWord = q"should"
     val matcher = q"3"
 
-    when(assertionWordClassifier.isEqualityAssertionWord(eqTree(assertion))).thenReturn(false)
+    when(assertionWordClassifier.isEqualAssertionWord(eqTree(assertionWord))).thenReturn(false)
     when(matcherTransformer.transform(eqTree(matcher))).thenReturn(None)
 
-    matcherAssertionTransformer.transform(actual, assertion, matcher) shouldBe None
+    matcherAssertionTransformer.transform(actual, assertionWord, matcher) shouldBe None
   }
 }

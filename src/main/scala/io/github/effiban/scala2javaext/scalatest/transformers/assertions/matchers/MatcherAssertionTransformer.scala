@@ -2,7 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matche
 
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestAssertionWordClassifier
 import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.AssertThat
-import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.Equal
+import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.{Be, Equal}
 
 import scala.meta.Term
 
@@ -15,13 +15,21 @@ private[transformers] class MatcherAssertionTransformerImpl(assertionWordClassif
                                                             matcherTransformer: MatcherTransformer)
   extends MatcherAssertionTransformer {
 
-  override def transform(actual: Term, verb: Term.Name, matcher: Term): Option[Term.Apply] = {
-    import assertionWordClassifier._
+  override def transform(actual: Term, assertionWord: Term.Name, matcher: Term): Option[Term.Apply] = {
 
-    val adjustedMatcher = if (isEqualityAssertionWord(verb)) Term.Apply(Equal, List(matcher)) else matcher
+    val adjustedMatcher = adjustMatcherByAssertion(assertionWord, matcher)
 
     matcherTransformer.transform(adjustedMatcher)
       .map(hamcrestMatcher => Term.Apply(AssertThat, List(actual, hamcrestMatcher)))
+  }
+
+  private def adjustMatcherByAssertion(assertionWord: Term.Name, matcher: Term) = {
+    import assertionWordClassifier._
+    assertionWord match {
+      case word if isEqualAssertionWord(word) => Term.Apply(Equal, List(matcher))
+      case word if isBeAssertionWord(word) => Term.Apply(Be, List(matcher))
+      case _ => matcher
+    }
   }
 }
 
