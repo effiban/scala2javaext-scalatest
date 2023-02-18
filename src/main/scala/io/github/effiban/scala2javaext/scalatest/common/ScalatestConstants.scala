@@ -40,4 +40,6 @@ object ScalatestConstants {
   val TestClassSuffixes: Set[String] = Set("Spec", "Suite")
 
   val Fail: Term.Name = q"fail"
+
+  val Equal: Term.Name = q"equal"
 }
