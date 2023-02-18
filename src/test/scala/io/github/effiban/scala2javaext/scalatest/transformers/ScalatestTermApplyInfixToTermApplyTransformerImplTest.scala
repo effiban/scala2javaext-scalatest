@@ -1,7 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestMatcherVerbClassifier
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.MatcherAssertionTransformer
 
@@ -10,11 +10,11 @@ import scala.meta.XtensionQuasiquoteTerm
 class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuite {
 
   private val matcherAssertionTransformer = mock[MatcherAssertionTransformer]
-  private val termNameClassifier = mock[ScalatestTermNameClassifier]
+  private val matcherVerbClassifier = mock[ScalatestMatcherVerbClassifier]
 
   private val termApplyInfixTransformer = new ScalatestTermApplyInfixToTermApplyTransformerImpl(
     matcherAssertionTransformer,
-    termNameClassifier
+    matcherVerbClassifier
   )
 
 
@@ -25,7 +25,7 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
     val matcher = q"equal(3)"
     val expectedHamcrestAssertion = q"assertThat(x, is(3))"
 
-    when(termNameClassifier.isMatcherVerb(eqTree(verb))).thenReturn(true)
+    when(matcherVerbClassifier.isMatcherVerb(eqTree(verb))).thenReturn(true)
     when(matcherAssertionTransformer.transform(eqTree(actual), eqTree(verb), eqTree(matcher))).thenReturn(Some(expectedHamcrestAssertion))
 
     termApplyInfixTransformer.transform(inputAssertion).value.structure shouldBe expectedHamcrestAssertion.structure
@@ -37,7 +37,7 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
     val verb = q"should"
     val matcher = q"bla(3)"
 
-    when(termNameClassifier.isMatcherVerb(eqTree(verb))).thenReturn(true)
+    when(matcherVerbClassifier.isMatcherVerb(eqTree(verb))).thenReturn(true)
     when(matcherAssertionTransformer.transform(eqTree(actual), eqTree(verb), eqTree(matcher))).thenReturn(None)
 
     termApplyInfixTransformer.transform(inputAssertion) shouldBe None
@@ -45,11 +45,9 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
 
   test("transform() when has matcher assertion format, but verb is not a matcher - should return None") {
     val inputAssertion = q"x bla equal(3)"
-    val actual = q"x"
     val verb = q"bla"
-    val matcher = q"bla(3)"
 
-    when(termNameClassifier.isMatcherVerb(eqTree(verb))).thenReturn(false)
+    when(matcherVerbClassifier.isMatcherVerb(eqTree(verb))).thenReturn(false)
 
     termApplyInfixTransformer.transform(inputAssertion) shouldBe None
 
@@ -61,6 +59,6 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
 
     termApplyInfixTransformer.transform(termApplyInfix) shouldBe None
 
-    verifyNoMoreInteractions(termNameClassifier, matcherAssertionTransformer)
+    verifyNoMoreInteractions(matcherVerbClassifier, matcherAssertionTransformer)
   }
 }

@@ -2,7 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitTestMethodGenerator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import org.mockito.ArgumentMatchersSugar.eqTo
@@ -11,10 +11,10 @@ import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
-  private val scalatestTermNameClassifier = mock[ScalatestTermNameClassifier]
+  private val registrationWordClassifier = mock[TestRegistrationWordClassifier]
   private val junitTestMethodGenerator = mock[JUnitTestMethodGenerator]
 
-  private val transformer = new TermApplyRegistrationTransformer(scalatestTermNameClassifier, junitTestMethodGenerator)
+  private val transformer = new TermApplyRegistrationTransformer(registrationWordClassifier, junitTestMethodGenerator)
 
   test("transform() when valid and not ignored, and one argument - should return equivalent JUnit '@Test' method") {
     val registration =
@@ -40,8 +40,8 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
-    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
+    when(registrationWordClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
     when(junitTestMethodGenerator.generate(eqTreeList(args), disabled = eqTo(false))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
     transformer.transform(registration).value.structure shouldBe junitTestMethod.structure
@@ -72,8 +72,8 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
-    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(true)
+    when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
+    when(registrationWordClassifier.isIgnore(eqTree(registrator))).thenReturn(true)
     when(junitTestMethodGenerator.generate(eqTreeList(args), disabled = eqTo(true))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
     transformer.transform(registration).value.structure shouldBe junitTestMethod.structure
@@ -104,8 +104,8 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
       def checkMe(): Unit = doCheck()
       """
 
-    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
-    when(scalatestTermNameClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
+    when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
+    when(registrationWordClassifier.isIgnore(eqTree(registrator))).thenReturn(false)
     when(junitTestMethodGenerator.generate(eqTreeList(args), disabled = eqTo(false))(eqTree(body))).thenReturn(Some(junitTestMethod))
 
     transformer.transform(registration).value.structure shouldBe junitTestMethod.structure
@@ -139,7 +139,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
     val registrator = q"bla"
 
-    when(scalatestTermNameClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(false)
+    when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(false)
 
     transformer.transform(registration) shouldBe None
   }

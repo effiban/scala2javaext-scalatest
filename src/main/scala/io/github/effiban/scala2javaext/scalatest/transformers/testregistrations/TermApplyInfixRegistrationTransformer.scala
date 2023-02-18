@@ -1,20 +1,20 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyInfixToDefnTransformer
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.extractors.TermSpecInfoExtractor
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitTestMethodGenerator
 
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 import scala.meta.{Defn, Term}
 
-private[transformers] class TermApplyInfixRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
+private[transformers] class TermApplyInfixRegistrationTransformer(registrationWordClassifier: TestRegistrationWordClassifier,
                                                                   termSpecInfoExtractor: TermSpecInfoExtractor,
                                                                   junitTestMethodGenerator: JUnitTestMethodGenerator)
   extends TemplateTermApplyInfixToDefnTransformer  {
 
   override def transform(termApplyInfix: Term.ApplyInfix): Option[Defn] = {
-    import scalatestTermNameClassifier._
+    import registrationWordClassifier._
     termApplyInfix match {
       case Term.ApplyInfix(description: Term, registrator: Term.Name, Nil, body :: Nil) if isTermApplyInfixRegistrator(registrator) =>
         transformByDescription(description, registrator)(body)
@@ -30,7 +30,7 @@ private[transformers] class TermApplyInfixRegistrationTransformer(scalatestTermN
   }
 
   private def transformBySpec(spec: Term, tags: List[Term] = Nil, registrator: Term.Name)(body: Term) = {
-    import scalatestTermNameClassifier._
+    import registrationWordClassifier._
 
     termSpecInfoExtractor.extract(spec)
       .flatMap(specInfo => {
@@ -41,7 +41,7 @@ private[transformers] class TermApplyInfixRegistrationTransformer(scalatestTermN
 }
 
 object TermApplyInfixRegistrationTransformer extends TermApplyInfixRegistrationTransformer(
-  ScalatestTermNameClassifier,
+  TestRegistrationWordClassifier,
   TermSpecInfoExtractor,
   JUnitTestMethodGenerator
 )

@@ -1,10 +1,9 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
 import scala.meta.Term
-
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
 
-trait ScalatestTermNameClassifier {
+trait TestRegistrationWordClassifier {
 
   def isTermApplyRegistrator(termName: Term.Name): Boolean
 
@@ -16,16 +15,10 @@ trait ScalatestTermNameClassifier {
 
   def isSpecVerb(termName: Term.Name): Boolean
 
-  def isMatcherVerb(termName: Term.Name): Boolean
-
-  def isEqualityMatcherVerb(termName: Term.Name): Boolean
-
-  def isEqualityOperator(termName: Term.Name): Boolean
-
   def isIgnore(termName: Term.Name): Boolean
 }
 
-object ScalatestTermNameClassifier extends ScalatestTermNameClassifier {
+object TestRegistrationWordClassifier extends TestRegistrationWordClassifier {
 
   override def isTermApplyRegistrator(termName: Term.Name): Boolean = termName match {
     case q"test" | q"Scenario" | q"scenario" | q"it" | q"they" => true
@@ -52,25 +45,6 @@ object ScalatestTermNameClassifier extends ScalatestTermNameClassifier {
 
   override def isSpecVerb(termName: Term.Name): Boolean = termName match {
     case q"should" | q"must" | q"can" => true
-    case _ => false
-  }
-
-  override def isMatcherVerb(termName: Term.Name): Boolean = termName match {
-    case q"should" | q"must" => true
-    case verb if isEqualityMatcherVerb(verb) => true
-    case _ => false
-  }
-
-  override def isEqualityMatcherVerb(termName: Term.Name): Boolean = termName match {
-    case q"shouldBe" |
-         q"shouldEqual" |
-         q"mustBe" |
-         q"mustEqual" => true
-    case _ => false
-  }
-
-  override def isEqualityOperator(termName: Term.Name): Boolean = termName match {
-    case q"equal" | q"===" | q"be" => true
     case _ => false
   }
 
