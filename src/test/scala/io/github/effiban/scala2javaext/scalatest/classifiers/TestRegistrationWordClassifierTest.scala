@@ -1,11 +1,11 @@
 package io.github.effiban.scala2javaext.scalatest.classifiers
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier.{isEqualityMatcherVerb, isEqualityOperator, isIgnore, isMatcherVerb, isSpecVerb, isTermApplyInfixNestedRegistrator, isTermApplyNestedRegistrator, isTermApplyRegistrator}
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier._
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Term, XtensionQuasiquoteTerm}
 
-class ScalatestTermNameClassifierTest extends UnitTestSuite {
+class TestRegistrationWordClassifierTest extends UnitTestSuite {
 
   private val IsTermApplyRegistratorScenarios = Table(
     ("Term Name", "IsTermApplyRegistrator"),
@@ -48,42 +48,6 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
     (q"want", false)
   )
 
-  private val IsMatcherVerbScenarios = Table(
-    ("Term Name", "IsMatcherVerb"),
-    (q"should", true),
-    (q"shouldBe", true),
-    (q"shouldEqual", true),
-    (q"must", true),
-    (q"may", false),
-    (q"will", false),
-    (q"want", false)
-  )
-
-  private val IsEqualityMatcherVerbScenarios = Table(
-    ("Term Name", "IsMatcherVerb"),
-    (q"shouldBe", true),
-    (q"shouldEqual", true),
-    (q"mustBe", true),
-    (q"mustEqual", true),
-    (q"should", false),
-    (q"must", false),
-    (q"may", false),
-    (q"will", false),
-    (q"want", false)
-  )
-
-  private val IsEqualityOperatorScenarios = Table(
-    ("Term Name", "IsEqualityOperator"),
-    (q"equal", true),
-    (q"===", true),
-    (q"be", true),
-    (q"shouldBe", false),
-    (q"mustBe", false),
-    (q"should", false),
-    (q"contains", false),
-    (q"have", false)
-  )
-
   private val IsIgnoreScenarios = Table(
     ("Term Name", "IsIgnore"),
     (q"ignore", true),
@@ -112,24 +76,6 @@ class ScalatestTermNameClassifierTest extends UnitTestSuite {
   forAll(IsSpecVerbScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
     test(s"'$termName' is ${if (expectedResult) "" else "not "} a spec verb") {
       isSpecVerb(termName) shouldBe expectedResult
-    }
-  }
-
-  forAll(IsMatcherVerbScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
-    test(s"'$termName' is ${if (expectedResult) "" else "not "} a matcher verb") {
-      isMatcherVerb(termName) shouldBe expectedResult
-    }
-  }
-
-  forAll(IsEqualityMatcherVerbScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
-    test(s"'$termName' is ${if (expectedResult) "" else "not "} an equality matcher verb") {
-      isEqualityMatcherVerb(termName) shouldBe expectedResult
-    }
-  }
-
-  forAll(IsEqualityOperatorScenarios) { case (termName: Term.Name, expectedResult: Boolean) =>
-    test(s"'$termName' is ${if (expectedResult) "" else "not "} an equality operator") {
-      isEqualityOperator(termName) shouldBe expectedResult
     }
   }
 

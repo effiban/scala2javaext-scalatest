@@ -1,7 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.extractors
 
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.entities.SpecInfo
 import io.github.effiban.scala2javaext.scalatest.matchers.SpecInfoScalatestMatcher.equalSpecInfo
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
@@ -10,9 +10,9 @@ import scala.meta.XtensionQuasiquoteTerm
 
 class SubjectInfoExtractorImplTest extends UnitTestSuite {
 
-  private val scalatestTermNameClassifier = mock[ScalatestTermNameClassifier]
+  private val registrationWordClassifier = mock[TestRegistrationWordClassifier]
 
-  private val subjectInfoExtractor = new SubjectInfoExtractorImpl(scalatestTermNameClassifier)
+  private val subjectInfoExtractor = new SubjectInfoExtractorImpl(registrationWordClassifier)
 
 
   test("when subject is the Term.Name 'it' should return the literal 'it' and ignored=false") {
@@ -25,14 +25,14 @@ class SubjectInfoExtractorImplTest extends UnitTestSuite {
 
   test("when subject is the Term.Name 'ignore' should return the 'it' and ignored=true") {
     val subject = q"ignore"
-    when(scalatestTermNameClassifier.isIgnore(eqTree(subject))).thenReturn(true)
+    when(registrationWordClassifier.isIgnore(eqTree(subject))).thenReturn(true)
 
     subjectInfoExtractor.extract(subject).value should equalSpecInfo(SpecInfo(q""""it"""", ignored = true))
   }
 
   test("when subject is the Term.Name 'blabla' should return None") {
     val subject = q"blabla"
-    when(scalatestTermNameClassifier.isIgnore(eqTree(subject))).thenReturn(false)
+    when(registrationWordClassifier.isIgnore(eqTree(subject))).thenReturn(false)
 
     subjectInfoExtractor.extract(subject) shouldBe None
   }

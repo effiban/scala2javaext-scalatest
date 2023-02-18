@@ -2,7 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.test.utils.matchers.CombinedMatchers.eqTreeList
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitNestedTestClassGenerator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
@@ -10,10 +10,10 @@ import scala.meta.{Lit, XtensionQuasiquoteTerm}
 
 class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
 
-  private val scalatestTermNameClassifier = mock[ScalatestTermNameClassifier]
+  private val registrationWordClassifier = mock[TestRegistrationWordClassifier]
   private val junitNestedTestClassGenerator = mock[JUnitNestedTestClassGenerator]
 
-  private val transformer = new TermApplyNestedRegistrationTransformer(scalatestTermNameClassifier, junitNestedTestClassGenerator)
+  private val transformer = new TermApplyNestedRegistrationTransformer(registrationWordClassifier, junitNestedTestClassGenerator)
 
   test("transform() valid with one argument should return equivalent JUnit '@Nested' class") {
     val testRegistration =
@@ -60,7 +60,7 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
       }
       """
 
-    when(scalatestTermNameClassifier.isTermApplyNestedRegistrator(eqTree(registrationWord))).thenReturn(true)
+    when(registrationWordClassifier.isTermApplyNestedRegistrator(eqTree(registrationWord))).thenReturn(true)
     when(junitNestedTestClassGenerator.generate(eqTree(name), eqTree(Lit.String("")), eqTreeList(nestedRegistrations))).thenReturn(junitNestedTestClass)
 
     transformer.transform(testRegistration).value.structure shouldBe junitNestedTestClass.structure
@@ -142,7 +142,7 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
 
     val registrationWord = q"bla"
 
-    when(scalatestTermNameClassifier.isTermApplyNestedRegistrator(eqTree(registrationWord))).thenReturn(false)
+    when(registrationWordClassifier.isTermApplyNestedRegistrator(eqTree(registrationWord))).thenReturn(false)
 
     transformer.transform(testRegistration) shouldBe None
   }

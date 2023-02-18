@@ -1,18 +1,18 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.testregistrations
 
 import io.github.effiban.scala2java.spi.transformers.TemplateTermApplyToDefnTransformer
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.generators.JUnitNestedTestClassGenerator
 
 import scala.meta.{Defn, Lit, Term}
 
-private[transformers] class TermApplyNestedRegistrationTransformer(scalatestTermNameClassifier: ScalatestTermNameClassifier,
+private[transformers] class TermApplyNestedRegistrationTransformer(registrationWordClassifier: TestRegistrationWordClassifier,
                                                                    junitNestedTestClassGenerator: JUnitNestedTestClassGenerator)
   extends TemplateTermApplyToDefnTransformer {
 
   override def transform(termApply: Term.Apply): Option[Defn.Class] = {
     import junitNestedTestClassGenerator._
-    import scalatestTermNameClassifier._
+    import registrationWordClassifier._
 
     termApply match {
       case Term.Apply(Term.Apply(word: Term.Name, (name: Lit.String) :: Nil), (registrationBlock: Term.Block) :: Nil)
@@ -23,6 +23,6 @@ private[transformers] class TermApplyNestedRegistrationTransformer(scalatestTerm
 }
 
 private[transformers] object TermApplyNestedRegistrationTransformer extends TermApplyNestedRegistrationTransformer(
-  ScalatestTermNameClassifier,
+  TestRegistrationWordClassifier,
   JUnitNestedTestClassGenerator
 )

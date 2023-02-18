@@ -1,17 +1,17 @@
 package io.github.effiban.scala2javaext.scalatest.extractors
 
-import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestTermNameClassifier
+import io.github.effiban.scala2javaext.scalatest.classifiers.TestRegistrationWordClassifier
 import io.github.effiban.scala2javaext.scalatest.entities.SpecInfo
 
 import scala.meta.{Lit, Term}
 
 trait InfixSpecInfoExtractor extends SpecInfoExtractor[Term.ApplyInfix]
 
-private[extractors] class InfixSpecInfoExtractorImpl(termNameClassifier: ScalatestTermNameClassifier,
+private[extractors] class InfixSpecInfoExtractorImpl(registrationWordClassifier: TestRegistrationWordClassifier,
                                                      subjectInfoExtractor: SubjectInfoExtractor) extends InfixSpecInfoExtractor {
 
   def extract(infixSpec: Term.ApplyInfix): Option[SpecInfo] = {
-    import termNameClassifier._
+    import registrationWordClassifier._
 
     infixSpec match {
       case Term.ApplyInfix(subject, verb, Nil, (expectation: Lit.String) :: Nil) if isSpecVerb(verb) =>
@@ -23,4 +23,4 @@ private[extractors] class InfixSpecInfoExtractorImpl(termNameClassifier: Scalate
   }
 }
 
-object InfixSpecInfoExtractor extends InfixSpecInfoExtractorImpl(ScalatestTermNameClassifier, SubjectInfoExtractor)
+object InfixSpecInfoExtractor extends InfixSpecInfoExtractorImpl(TestRegistrationWordClassifier, SubjectInfoExtractor)
