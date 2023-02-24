@@ -18,6 +18,6 @@ public class SampleTest {
     }
 
     public void dummy() {
-        assertThat(result, hasItems(3, 4));
+        assertThat(result, anyOf(hasItem(3), hasItem(4)));
     }
 }
