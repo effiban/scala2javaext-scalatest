@@ -22,8 +22,8 @@ private[transformers] class BeMatcherTransformer(nestedTransformer: MatcherTrans
 object BeMatcherTransformer extends BeMatcherTransformer(
   new CompositeMatcherTransformer(
     List(
-      OrderingMatcherTransformer
-      // TODO - add more matchers which are allowed after 'be'
+      OrderingMatcherTransformer,
+      SameInstanceMatcherTransformer
     )
   )
 )

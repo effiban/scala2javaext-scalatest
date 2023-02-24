@@ -21,7 +21,6 @@ object HaveMatcherTransformer extends HaveMatcherTransformer(
   new CompositeMatcherTransformer(
     List(
       SizeMatcherTransformer
-      // TODO - add more matchers which are allowed after 'have'
     )
   )
 )
