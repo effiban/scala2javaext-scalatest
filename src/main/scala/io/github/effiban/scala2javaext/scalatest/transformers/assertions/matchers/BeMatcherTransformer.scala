@@ -24,7 +24,8 @@ object BeMatcherTransformer extends BeMatcherTransformer(
     List(
       OrderingMatcherTransformer,
       SameInstanceMatcherTransformer,
-      ATypeMatcherTransformer
+      ATypeMatcherTransformer,
+      EmptyMatcherTransformer
     )
   )
 )

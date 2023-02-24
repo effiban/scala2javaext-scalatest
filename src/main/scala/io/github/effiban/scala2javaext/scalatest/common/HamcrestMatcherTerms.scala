@@ -24,4 +24,6 @@ object HamcrestMatcherTerms {
 
   val SameInstance: Term.Name = q"sameInstance"
   val IsA: Term.Name = q"isA"
+
+  val Empty: Term.Name = q"empty"
 }
