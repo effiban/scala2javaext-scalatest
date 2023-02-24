@@ -9,7 +9,8 @@ private[transformers] class BeMatcherTransformer(nestedTransformer: MatcherTrans
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
-      case Term.Apply(q"be", List(nestedTerm: Term)) => transformNested(nestedTerm).orElse(Some(Term.Apply(Is, List(nestedTerm))))
+      case Term.Apply(q"be", List(expected: Term)) => transformNested(expected).orElse(Some(Term.Apply(Is, List(expected))))
+      case Term.ApplyInfix(q"be", nestedMatcherWord: Term.Name, _,  List(expected: Term)) => transformNested(Term.Apply(nestedMatcherWord, List(expected)))
       case _ => None
     }
   }
@@ -21,7 +22,8 @@ private[transformers] class BeMatcherTransformer(nestedTransformer: MatcherTrans
 object BeMatcherTransformer extends BeMatcherTransformer(
   new CompositeMatcherTransformer(
     List(
-      // TODO - add matchers which are allowed after 'be'
+      OrderingMatcherTransformer
+      // TODO - add more matchers which are allowed after 'be'
     )
   )
 )
