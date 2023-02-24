@@ -23,6 +23,13 @@ class ContainNestedMatcherTransformerTest extends UnitTestSuite {
     transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
   }
 
+  test("transform() a Term.Apply when fun is 'allOf' should return Hamcrest 'hasItems(...)'") {
+    val matcher = q"allOf(3, 4)"
+    val expectedHamcrestMatcher = q"hasItems(3, 4)"
+
+    transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
+  }
+
   test("transform() a Term.Apply when fun is 'bla' should return None") {
     val matcher = q"bla(3, 4)"
 

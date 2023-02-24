@@ -10,6 +10,7 @@ object ContainNestedMatcherTransformer extends MatcherTransformer {
   override def transform(matcher: Term): Option[Term] = matcher match {
     case Term.Apply(q"atLeastOneOf", elems) => Some(Term.Apply(AnyOf, elems.map(elem => Term.Apply(HasItem, List(elem)))))
     case Term.Apply(q"noneOf", elems) => Some(Term.Apply(Not, List(Term.Apply(HasItems, elems))))
+    case Term.Apply(q"allOf", elems) => Some(Term.Apply(HasItems, elems))
     case _ => None
   }
 }
