@@ -38,7 +38,8 @@ object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(
   new CompositeMatcherTransformer(
     List(
       EqualMatcherTransformer,
-      BeMatcherTransformer
+      BeMatcherTransformer,
+      HaveMatcherTransformer
     )
   )
 )
