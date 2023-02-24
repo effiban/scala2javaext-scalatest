@@ -13,4 +13,5 @@ object HamcrestMatcherTerms {
   val EndsWith: Term.Name = q"endsWith"
   val ContainsString: Term.Name = q"containsString"
   val MatchesPattern: Term.Name = q"matchesPattern"
+  val MatchesRegex: Term.Name = q"matchesRegex"
 }

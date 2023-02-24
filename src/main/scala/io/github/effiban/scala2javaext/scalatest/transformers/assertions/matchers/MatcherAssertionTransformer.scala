@@ -40,7 +40,8 @@ object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(
       EqualMatcherTransformer,
       BeMatcherTransformer,
       HaveMatcherTransformer,
-      StringMatcherTransformer
+      StringMatcherTransformer,
+      RegexMatcherTransformer
     )
   )
 )
