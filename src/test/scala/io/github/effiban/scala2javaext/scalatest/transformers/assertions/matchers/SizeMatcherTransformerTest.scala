@@ -26,9 +26,9 @@ class SizeMatcherTransformerTest extends UnitTestSuite {
     val matcher = q"size(3, 4)"
     val word = q"size"
 
-    when(matcherWordClassifier.isSizeWord(eqTree(word))).thenReturn(true)
-
     sizeMatcherTransformer.transform(matcher) shouldBe None
+
+    verifyNoMoreInteractions(matcherWordClassifier)
   }
 
   test("transform() for a Term.Apply() when word is not a 'size' word, should return None") {
@@ -38,5 +38,13 @@ class SizeMatcherTransformerTest extends UnitTestSuite {
     when(matcherWordClassifier.isSizeWord(eqTree(word))).thenReturn(false)
 
     sizeMatcherTransformer.transform(matcher) shouldBe None
+  }
+
+  test("transform() for a Term.Apply() when 'fun' is not a Term.Name, should return None") {
+    val matcher = q"(size bigger than)(3)"
+
+    sizeMatcherTransformer.transform(matcher) shouldBe None
+
+    verifyNoMoreInteractions(matcherWordClassifier)
   }
 }

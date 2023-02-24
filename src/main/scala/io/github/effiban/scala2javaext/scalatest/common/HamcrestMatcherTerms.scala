@@ -9,4 +9,8 @@ object HamcrestMatcherTerms {
   val IsTrue: Term.Apply = q"is(true)"
   val Is: Term.Name = q"is"
   val HasSize: Term.Name = q"hasSize"
+  val StartsWith: Term.Name = q"startsWith"
+  val EndsWith: Term.Name = q"endsWith"
+  val ContainsString: Term.Name = q"containsString"
+  val MatchesPattern: Term.Name = q"matchesPattern"
 }
