@@ -43,4 +43,5 @@ object ScalatestConstants {
 
   val Equal: Term.Name = q"equal"
   val Be: Term.Name = q"be"
+  val Empty: Term.Name = q"empty"
 }
