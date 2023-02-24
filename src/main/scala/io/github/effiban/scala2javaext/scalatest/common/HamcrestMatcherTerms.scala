@@ -8,10 +8,17 @@ object HamcrestMatcherTerms {
 
   val IsTrue: Term.Apply = q"is(true)"
   val Is: Term.Name = q"is"
+
   val HasSize: Term.Name = q"hasSize"
+
   val StartsWith: Term.Name = q"startsWith"
   val EndsWith: Term.Name = q"endsWith"
   val ContainsString: Term.Name = q"containsString"
   val MatchesPattern: Term.Name = q"matchesPattern"
   val MatchesRegex: Term.Name = q"matchesRegex"
+
+  val GreaterThan: Term.Name = q"greaterThan"
+  val GreaterThanOrEqualTo: Term.Name = q"greaterThanOrEqualTo"
+  val LessThan: Term.Name = q"lessThan"
+  val LessThanOrEqualTo: Term.Name = q"lessThanOrEqualTo"
 }

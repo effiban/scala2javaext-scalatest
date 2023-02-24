@@ -7,42 +7,34 @@ import scala.meta.XtensionQuasiquoteTerm
 
 class StringMatcherTransformerTest extends UnitTestSuite {
 
-  test("transform for 'startWith' with one arg should return corresponding Hamcrest matcher") {
-    val matcher = q"""startWith("abc")"""
-    val hamcrestMatcher = q"""startsWith("abc")"""
+  test("transform for 'startWith' should return Hamcrest 'startsWith'") {
+    val word = q"startWith"
+    val expected = q""""abc""""
+    val expectedHamcrestMatcher = q"""startsWith("abc")"""
 
-    transform(matcher).value.structure shouldBe hamcrestMatcher.structure
+    transform(word, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
 
-  test("transform for 'endWith' with one arg should return corresponding Hamcrest matcher") {
-    val matcher = q"""endWith("abc")"""
-    val hamcrestMatcher = q"""endsWith("abc")"""
+  test("transform for 'endWith' should return Hamcrest 'endsWith'") {
+    val word = q"endWith"
+    val expected = q""""abc""""
+    val expectedHamcrestMatcher = q"""endsWith("abc")"""
 
-    transform(matcher).value.structure shouldBe hamcrestMatcher.structure
+    transform(word, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
 
-  test("transform for 'include' with one arg should return corresponding Hamcrest matcher") {
-    val matcher = q"""include("abc")"""
+  test("transform for 'include' should return Hamcrest 'containsString'") {
+    val word = q"include"
+    val expected = q""""abc""""
     val hamcrestMatcher = q"""containsString("abc")"""
 
-    transform(matcher).value.structure shouldBe hamcrestMatcher.structure
+    transform(word, expected).value.structure shouldBe hamcrestMatcher.structure
   }
 
-  test("transform for 'startWith' with two args should return None") {
-    val matcher = q"""startWith("abc", "def")"""
+  test("transform for 'unknown' should return None") {
+    val word = q"unknown"
+    val expected = q""""abc""""
 
-    transform(matcher) shouldBe None
-  }
-
-  test("transform for Term.Apply with 'unknown' fun should return None") {
-    val matcher = q"""unknown("abc")"""
-
-    transform(matcher) shouldBe None
-  }
-
-  test("transform for Term.Name should return None") {
-    val input = q"dummy"
-
-    transform(input) shouldBe None
+    transform(word, expected) shouldBe None
   }
 }
