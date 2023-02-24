@@ -8,6 +8,8 @@ trait ScalatestMatcherWordClassifier {
   def isEqualWord(word: Term.Name): Boolean
 
   def isSizeWord(word: Term.Name): Boolean
+
+  def isATypeWord(word: Term.Name): Boolean
 }
 
 object ScalatestMatcherWordClassifier extends ScalatestMatcherWordClassifier {
@@ -19,6 +21,11 @@ object ScalatestMatcherWordClassifier extends ScalatestMatcherWordClassifier {
 
   override def isSizeWord(word: Term.Name): Boolean = word match {
     case q"size" | q"length" => true
+    case _ => false
+  }
+
+  override def isATypeWord(word: Term.Name): Boolean = word match {
+    case q"a" | q"an" => true
     case _ => false
   }
 }

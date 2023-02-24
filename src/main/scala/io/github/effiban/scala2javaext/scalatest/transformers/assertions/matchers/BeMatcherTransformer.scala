@@ -23,7 +23,8 @@ object BeMatcherTransformer extends BeMatcherTransformer(
   new CompositeMatcherTransformer(
     List(
       OrderingMatcherTransformer,
-      SameInstanceMatcherTransformer
+      SameInstanceMatcherTransformer,
+      ATypeMatcherTransformer
     )
   )
 )
