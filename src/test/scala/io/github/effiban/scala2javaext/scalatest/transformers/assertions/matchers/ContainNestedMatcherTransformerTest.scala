@@ -1,6 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers
 
 import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms
+import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.HasItems
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.ContainNestedMatcherTransformer.transform
 
@@ -10,7 +11,14 @@ class ContainNestedMatcherTransformerTest extends UnitTestSuite {
 
   test("transform() a Term.Apply when fun is 'atLeastOneOf' should return Hamcrest 'hasItems'") {
     val matcher = q"atLeastOneOf(3, 4)"
-    val expectedHamcrestMatcher = Term.Apply(HamcrestMatcherTerms.HasItems, List(q"3", q"4"))
+    val expectedHamcrestMatcher = q"hasItems(3, 4)"
+
+    transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
+  }
+
+  test("transform() a Term.Apply when fun is 'noneOf' should return Hamcrest 'not(hasItems(...))'") {
+    val matcher = q"noneOf(3, 4)"
+    val expectedHamcrestMatcher = q"not(hasItems(3, 4))"
 
     transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
   }

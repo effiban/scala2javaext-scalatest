@@ -29,4 +29,6 @@ object HamcrestMatcherTerms {
 
   val HasItem: Term.Name = q"hasItem"
   val HasItems: Term.Name = q"hasItems"
+
+  val Not: Term.Name = q"not"
 }
