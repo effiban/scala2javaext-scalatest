@@ -23,4 +23,5 @@ object HamcrestMatcherTerms {
   val LessThanOrEqualTo: Term.Name = q"lessThanOrEqualTo"
 
   val SameInstance: Term.Name = q"sameInstance"
+  val IsA: Term.Name = q"isA"
 }
