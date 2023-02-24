@@ -26,4 +26,6 @@ object HamcrestMatcherTerms {
   val IsA: Term.Name = q"isA"
 
   val Empty: Term.Name = q"empty"
+
+  val HasItem: Term.Name = q"hasItem"
 }

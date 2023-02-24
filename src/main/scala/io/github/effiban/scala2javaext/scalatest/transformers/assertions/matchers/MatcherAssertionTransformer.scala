@@ -41,7 +41,8 @@ object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(
       BeMatcherTransformer,
       HaveMatcherTransformer,
       StringMatcherTransformer,
-      RegexMatcherTransformer
+      RegexMatcherTransformer,
+      ContainMatcherTransformer
     )
   )
 )
