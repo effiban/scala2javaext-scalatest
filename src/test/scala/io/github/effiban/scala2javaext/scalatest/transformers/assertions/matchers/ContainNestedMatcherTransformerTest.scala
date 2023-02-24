@@ -9,9 +9,9 @@ import scala.meta.{Term, XtensionQuasiquoteTerm}
 
 class ContainNestedMatcherTransformerTest extends UnitTestSuite {
 
-  test("transform() a Term.Apply when fun is 'atLeastOneOf' should return Hamcrest 'hasItems'") {
+  test("transform() a Term.Apply when fun is 'atLeastOneOf' should return Hamcrest 'anyOf(hasItem(..), hasItem(..), ...)'") {
     val matcher = q"atLeastOneOf(3, 4)"
-    val expectedHamcrestMatcher = q"hasItems(3, 4)"
+    val expectedHamcrestMatcher = q"anyOf(hasItem(3), hasItem(4))"
 
     transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
   }
