@@ -13,6 +13,7 @@ object ContainNestedMatcherTransformer extends WordAndValuesMatcherTransformer {
     case (q"inOrder", items) => Some(Term.Apply(ContainsInRelativeOrder, items))
     case (q"noneOf", items) => Some(Term.Apply(Not, List(Term.Apply(HasItems, items))))
     case (q"theSameElementsAs", collection :: Nil) => Some(Term.Apply(ContainsInAnyOrder, List(toHamcrestIsPerItem(collection))))
+    case (q"theSameElementsInOrderAs", collection :: Nil) => Some(Term.Apply(Contains, List(toHamcrestIsPerItem(collection))))
     case _ => None
   }
 
