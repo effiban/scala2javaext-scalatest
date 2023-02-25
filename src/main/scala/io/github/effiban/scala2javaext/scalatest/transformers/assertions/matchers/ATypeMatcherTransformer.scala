@@ -1,7 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers
 
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestMatcherWordClassifier
-import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.{IsA, SameInstance}
+import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.IsA
 
 import scala.meta.Term
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
