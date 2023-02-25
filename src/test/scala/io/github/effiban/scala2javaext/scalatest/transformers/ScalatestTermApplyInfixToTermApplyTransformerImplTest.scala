@@ -2,6 +2,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers
 
 import io.github.effiban.scala2java.test.utils.matchers.TreeMatcher.eqTree
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestAssertionWordClassifier
+import io.github.effiban.scala2javaext.scalatest.manipulators.TermApplyInfixManipulator
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.MatcherAssertionTransformer
 import org.mockito.ArgumentMatchersSugar.any
@@ -12,10 +13,12 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
 
   private val matcherAssertionTransformer = mock[MatcherAssertionTransformer]
   private val assertionWordClassifier = mock[ScalatestAssertionWordClassifier]
+  private val termApplyInfixManipulator = mock[TermApplyInfixManipulator]
 
   private val termApplyInfixTransformer = new ScalatestTermApplyInfixToTermApplyTransformerImpl(
     matcherAssertionTransformer,
-    assertionWordClassifier
+    assertionWordClassifier,
+    termApplyInfixManipulator
   )
 
 
@@ -49,13 +52,14 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
     val word = q"bla"
 
     when(assertionWordClassifier.isAssertionWord(eqTree(word))).thenReturn(false)
+    when(termApplyInfixManipulator.rightShiftInnerIfPossible(eqTree(inputAssertion))).thenReturn(None)
 
     termApplyInfixTransformer.transform(inputAssertion) shouldBe None
 
     verifyNoMoreInteractions(matcherAssertionTransformer)
   }
 
-  test("transform() when LHS is a (nested) infix, 'op' is an assertion word, and matcher is transformed - should return Hamcrest matcher") {
+  test("transform() when LHS is an infix, 'op' is an assertion word, and matcher is transformed - should return Hamcrest matcher") {
     val inputAssertion = q"(x + y) should be(3)"
     val actual = q"(x + y)"
     val word = q"should"
@@ -70,11 +74,16 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
 
   test("transform() when LHS is an infix including an assertion word, and matcher is transformed - should return Hamcrest matcher") {
     val inputAssertion = q"x should have size 3"
+    val shiftedInputAssertion = q"x should (have size 3)"
     val actual = q"x"
     val assertionWord = q"should"
     val matcher = q"have size 3"
     val expectedHamcrestAssertion = q"is(3)"
 
+    when(termApplyInfixManipulator.rightShiftInnerIfPossible(any[Term.ApplyInfix])).thenAnswer((infix: Term.ApplyInfix) => infix match {
+      case anInfix if anInfix.structure == inputAssertion.structure => Some(shiftedInputAssertion)
+      case _ => None
+    })
     // Due to the 'right-shift' and recursion, this will be called twice
     when(assertionWordClassifier.isAssertionWord(any[Term.Name])).thenAnswer((word: Term.Name) => word.structure == q"should".structure)
     when(matcherAssertionTransformer.transform(eqTree(actual), eqTree(assertionWord), eqTree(matcher))).thenReturn(Some(expectedHamcrestAssertion))
@@ -84,7 +93,12 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
 
   test("transform() when LHS is an infix without an assertion word - should return None") {
     val inputAssertion = q"x bla have size 3"
+    val shiftedInputAssertion = q"x bla (have size 3)"
 
+    when(termApplyInfixManipulator.rightShiftInnerIfPossible(any[Term.ApplyInfix])).thenAnswer((infix: Term.ApplyInfix) => infix match {
+      case anInfix if anInfix.structure == inputAssertion.structure => Some(shiftedInputAssertion)
+      case _ => None
+    })
     when(assertionWordClassifier.isAssertionWord(any[Term.Name])).thenReturn(false)
 
     termApplyInfixTransformer.transform(inputAssertion) shouldBe None
@@ -97,6 +111,7 @@ class ScalatestTermApplyInfixToTermApplyTransformerImplTest extends UnitTestSuit
   test("transform() when has multiple args in the RHS - should return None") {
     val termApplyInfix = q"x should (equal(4), notEqual(5))"
 
+    when(termApplyInfixManipulator.rightShiftInnerIfPossible(eqTree(termApplyInfix))).thenReturn(None)
     termApplyInfixTransformer.transform(termApplyInfix) shouldBe None
 
     verifyNoMoreInteractions(assertionWordClassifier, matcherAssertionTransformer)
