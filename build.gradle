@@ -82,7 +82,7 @@ publishing {
 
             pom {
                 name = 'Scala2Java Mockito Extension'
-                description = 'Scala2Java extension for translating ScalaTest to JUnit'
+                description = 'Scala2Java extension for translating ScalaTest to JUnit / Hamcrest'
                 url = 'https://github.com/effiban/scala2javaext-scalatest'
                 licenses {
                     license {
