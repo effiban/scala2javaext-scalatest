@@ -3,6 +3,7 @@ package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matche
 import io.github.effiban.scala2javaext.scalatest.classifiers.ScalatestAssertionWordClassifier
 import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.AssertThat
 import io.github.effiban.scala2javaext.scalatest.common.ScalatestConstants.{Be, Equal}
+import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.MatcherTransformers.rootMatcherTransformer
 
 import scala.meta.Term
 
@@ -12,7 +13,7 @@ trait MatcherAssertionTransformer {
 }
 
 private[transformers] class MatcherAssertionTransformerImpl(assertionWordClassifier: ScalatestAssertionWordClassifier,
-                                                            matcherTransformer: MatcherTransformer)
+                                                            matcherTransformer: => MatcherTransformer)
   extends MatcherAssertionTransformer {
 
   override def transform(actual: Term, assertionWord: Term.Name, matcher: Term): Option[Term.Apply] = {
@@ -33,16 +34,4 @@ private[transformers] class MatcherAssertionTransformerImpl(assertionWordClassif
   }
 }
 
-object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(
-  ScalatestAssertionWordClassifier,
-  new CompositeMatcherTransformer(
-    List(
-      EqualMatcherTransformer,
-      BeMatcherTransformer,
-      HaveMatcherTransformer,
-      StringMatcherTransformer,
-      RegexMatcherTransformer,
-      ContainMatcherTransformer
-    )
-  )
-)
+object MatcherAssertionTransformer extends MatcherAssertionTransformerImpl(ScalatestAssertionWordClassifier, rootMatcherTransformer)
