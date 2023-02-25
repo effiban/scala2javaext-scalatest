@@ -83,6 +83,57 @@ class LogicalMatcherTransformerTest extends UnitTestSuite {
     transformer.transform(matcher) shouldBe None
   }
 
+  test("transform() for a Term.ApplyInfix with 'or', when LHS and RHS both transformed, should return 'allOf' of the results") {
+    val matcher = q"leftIs(2) or rightIs(3)"
+    val leftMatcher = q"leftIs(2)"
+    val rightMatcher = q"rightIs(3)"
+    val expectedLeftHamcrestMatcher = q"hamcrestLeftIs(2)"
+    val expectedRightHamcrestMatcher = q"hamcrestRightIs(3)"
+    val expectedHamcrestMatcher = q"anyOf(hamcrestLeftIs(2), hamcrestRightIs(3))"
+
+    when(nestedTransformer.transform(any[Term])).thenAnswer((matcher: Term) => matcher match {
+      case aMatcher if aMatcher.structure == leftMatcher.structure => Some(expectedLeftHamcrestMatcher)
+      case aMatcher if aMatcher.structure == rightMatcher.structure => Some(expectedRightHamcrestMatcher)
+      case _ => None
+    })
+
+    transformer.transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
+  }
+
+  test("transform() for a Term.ApplyInfix with 'or', when only LHS transformed, should return None") {
+    val matcher = q"leftIs(2) or rightIs(3)"
+    val leftMatcher = q"leftIs(2)"
+    val expectedLeftHamcrestMatcher = q"hamcrestLeftIs(2)"
+
+    when(nestedTransformer.transform(any[Term])).thenAnswer((matcher: Term) => matcher match {
+      case aMatcher if aMatcher.structure == leftMatcher.structure => Some(expectedLeftHamcrestMatcher)
+      case _ => None
+    })
+
+    transformer.transform(matcher) shouldBe None
+  }
+
+  test("transform() for a Term.ApplyInfix with 'or', when only RHS transformed, should return None") {
+    val matcher = q"leftIs(2) or rightIs(3)"
+    val rightMatcher = q"rightIs(3)"
+    val expectedRightHamcrestMatcher = q"hamcrestRightIs(3)"
+
+    when(nestedTransformer.transform(any[Term])).thenAnswer((matcher: Term) => matcher match {
+      case aMatcher if aMatcher.structure == rightMatcher.structure => Some(expectedRightHamcrestMatcher)
+      case _ => None
+    })
+
+    transformer.transform(matcher) shouldBe None
+  }
+
+  test("transform() for a Term.ApplyInfix with 'or', when neither side transformed, should return None") {
+    val matcher = q"leftIs(2) or rightIs(3)"
+
+    when(nestedTransformer.transform(any[Term])).thenReturn(None)
+
+    transformer.transform(matcher) shouldBe None
+  }
+
   test("transform() for a Term.ApplyInfix when term is not a logical matcher should return None") {
     transformer.transform(q"bla bla 3") shouldBe None
   }

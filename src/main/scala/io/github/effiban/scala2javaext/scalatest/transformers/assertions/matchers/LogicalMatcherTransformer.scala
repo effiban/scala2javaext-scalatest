@@ -1,6 +1,6 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers
 
-import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.{AllOf, Not}
+import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.{AllOf, AnyOf, Not}
 
 import scala.meta.Term
 import scala.meta.quasiquotes.XtensionQuasiquoteTerm
@@ -11,14 +11,15 @@ private[transformers] class LogicalMatcherTransformer(nestedTransformer: => Matc
     matcher match {
       case Term.Apply(q"not", List(nestedMatcher)) => transformNot(nestedMatcher)
       case Term.ApplyInfix(q"not", nestedWord, _, nestedArgs) => transformNot(nestedWord, nestedArgs)
-      case Term.ApplyInfix(lhsMatcher, q"and", _, List(rhsMatcher)) => transformAnd(lhsMatcher, rhsMatcher)
+      case Term.ApplyInfix(lhsMatcher, q"and", _, List(rhsMatcher)) => transformBinary(AllOf, lhsMatcher, rhsMatcher)
+      case Term.ApplyInfix(lhsMatcher, q"or", _, List(rhsMatcher)) => transformBinary(AnyOf, lhsMatcher, rhsMatcher)
       case _ => None
     }
   }
 
-  private def transformAnd(lhsMatcher: Term, rhsMatcher: Term) = {
+  private def transformBinary(hamcrestWord: Term.Name, lhsMatcher: Term, rhsMatcher: Term) = {
     (transformNested(lhsMatcher), transformNested(rhsMatcher)) match {
-      case (Some(hamcrestLhsMatcher), Some(hamcrestRhsMatcher)) => Some(Term.Apply(AllOf, List(hamcrestLhsMatcher, hamcrestRhsMatcher)))
+      case (Some(hamcrestLhsMatcher), Some(hamcrestRhsMatcher)) => Some(Term.Apply(hamcrestWord, List(hamcrestLhsMatcher, hamcrestRhsMatcher)))
       case _ => None
     }
   }
