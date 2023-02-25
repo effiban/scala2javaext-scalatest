@@ -31,6 +31,7 @@ object HamcrestMatcherTerms {
   val HasItems: Term.Name = q"hasItems"
 
   val ContainsInAnyOrder: Term.Name = q"containsInAnyOrder"
+  val ContainsInRelativeOrder: Term.Name = q"containsInRelativeOrder"
 
   val Not: Term.Name = q"not"
 
