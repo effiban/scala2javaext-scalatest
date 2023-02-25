@@ -12,17 +12,19 @@ class ContainNestedMatcherTransformerTest extends UnitTestSuite {
     (q"allOf", List(q"3", q"4"), q"hasItems(3, 4)"),
     (q"atLeastOneOf", List(q"3", q"4"), q"anyOf(hasItem(3), hasItem(4))"),
     (q"inOrder", List(q"3", q"4"), q"containsInRelativeOrder(3, 4)"),
-    (q"noneOf", List(q"3", q"4"), q"not(hasItems(3, 4))"),
+    (q"noneOf", List(q"3", q"4"), q"not(hasItems(3, 4))")
   )
 
   private val ValidCollectionScenarios = Table(
     ("Word", "CollectionArg", "ExpectedHamcrestMatcher"),
     (q"theSameElementsAs", q"expectedList", q"containsInAnyOrder(expectedList.map(item => is(item)))"),
+    (q"theSameElementsInOrderAs", q"expectedList", q"contains(expectedList.map(item => is(item)))")
   )
 
   private val InvalidMultiCollectionScenarios = Table(
     ("Word", "MultiCollection"),
     (q"theSameElementsAs", List(q"expectedList1", q"expectedList2")),
+    (q"theSameElementsInOrderAs", List(q"expectedList1", q"expectedList2"))
   )
 
   forAll(ValidItemsScenarios) { case (word: Term.Name, items: List[Term], expectedHamcrestMatcher: Term) =>
