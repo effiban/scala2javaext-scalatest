@@ -10,8 +10,9 @@ object ContainNestedMatcherTransformer extends WordAndValuesMatcherTransformer {
   override protected[matchers] def transform(word: Term.Name, values: List[Term]): Option[Term] = (word, values) match {
     case (q"allOf", items) => Some(Term.Apply(HasItems, items))
     case (q"atLeastOneOf", items) => Some(Term.Apply(AnyOf, items.map(item => Term.Apply(HasItem, List(item)))))
-    case (q"theSameElementsAs", collection :: Nil) => Some(Term.Apply(ContainsInAnyOrder, List(toHamcrestIsPerItem(collection))))
+    case (q"inOrder", items) => Some(Term.Apply(ContainsInRelativeOrder, items))
     case (q"noneOf", items) => Some(Term.Apply(Not, List(Term.Apply(HasItems, items))))
+    case (q"theSameElementsAs", collection :: Nil) => Some(Term.Apply(ContainsInAnyOrder, List(toHamcrestIsPerItem(collection))))
     case _ => None
   }
 

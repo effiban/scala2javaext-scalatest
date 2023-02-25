@@ -11,6 +11,7 @@ class ContainNestedMatcherTransformerTest extends UnitTestSuite {
     ("Word", "Items", "ExpectedHamcrestMatcher"),
     (q"allOf", List(q"3", q"4"), q"hasItems(3, 4)"),
     (q"atLeastOneOf", List(q"3", q"4"), q"anyOf(hasItem(3), hasItem(4))"),
+    (q"inOrder", List(q"3", q"4"), q"containsInRelativeOrder(3, 4)"),
     (q"noneOf", List(q"3", q"4"), q"not(hasItems(3, 4))"),
   )
 
