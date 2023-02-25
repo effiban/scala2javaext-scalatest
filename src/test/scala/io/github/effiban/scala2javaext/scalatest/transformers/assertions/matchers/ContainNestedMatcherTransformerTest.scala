@@ -1,7 +1,5 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers
 
-import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms
-import io.github.effiban.scala2javaext.scalatest.common.HamcrestMatcherTerms.HasItems
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.assertions.matchers.ContainNestedMatcherTransformer.transform
 
@@ -9,36 +7,22 @@ import scala.meta.{Term, XtensionQuasiquoteTerm}
 
 class ContainNestedMatcherTransformerTest extends UnitTestSuite {
 
-  test("transform() a Term.Apply when fun is 'atLeastOneOf' should return Hamcrest 'anyOf(hasItem(..), hasItem(..), ...)'") {
-    val matcher = q"atLeastOneOf(3, 4)"
-    val expectedHamcrestMatcher = q"anyOf(hasItem(3), hasItem(4))"
+  private val ValidScenarios = Table(
+    ("Word", "Items", "ExpectedHamcrestMatcher"),
+    (q"allOf", List(q"3", q"4"), q"hasItems(3, 4)"),
+    (q"atLeastOneOf", List(q"3", q"4"), q"anyOf(hasItem(3), hasItem(4))"),
+    (q"noneOf", List(q"3", q"4"), q"not(hasItems(3, 4))"),
+  )
 
-    transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
+  forAll(ValidScenarios) { case (word: Term.Name, items: List[Term], expectedHamcrestMatcher: Term) =>
+    test(s"The matcher '$word${formatItems(items)}' should be transformed to '$expectedHamcrestMatcher'") {
+      transform(word, items).value.structure shouldBe expectedHamcrestMatcher.structure
+    }
   }
 
-  test("transform() a Term.Apply when fun is 'noneOf' should return Hamcrest 'not(hasItems(...))'") {
-    val matcher = q"noneOf(3, 4)"
-    val expectedHamcrestMatcher = q"not(hasItems(3, 4))"
-
-    transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
+  test("transform() when word is 'bla' should return None") {
+    transform(q"bla", List(q"1", q"2")) shouldBe None
   }
 
-  test("transform() a Term.Apply when fun is 'allOf' should return Hamcrest 'hasItems(...)'") {
-    val matcher = q"allOf(3, 4)"
-    val expectedHamcrestMatcher = q"hasItems(3, 4)"
-
-    transform(matcher).value.structure shouldBe expectedHamcrestMatcher.structure
-  }
-
-  test("transform() a Term.Apply when fun is 'bla' should return None") {
-    val matcher = q"bla(3, 4)"
-
-    transform(matcher) shouldBe None
-  }
-
-  test("transform() a Term.Name should return None") {
-    val matcher = q"atLeastOneOf"
-
-    transform(matcher) shouldBe None
-  }
+  private def formatItems(items: List[Term]) = "(" + items.mkString(",") + ")"
 }
