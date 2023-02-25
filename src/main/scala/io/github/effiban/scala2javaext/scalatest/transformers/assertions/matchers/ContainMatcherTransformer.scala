@@ -9,8 +9,8 @@ private[transformers] class ContainMatcherTransformer(nestedTransformer: Matcher
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
-      case Term.Apply(q"contain", List(expected: Term)) => Some(Term.Apply(HasItem, List(expected)))
-      case Term.ApplyInfix(q"contain", nestedMatcherWord: Term.Name, _, expectedElems) => transformNested(Term.Apply(nestedMatcherWord, expectedElems))
+      case Term.Apply(q"contain", List(item: Term)) => Some(Term.Apply(HasItem, List(item)))
+      case Term.ApplyInfix(q"contain", nestedMatcherWord: Term.Name, _, items) => transformNested(Term.Apply(nestedMatcherWord, items))
       case _ => None
     }
   }

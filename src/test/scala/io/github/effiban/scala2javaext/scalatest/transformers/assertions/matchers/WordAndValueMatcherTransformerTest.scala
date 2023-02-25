@@ -4,9 +4,9 @@ import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 
 import scala.meta.{Term, XtensionQuasiquoteTerm}
 
-class WordAndExpectedValueMatcherTransformerTest extends UnitTestSuite {
+class WordAndValueMatcherTransformerTest extends UnitTestSuite {
 
-  test("transform for a Term.Apply with word 'valid' and one expeted arg, should return expected matcher") {
+  test("transform for a Term.Apply with word 'valid' and one expected arg, should return expected matcher") {
     val matcher = q"valid(3)"
     val expectedMatcher = q"matches(3)"
 
@@ -31,9 +31,9 @@ class WordAndExpectedValueMatcherTransformerTest extends UnitTestSuite {
     TestMatcherTransformer.transform(input) shouldBe None
   }
 
-  private object TestMatcherTransformer extends WordAndExpectedValueMatcherTransformer {
-    override protected[matchers] def transform(word: Term.Name, expected: Term): Option[Term] = word match {
-      case q"valid" => Some(Term.Apply(q"matches", List(expected)))
+  private object TestMatcherTransformer extends WordAndValueMatcherTransformer {
+    override protected[matchers] def transform(word: Term.Name, value: Term): Option[Term] = word match {
+      case q"valid" => Some(Term.Apply(q"matches", List(value)))
       case _ => None
     }
   }
