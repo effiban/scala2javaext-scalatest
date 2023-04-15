@@ -14,9 +14,6 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     @Test
     @DisplayName("check that everything works")
     public void checkThatEverythingWorks() {

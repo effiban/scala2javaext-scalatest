@@ -14,15 +14,9 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     @Nested
     @DisplayName("air conditioners")
     public class AirConditioners {
-
-        public AirConditioners() {
-        }
 
         @Test
         @DisplayName("should lower temperature when cooling selected")

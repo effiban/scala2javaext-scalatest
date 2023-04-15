@@ -14,22 +14,13 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     @Nested
     @DisplayName("Coffee machine")
     public class CoffeeMachine {
 
-        public CoffeeMachine() {
-        }
-
         @Nested
         @DisplayName("should provide a button")
         public class ShouldProvideAButton {
-
-            public ShouldProvideAButton() {
-            }
 
             @Test
             @DisplayName("which prepares an Espresso")
