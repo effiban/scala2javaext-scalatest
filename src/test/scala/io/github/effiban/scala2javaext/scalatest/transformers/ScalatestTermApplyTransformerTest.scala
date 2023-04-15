@@ -44,7 +44,7 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
   }
 
   test("transform() for assertResult() without clue") {
-    val assertResultInvocation = q"assertResult(3)(x + y)"
+    val assertResultInvocation = q"assertResult(3, x + y)"
     val expected = q"3"
     val actual = q"x + y"
     val expectedOutput = q"assertThat(x + y, is(3))"
@@ -55,7 +55,7 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
   }
 
   test("transform() for assertResult() with clue") {
-    val assertResultInvocation = q"""assertResult(3, "should be 3")(x + y)"""
+    val assertResultInvocation = q"""assertResult(3, "should be 3", x + y)"""
     val expected = q"3"
     val actual = q"x + y"
     val clue = q""""should be 3""""
@@ -114,9 +114,9 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
   test("transform() for withClue() without a type") {
     val invocation =
       q"""
-      withClue("special clue") {
+      withClue("special clue", {
        doSomething()
-      }
+      })
       """
 
     val clue = q""""special clue""""
@@ -139,9 +139,9 @@ class ScalatestTermApplyTransformerTest extends UnitTestSuite {
   test("transform() for withClue() with a type") {
     val invocation =
       q"""
-      withClue[Int]("special clue") {
+      withClue[Int]("special clue", {
         doSomething()
-      }
+      })
       """
 
     val clue = q""""special clue""""

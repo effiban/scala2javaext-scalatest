@@ -14,9 +14,6 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     public void dummy() {
         assertThat(((Supplier<Object>)() ->  {
                     final var x = 1;

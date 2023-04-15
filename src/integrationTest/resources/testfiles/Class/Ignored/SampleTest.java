@@ -15,7 +15,4 @@ import org.hamcrest.MatcherAssert.*;
 @Disabled
 public class SampleTest {
     private final int x = 3;
-
-    public SampleTest() {
-    }
 }

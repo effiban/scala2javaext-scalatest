@@ -14,9 +14,6 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     @AfterEach
     protected void afterEach() {
         cleanup();

@@ -14,9 +14,6 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     public void dummy() {
         assertThat("x + y should be 3",
                 x + y,

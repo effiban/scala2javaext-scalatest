@@ -14,7 +14,4 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleSuite {
     private final int x = 3;
-
-    public SampleSuite() {
-    }
 }

@@ -14,7 +14,4 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleBlaTest {
     private final int x = 3;
-
-    public SampleBlaTest() {
-    }
 }

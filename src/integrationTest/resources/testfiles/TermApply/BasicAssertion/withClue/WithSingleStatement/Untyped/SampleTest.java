@@ -14,9 +14,6 @@ import org.hamcrest.MatcherAssert.*;
 
 public class SampleTest {
 
-    public SampleTest() {
-    }
-
     public void dummy() {
         Try.ofSupplier(() -> doSomething())
                 .recover(e -> switch (e) {
