@@ -17,9 +17,9 @@ class WithClueTransformerTest extends UnitTestSuite {
 
     val expectedResult =
       q"""
-      Try {
+      Try.of(() => {
         doSomething()
-      }.recover(e => e match {
+      }).recover(e => e match {
         case ex: AssertionFailedError => fail("special clue", ex)
         case _ => throw e
       })
@@ -34,15 +34,15 @@ class WithClueTransformerTest extends UnitTestSuite {
     val clue = q""""special clue""""
     val body =
       q"""{
-      doSomething()
-    }
-    """
+        doSomething()
+      }
+      """
 
     val expectedResult =
       q"""
-      Try[Int] {
+      Try.ofSupplier[Int](() => {
         doSomething()
-      }.recover(e => e match {
+      }).recover(e => e match {
         case ex: AssertionFailedError => fail("special clue", ex)
         case _ => throw e
       }).get()

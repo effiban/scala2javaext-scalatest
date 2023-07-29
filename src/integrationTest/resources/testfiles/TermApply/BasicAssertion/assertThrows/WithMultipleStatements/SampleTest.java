@@ -17,7 +17,7 @@ public class SampleTest {
     public void dummy() {
         assertThrows(IllegalStateException.class, () ->  {
                 doSomethingLegal();
-                /* return? */doSomethingIllegal();
+                doSomethingIllegal();
             }
             );
     }

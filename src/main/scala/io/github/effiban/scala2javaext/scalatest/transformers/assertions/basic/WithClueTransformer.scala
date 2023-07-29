@@ -18,8 +18,8 @@ object WithClueTransformer extends WithClueTransformer {
 
   private def generateTryAndRecover(maybeReturnType: Option[Type], clue: Term, body: Term) = {
     val tryInvocation = maybeReturnType match {
-      case Some(returnType) => Term.Apply(Term.ApplyType(q"Try", List(returnType)), List(body))
-      case None => Term.Apply(q"Try", List(body))
+      case Some(returnType) => Term.Apply(Term.ApplyType(q"Try.ofSupplier", List(returnType)), List(Term.Function(Nil, body)))
+      case None => Term.Apply(q"Try.of", List(Term.Function(Nil, body)))
     }
 
     Term.Apply(
