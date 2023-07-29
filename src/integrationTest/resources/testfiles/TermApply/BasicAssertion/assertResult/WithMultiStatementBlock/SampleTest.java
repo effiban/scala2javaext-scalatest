@@ -16,9 +16,9 @@ public class SampleTest {
 
     public void dummy() {
         assertThat(((Supplier<Object>)() ->  {
-                    final var x = 1;
-                    final var y = 2;
-                    /* return? */x + y;
+                    final int x = 1;
+                    final int y = 2;
+                    x + y;
                 }
                 ).get(), is(3));
     }

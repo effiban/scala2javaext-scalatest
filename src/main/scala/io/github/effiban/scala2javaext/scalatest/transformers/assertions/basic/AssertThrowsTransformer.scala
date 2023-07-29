@@ -11,6 +11,6 @@ object AssertThrowsTransformer extends AssertThrowsTransformer {
 
   override def transform(exceptionType: Type = t"Throwable", body: Term): Term.Apply = {
     val exceptionClass = Term.ApplyType(q"classOf", List(exceptionType))
-    Term.Apply(q"assertThrows", List(exceptionClass, body))
+    Term.Apply(q"assertThrows", List(exceptionClass, Term.Function(Nil, body)))
   }
 }

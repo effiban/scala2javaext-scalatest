@@ -15,7 +15,7 @@ import org.hamcrest.MatcherAssert.*;
 public class SampleTest {
 
     public void dummy() {
-        Try.ofSupplier(() -> doSomething())
+        Try.of(() -> doSomething())
                 .recover(e -> switch (e) {
                     case AssertionFailedError ex -> fail("special clue", ex);
                     default -> throw e;
