@@ -1,0 +1,17 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.theSameElementsInOrderAs;
+
+import org.scalatest.matchers.should.Matchers;
+import java.util.List;
+import java.util.List.of;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.contains;
+import org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final List<int> expectedList = of(1, 2);
+        final List<int> result = of(1, 2);
+        assertThat(result, contains(expectedList.map(item -> is(item))));
+    }
+}

@@ -7,10 +7,6 @@ class ScalatestTransformersTest extends UnitTestSuite {
   private val scalatestTransformers = new ScalatestTransformers {}
   import scalatestTransformers._
 
-  test("fileNameTransformer") {
-    fileNameTransformer() shouldBe ScalatestFileNameTransformer
-  }
-
   test("classTransformer") {
     classTransformer() shouldBe ScalatestClassTransformer
   }

@@ -6,6 +6,7 @@ trait WordAndValuesMatcherTransformer extends MatcherTransformer {
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
+      case Term.Apply(Term.Select(_, word: Term.Name), values: List[Term]) => transform(word, values)
       case Term.Apply(word: Term.Name, values: List[Term]) => transform(word, values)
       case _ => None
     }

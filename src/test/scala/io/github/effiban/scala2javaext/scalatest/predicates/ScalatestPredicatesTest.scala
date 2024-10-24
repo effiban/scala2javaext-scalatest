@@ -7,10 +7,6 @@ class ScalatestPredicatesTest extends UnitTestSuite {
   private val scalatestPredicates = new ScalatestPredicates {}
   import scalatestPredicates._
 
-  test("importerExcludedPredicate() should return ScalatestImporterExcludedPredicate") {
-    importerExcludedPredicate() shouldBe ScalatestImporterExcludedPredicate
-  }
-
   test("templateInitExcludedPredicate() should return ScalatestTemplateInitExcludedPredicate") {
     templateInitExcludedPredicate() shouldBe ScalatestTemplateInitExcludedPredicate
   }

@@ -1,0 +1,13 @@
+package testfiles.DefnDef.beforeEach;
+
+import org.scalatest.Suite;
+import org.scalatest.BeforeAndAfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
+public class SampleTest {
+
+    @BeforeEach
+    protected void beforeEach() {
+        final int x = 3;
+    }
+}

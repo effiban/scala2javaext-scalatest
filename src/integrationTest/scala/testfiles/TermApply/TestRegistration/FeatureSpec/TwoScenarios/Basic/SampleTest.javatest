@@ -1,0 +1,26 @@
+package testfiles.TermApply.TestRegistration.FeatureSpec.TwoScenarios.Basic;
+
+import org.scalatest.featurespec.AnyFeatureSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("air conditioner")
+    public class AirConditioner {
+
+        @Test
+        @DisplayName("cooling")
+        public void cooling() {
+            final int x = 3;
+        }
+
+        @Test
+        @DisplayName("heating")
+        public void heating() {
+            final int y = 4;
+        }
+    }
+}

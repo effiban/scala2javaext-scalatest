@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.be.greaterOrEqual;
+
+import org.scalatest.matchers.should.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.greaterThanOrEqualTo;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int result = 3;
+        assertThat(result, greaterThanOrEqualTo(3));
+    }
+}

@@ -1,0 +1,25 @@
+package testfiles.TermApplyInfix.TestRegistration.FreeSpec.TwoNestedLevels.Basic;
+
+import org.scalatest.freespec.AnyFreeSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("Coffee machine")
+    public class CoffeeMachine {
+
+        @Nested
+        @DisplayName("should provide a button")
+        public class ShouldProvideAButton {
+
+            @Test
+            @DisplayName("which prepares an Espresso")
+            public void whichPreparesAnEspresso() {
+                final int x = 3;
+            }
+        }
+    }
+}

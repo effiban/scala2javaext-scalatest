@@ -9,7 +9,7 @@ object RegexMatcherTransformer extends MatcherTransformer {
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
-      case Term.ApplyInfix(matcherWord: Term.Name, q"regex", _, List(regex: Lit.String)) => transform(matcherWord, regex)
+      case Term.ApplyInfix(Term.Select(_, matcherWord: Term.Name), q"regex", _, List(regex: Lit.String)) => transform(matcherWord, regex)
       case _ => None
     }
   }

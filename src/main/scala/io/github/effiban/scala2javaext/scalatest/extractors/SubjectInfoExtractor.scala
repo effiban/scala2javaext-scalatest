@@ -13,8 +13,8 @@ private[extractors] class SubjectInfoExtractorImpl(registrationWordClassifier: T
     import registrationWordClassifier._
 
     subject match {
-      case subj@Term.Name("it" | "they") => Some(SpecInfo(Lit.String(subj.value)))
-      case subj: Term.Name if isIgnore(subj) => Some(SpecInfo(q""""it"""", ignored = true))
+      case Term.Select(_, subj@Term.Name("it" | "they")) => Some(SpecInfo(Lit.String(subj.value)))
+      case Term.Select(_, subj: Term.Name) if isIgnore(subj) => Some(SpecInfo(q""""it"""", ignored = true))
       case litStr: Lit.String => Some(SpecInfo(litStr))
       case _ => None
     }

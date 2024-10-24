@@ -11,16 +11,16 @@ class ClassModsTransformerImplTest extends UnitTestSuite {
 
   private val classModsTransformer = new ClassModsTransformerImpl(junitAnnotationGenerator)
 
-  test("transform() when includes '@Ignore'") {
-    val mods = List(mod"@Bla", mod"@Ignore", Mod.Sealed())
-    val expectedMods = List(mod"@Bla", mod"@Disabled", Mod.Sealed())
+  test("transform() when includes '@org.scalatest.Ignore'") {
+    val mods = List(mod"@Bla", mod"@org.scalatest.Ignore", Mod.Sealed())
+    val expectedMods = List(mod"@Bla", mod"@org.junit.jupiter.api.Disabled", Mod.Sealed())
 
-    when(junitAnnotationGenerator.disabledAnnotation()).thenReturn(mod"@Disabled")
+    when(junitAnnotationGenerator.disabledAnnotation()).thenReturn(mod"@org.junit.jupiter.api.Disabled")
 
     classModsTransformer.transform(mods).structure shouldBe expectedMods.structure
   }
 
-  test("transform() when doesn't include '@Ignore'") {
+  test("transform() when doesn't include '@org.scalatest.Ignore'") {
     val mods = List(mod"@Bla", mod"@Gaga", Mod.Sealed())
 
     classModsTransformer.transform(mods).structure shouldBe mods.structure

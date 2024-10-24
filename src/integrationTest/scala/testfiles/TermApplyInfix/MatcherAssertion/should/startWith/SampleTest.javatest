@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.startWith;
+
+import org.scalatest.matchers.should.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.startsWith;
+
+public class SampleTest {
+
+    public void dummy() {
+        final String result = "abcd";
+        assertThat(result, startsWith("abc"));
+    }
+}

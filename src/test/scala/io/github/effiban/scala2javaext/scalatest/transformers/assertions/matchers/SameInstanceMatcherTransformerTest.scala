@@ -10,14 +10,14 @@ class SameInstanceMatcherTransformerTest extends UnitTestSuite {
   test("transform for 'theSameInstanceAs' should return Hamcrest 'sameInstance'") {
     val word = q"theSameInstanceAs"
     val expected = q"expected"
-    val hamcrestMatcher = q"sameInstance(expected)"
+    val hamcrestMatcher = q"org.hamcrest.Matchers.sameInstance(expected)"
 
     transform(word, expected).value.structure shouldBe hamcrestMatcher.structure
   }
 
   test("transform for 'bla' should return None") {
     val operator = q"bla"
-    val expected = q"expected"
+    val expected = q"org.hamcrest.Matchers.expected"
 
     transform(operator, expected) shouldBe None
   }

@@ -1,0 +1,6 @@
+package testfiles.Class.NonScalatest;
+
+
+public class SampleTest {
+    private final int x = 3;
+}

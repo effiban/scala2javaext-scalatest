@@ -14,7 +14,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val ExpectedOutputBeforeEach =
     q"""
-    @BeforeEach
+    @org.junit.jupiter.api.BeforeEach
     override protected def beforeEach(): Unit = {
     }
     """
@@ -27,7 +27,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val ExpectedOutputAfterEach =
     q"""
-    @AfterEach
+    @org.junit.jupiter.api.AfterEach
     override protected def afterEach(): Unit = {
     }
     """
@@ -40,7 +40,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val ExpectedOutputBeforeAll =
     q"""
-    @BeforeAll
+    @org.junit.jupiter.api.BeforeAll
     override protected def beforeAll(): Unit = {
     }
     """
@@ -53,7 +53,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val ExpectedOutputAfterAll =
     q"""
-    @AfterAll
+    @org.junit.jupiter.api.AfterAll
     override protected def afterAll(): Unit = {
     }
     """
@@ -67,10 +67,10 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
 
   private val TransformedScenarios = Table(
     ("Input Method Name", "Input Method", "Expected Annotation", "Expected Output Method"),
-    ("beforeEach", InputBeforeEach, mod"@BeforeEach", ExpectedOutputBeforeEach),
-    ("afterEach", InputAfterEach, mod"@AfterEach", ExpectedOutputAfterEach),
-    ("beforeAll", InputBeforeAll, mod"@BeforeAll", ExpectedOutputBeforeAll),
-    ("afterAll", InputAfterAll, mod"@AfterAll", ExpectedOutputAfterAll)
+    ("beforeEach", InputBeforeEach, mod"@org.junit.jupiter.api.BeforeEach", ExpectedOutputBeforeEach),
+    ("afterEach", InputAfterEach, mod"@org.junit.jupiter.api.AfterEach", ExpectedOutputAfterEach),
+    ("beforeAll", InputBeforeAll, mod"@org.junit.jupiter.api.BeforeAll", ExpectedOutputBeforeAll),
+    ("afterAll", InputAfterAll, mod"@org.junit.jupiter.api.AfterAll", ExpectedOutputAfterAll)
   )
 
   forAll(TransformedScenarios) { case (

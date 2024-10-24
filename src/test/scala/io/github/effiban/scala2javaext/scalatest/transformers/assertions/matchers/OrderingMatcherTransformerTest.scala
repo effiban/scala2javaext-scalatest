@@ -10,7 +10,7 @@ class OrderingMatcherTransformerTest extends UnitTestSuite {
   test("transform for '<' should return Hamcrest 'lessThan'") {
     val operator = q"<"
     val expected = q"3"
-    val expectedHamcrestMatcher = q"lessThan(3)"
+    val expectedHamcrestMatcher = q"org.hamcrest.Matchers.lessThan(3)"
 
     transform(operator, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
@@ -18,7 +18,7 @@ class OrderingMatcherTransformerTest extends UnitTestSuite {
   test("transform for '<=' should return Hamcrest 'lessThanOrEqualTo'") {
     val operator = q"<="
     val expected = q"3"
-    val expectedHamcrestMatcher = q"lessThanOrEqualTo(3)"
+    val expectedHamcrestMatcher = q"org.hamcrest.Matchers.lessThanOrEqualTo(3)"
 
     transform(operator, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
@@ -26,7 +26,7 @@ class OrderingMatcherTransformerTest extends UnitTestSuite {
   test("transform for '>' should return Hamcrest 'greaterThan'") {
     val operator = q">"
     val expected = q"3"
-    val hamcrestMatcher = q"greaterThan(3)"
+    val hamcrestMatcher = q"org.hamcrest.Matchers.greaterThan(3)"
 
     transform(operator, expected).value.structure shouldBe hamcrestMatcher.structure
   }
@@ -34,7 +34,7 @@ class OrderingMatcherTransformerTest extends UnitTestSuite {
   test("transform for '>=' should return Hamcrest 'greaterThanOrEqualTo'") {
     val operator = q">="
     val expected = q"3"
-    val hamcrestMatcher = q"greaterThanOrEqualTo(3)"
+    val hamcrestMatcher = q"org.hamcrest.Matchers.greaterThanOrEqualTo(3)"
 
     transform(operator, expected).value.structure shouldBe hamcrestMatcher.structure
   }

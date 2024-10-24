@@ -1,0 +1,6 @@
+package testfiles.FileName.EndsInSpec.ExtendsNothing;
+
+
+public class SampleSpec {
+    private final int x = 3;
+}

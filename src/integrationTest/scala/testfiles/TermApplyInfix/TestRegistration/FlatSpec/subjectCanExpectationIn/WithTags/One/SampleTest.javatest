@@ -1,0 +1,16 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.subjectCanExpectationIn.WithTags.One;
+
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("process can save")
+    @Tag("MyTag")
+    public void processCanSave() {
+        final int x = 3;
+    }
+}
