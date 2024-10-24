@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.be.theSameInstanceAs;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.sameInstance;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var expected = new Object();
+        final var result = expected;
+        assertThat(result, sameInstance(expected));
+    }
+}

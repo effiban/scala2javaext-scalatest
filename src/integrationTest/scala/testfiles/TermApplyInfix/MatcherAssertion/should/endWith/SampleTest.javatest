@@ -1,0 +1,12 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.endWith;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = "xxxabc";
+        assertThat(result, endsWith("abc"));
+    }
+}

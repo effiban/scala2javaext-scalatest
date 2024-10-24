@@ -12,7 +12,7 @@ private[transformers] class ClassModsTransformerImpl(junitAnnotationGenerator: J
 
   override def transform(mods: List[Mod]): List[Mod] = {
     mods.map {
-      case mod"@Ignore" => junitAnnotationGenerator.disabledAnnotation()
+      case mod"@org.scalatest.Ignore" => junitAnnotationGenerator.disabledAnnotation()
       case other => other
     }
   }

@@ -1,0 +1,19 @@
+package testfiles.TermApply.TestRegistration.FunSpec.OneNestedLevel.OneTest.it.Basic;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("air conditioner")
+    public class AirConditioner {
+
+        @Test
+        @DisplayName("should lower temperature when cooling selected")
+        public void shouldLowerTemperatureWhenCoolingSelected() {
+            final int x = 3;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+package testfiles.DefnDef.beforeEach;
+
+import org.junit.jupiter.api.BeforeEach;
+
+public class SampleTest {
+
+    @BeforeEach
+    protected void beforeEach() {
+    }
+}

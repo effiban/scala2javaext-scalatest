@@ -1,0 +1,12 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.endWith.regex;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesRegex;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = "123abc";
+        assertThat(result, matchesRegex("[a-z]+$"));
+    }
+}

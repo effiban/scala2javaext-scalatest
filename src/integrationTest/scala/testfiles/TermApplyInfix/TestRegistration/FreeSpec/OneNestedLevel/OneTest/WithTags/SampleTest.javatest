@@ -1,0 +1,22 @@
+package testfiles.TermApplyInfix.TestRegistration.FreeSpec.OneNestedLevel.OneTest.WithTags;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("Air conditioner")
+    public class AirConditioner {
+
+        @Test
+        @DisplayName("should lower temperature when cooling selected")
+        @Tag("tag1")
+        @Tag("tag2")
+        public void shouldLowerTemperatureWhenCoolingSelected() {
+            final int x = 3;
+        }
+    }
+}

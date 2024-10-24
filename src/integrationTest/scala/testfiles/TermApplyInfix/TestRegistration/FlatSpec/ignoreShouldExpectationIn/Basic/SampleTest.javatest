@@ -1,0 +1,15 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.ignoreShouldExpectationIn.Basic;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("it should save")
+    @Disabled
+    public void itShouldSave() {
+        final int x = 3;
+    }
+}

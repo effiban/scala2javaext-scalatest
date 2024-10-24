@@ -1,0 +1,18 @@
+package testfiles.TermApply.BasicAssertion.assertResult.WithMultiStatementBlock;
+
+import java.util.function.Supplier;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        assertThat(((Supplier<Object>)() ->  {
+                    final int x = 1;
+                    final int y = 2;
+                    x + y;
+                }
+                ).get(), is(3));
+    }
+}

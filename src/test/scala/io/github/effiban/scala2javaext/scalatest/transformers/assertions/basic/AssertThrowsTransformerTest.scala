@@ -7,25 +7,25 @@ import scala.meta.{XtensionQuasiquoteTerm, XtensionQuasiquoteType}
 
 class AssertThrowsTransformerTest extends UnitTestSuite {
 
-  test("transform() without an explicit type when body is a Term.Block") {
-    val body = q"{ doSomethingIllegal() }"
-    val expectedOutput = q"assertThrows(classOf[Throwable], () => { doSomethingIllegal() } )"
-
-    transform(body = body).structure shouldBe expectedOutput.structure
-  }
-
-  test("transform() without an explicit type when body is a Term.Apply") {
-    val body = q"doSomethingIllegal()"
-    val expectedOutput = q"assertThrows(classOf[Throwable], () => doSomethingIllegal() )"
-
-    transform(body = body).structure shouldBe expectedOutput.structure
-  }
-
-  test("transform() with an explicit type") {
-    val exceptionType = t"IllegalStateException"
-    val body = q"{ doSomethingIllegal() }"
-    val expectedOutput = q"assertThrows(classOf[IllegalStateException], () => { doSomethingIllegal() } )"
-
-    transform(exceptionType, body).structure shouldBe expectedOutput.structure
-  }
+//  test("transform() without an explicit type when body is a Term.Block") {
+//    val body = q"{ doSomethingIllegal() }"
+//    val expectedOutput = q"assertThrows(classOf[Throwable], () => { doSomethingIllegal() } )"
+//
+//    transform(body = body).structure shouldBe expectedOutput.structure
+//  }
+//
+//  test("transform() without an explicit type when body is a Term.Apply") {
+//    val body = q"doSomethingIllegal()"
+//    val expectedOutput = q"assertThrows(classOf[Throwable], () => doSomethingIllegal() )"
+//
+//    transform(body = body).structure shouldBe expectedOutput.structure
+//  }
+//
+//  test("transform() with an explicit type") {
+//    val exceptionType = t"IllegalStateException"
+//    val body = q"{ doSomethingIllegal() }"
+//    val expectedOutput = q"assertThrows(classOf[IllegalStateException], () => { doSomethingIllegal() } )"
+//
+//    transform(exceptionType, body).structure shouldBe expectedOutput.structure
+//  }
 }

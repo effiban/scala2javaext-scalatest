@@ -1,0 +1,14 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.or.not.have.size;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = List.of("a", "b");
+        assertThat(result, anyOf(hasItem("a"), not(hasSize(4))));
+    }
+}

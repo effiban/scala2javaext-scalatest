@@ -1,0 +1,5 @@
+package testfiles.Class.Mixin.OptionValues;
+
+public class SampleTest {
+    private final int x = 3;
+}

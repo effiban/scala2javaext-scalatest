@@ -1,0 +1,8 @@
+package testfiles.Class.Ignored;
+
+import org.junit.jupiter.api.Disabled;
+
+@Disabled
+public class SampleTest {
+    private final int x = 3;
+}

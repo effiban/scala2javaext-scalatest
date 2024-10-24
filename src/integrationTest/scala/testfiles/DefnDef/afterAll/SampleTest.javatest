@@ -1,0 +1,10 @@
+package testfiles.DefnDef.afterAll;
+
+import org.junit.jupiter.api.AfterAll;
+
+public class SampleTest {
+
+    @AfterAll
+    protected void afterAll() {
+    }
+}

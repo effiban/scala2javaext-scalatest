@@ -1,0 +1,15 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.atLeastOneOf;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.hasItem;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = List.of(3, 5);
+        assertThat(result, anyOf(hasItem(3), hasItem(4)));
+    }
+}

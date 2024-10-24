@@ -32,7 +32,7 @@ private[generators] class JUnitTestMethodGeneratorImpl(junitAnnotationGenerator:
       name = Term.Name(identifierNormalizer.toMemberName(name)),
       tparams = Nil,
       paramss = List(Nil),
-      decltpe = Some(t"Unit"),
+      decltpe = Some(t"scala.Unit"),
       body = innerBody
     )
   }

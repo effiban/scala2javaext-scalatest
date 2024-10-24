@@ -1,0 +1,16 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.theSameElementsAs;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var expectedList = List.of(2, 1);
+        final var result = List.of(1, 2);
+        assertThat(result, containsInAnyOrder(expectedList.map(item -> is(item))));
+    }
+}

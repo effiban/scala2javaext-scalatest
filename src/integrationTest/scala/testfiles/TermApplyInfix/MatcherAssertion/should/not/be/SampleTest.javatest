@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.not.be;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int result = 2;
+        assertThat(result, not(is(3)));
+    }
+}

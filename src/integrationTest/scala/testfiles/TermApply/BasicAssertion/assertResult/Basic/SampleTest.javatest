@@ -1,0 +1,13 @@
+package testfiles.TermApply.BasicAssertion.assertResult.Basic;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int x = 1;
+        final int y = 2;
+        assertThat(x + y, is(3));
+    }
+}

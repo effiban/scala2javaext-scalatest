@@ -1,0 +1,16 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.itCanExpectationIn.WithTags.Two;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("it can save")
+    @Tag("Tag1")
+    @Tag("Tag2")
+    public void itCanSave() {
+        final int x = 3;
+    }
+}
