@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.endWith;
+
+import org.scalatest.matchers.should.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.endsWith;
+
+public class SampleTest {
+
+    public void dummy() {
+        final String result = "xxxabc";
+        assertThat(result, endsWith("abc"));
+    }
+}

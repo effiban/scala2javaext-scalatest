@@ -7,8 +7,9 @@ private[transformers] class HaveMatcherTransformer(nestedTransformer: MatcherTra
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
-      case Term.Apply(q"have", List(nestedTerm: Term)) => transformNested(nestedTerm)
-      case Term.ApplyInfix(q"have", matcherWord, _, matcherArgs) => transformNested(Term.Apply(matcherWord, matcherArgs))
+      case Term.Apply(q"have" | Term.Select(_, q"have"), List(nestedTerm: Term)) => transformNested(nestedTerm)
+      case Term.ApplyInfix(q"have"  | Term.Select(_, q"have"), matcherWord, _, matcherArgs) =>
+        transformNested(Term.Apply(matcherWord, matcherArgs))
       case _ => None
     }
   }

@@ -9,15 +9,15 @@ private[transformers] class LogicalMatcherTransformer(nestedTransformer: => Matc
 
   override def transform(matcher: Term): Option[Term] = {
     matcher match {
-      case Term.Apply(q"not", List(nestedMatcher)) => transformNot(nestedMatcher)
-      case Term.ApplyInfix(q"not", nestedWord, _, nestedArgs) => transformNot(nestedWord, nestedArgs)
+      case Term.Apply(Term.Select(_, q"not"), List(nestedMatcher)) => transformNot(nestedMatcher)
+      case Term.ApplyInfix(Term.Select(_, q"not"), nestedWord, _, nestedArgs) => transformNot(nestedWord, nestedArgs)
       case Term.ApplyInfix(lhsMatcher, q"and", _, List(rhsMatcher)) => transformBinary(AllOf, lhsMatcher, rhsMatcher)
       case Term.ApplyInfix(lhsMatcher, q"or", _, List(rhsMatcher)) => transformBinary(AnyOf, lhsMatcher, rhsMatcher)
       case _ => None
     }
   }
 
-  private def transformBinary(hamcrestWord: Term.Name, lhsMatcher: Term, rhsMatcher: Term) = {
+  private def transformBinary(hamcrestWord: Term.Select, lhsMatcher: Term, rhsMatcher: Term) = {
     (transformNested(lhsMatcher), transformNested(rhsMatcher)) match {
       case (Some(hamcrestLhsMatcher), Some(hamcrestRhsMatcher)) => Some(Term.Apply(hamcrestWord, List(hamcrestLhsMatcher, hamcrestRhsMatcher)))
       case _ => None

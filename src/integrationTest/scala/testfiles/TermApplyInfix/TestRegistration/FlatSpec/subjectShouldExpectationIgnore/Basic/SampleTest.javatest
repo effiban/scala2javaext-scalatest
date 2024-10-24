@@ -1,0 +1,16 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.subjectShouldExpectationIgnore.Basic;
+
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Disabled;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("process should save")
+    @Disabled
+    public void processShouldSave() {
+        final int x = 3;
+    }
+}

@@ -1,0 +1,17 @@
+package testfiles.TermApply.TestRegistration.FunSuite.test.One.WithTags.Two;
+
+import org.scalatest.funsuite.AnyFunSuite;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("check")
+    @Tag("tag1")
+    @Tag("tag2")
+    public void check() {
+        final int x = 3;
+    }
+}

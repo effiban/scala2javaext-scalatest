@@ -1,0 +1,14 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.subjectMustExpectationIn.Basic;
+
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("process must save")
+    public void processMustSave() {
+        final int x = 3;
+    }
+}

@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.be.lessThan;
+
+import org.scalatest.matchers.should.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.lessThan;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int result = 2;
+        assertThat(result, lessThan(3));
+    }
+}

@@ -1,0 +1,22 @@
+package testfiles.TermApply.TestRegistration.FeatureSpec.OneScenario.Ignored;
+
+import org.scalatest.featurespec.AnyFeatureSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("air conditioner")
+    public class AirConditioner {
+
+        @Test
+        @DisplayName("cooling")
+        @Disabled
+        public void cooling() {
+            final int x = 3;
+        }
+    }
+}

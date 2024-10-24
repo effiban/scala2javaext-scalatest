@@ -1,0 +1,14 @@
+package testfiles.TermApply.BasicAssertion.Assert.WithClue;
+
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int x = 3;
+        assertThat("x should be 3",
+                x == 3,
+                is(true));
+    }
+}

@@ -1,0 +1,17 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.have.length.asTermApplyInfix;
+
+import org.scalatest.matchers.should.Matchers;
+import java.util.List;
+import java.util.List.of;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.hasSize;
+
+public class SampleTest {
+
+    public void dummy() {
+        final List<String> result = of("a",
+            "b",
+            "c");
+        assertThat(result, hasSize(3));
+    }
+}

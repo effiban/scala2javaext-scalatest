@@ -1,0 +1,16 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.atLeastOneOf;
+
+import org.scalatest.matchers.should.Matchers;
+import java.util.List;
+import java.util.List.of;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.anyOf;
+import org.hamcrest.Matchers.hasItem;
+
+public class SampleTest {
+
+    public void dummy() {
+        final List<int> result = of(3, 5);
+        assertThat(result, anyOf(hasItem(3), hasItem(4)));
+    }
+}

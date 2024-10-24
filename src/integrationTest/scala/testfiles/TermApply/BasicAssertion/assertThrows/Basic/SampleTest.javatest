@@ -1,0 +1,10 @@
+package testfiles.TermApply.BasicAssertion.assertThrows.Basic;
+
+import org.junit.jupiter.api.Assertions.assertThrows;
+
+public class SampleTest {
+
+    public void dummy() {
+        assertThrows(ArithmeticException.class, () -> 1 / 0);
+    }
+}

@@ -1,0 +1,15 @@
+package testfiles.TermApplyInfix.MatcherAssertion.shouldBe.empty;
+
+import org.scalatest.matchers.should.Matchers;
+import java.util.List;
+import java.util.List.of;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.empty;
+
+public class SampleTest {
+
+    public void dummy() {
+        final List result = of();
+        assertThat(result, empty());
+    }
+}

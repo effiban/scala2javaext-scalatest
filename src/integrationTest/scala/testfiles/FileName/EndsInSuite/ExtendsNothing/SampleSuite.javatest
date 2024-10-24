@@ -1,0 +1,6 @@
+package testfiles.FileName.EndsInSuite.ExtendsNothing;
+
+
+public class SampleSuite {
+    private final int x = 3;
+}

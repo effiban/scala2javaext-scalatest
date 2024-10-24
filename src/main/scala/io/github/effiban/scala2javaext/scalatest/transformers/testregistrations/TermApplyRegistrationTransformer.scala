@@ -15,7 +15,7 @@ private[transformers] class TermApplyRegistrationTransformer(registrationWordCla
     import registrationWordClassifier._
 
     termApply match {
-      case Term.Apply(Term.Apply(registrator: Term.Name, args), body :: Nil) if isTermApplyRegistrator(registrator) =>
+      case Term.Apply(Term.Apply(Term.Select(_, registrator: Term.Name), args), body :: Nil) if isTermApplyRegistrator(registrator) =>
         generate(args, isIgnore(registrator))(body)
       case _ => None
     }

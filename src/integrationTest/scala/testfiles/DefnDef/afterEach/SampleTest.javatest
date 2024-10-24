@@ -1,0 +1,12 @@
+package testfiles.DefnDef.afterEach;
+
+import org.scalatest.Suite;
+import org.scalatest.BeforeAndAfterEach;
+import org.junit.jupiter.api.AfterEach;
+
+public class SampleTest {
+
+    @AfterEach
+    protected void afterEach() {
+    }
+}

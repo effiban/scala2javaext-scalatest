@@ -1,8 +1,8 @@
 package io.github.effiban.scala2javaext.scalatest.typeinferrers
 
-import io.github.effiban.scala2java.spi.typeinferrers.{ExtendedTypeInferrers, NameTypeInferrer}
+import io.github.effiban.scala2java.spi.typeinferrers.{ExtendedTypeInferrers, SelectTypeInferrer}
 
 trait ScalatestTypeInferrers extends ExtendedTypeInferrers {
 
-  override def nameTypeInferrer(): NameTypeInferrer = ScalatestNameTypeInferrer
+  override def selectTypeInferrer(): SelectTypeInferrer = ScalatestSelectTypeInferrer
 }

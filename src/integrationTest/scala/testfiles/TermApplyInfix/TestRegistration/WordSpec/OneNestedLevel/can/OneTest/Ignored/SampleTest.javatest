@@ -1,0 +1,22 @@
+package testfiles.TermApplyInfix.TestRegistration.WordSpec.OneNestedLevel.can.OneTest.Ignored;
+
+import org.scalatest.wordspec.AnyWordSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("Air conditioner")
+    public class AirConditioner {
+
+        @Test
+        @DisplayName("can lower temperature when cooling selected")
+        @Disabled
+        public void canLowerTemperatureWhenCoolingSelected() {
+            final int x = 3;
+        }
+    }
+}

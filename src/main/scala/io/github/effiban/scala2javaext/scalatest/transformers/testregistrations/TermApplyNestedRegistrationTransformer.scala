@@ -15,7 +15,7 @@ private[transformers] class TermApplyNestedRegistrationTransformer(registrationW
     import registrationWordClassifier._
 
     termApply match {
-      case Term.Apply(Term.Apply(word: Term.Name, (name: Lit.String) :: Nil), (registrationBlock: Term.Block) :: Nil)
+      case Term.Apply(Term.Apply(Term.Select(_, word: Term.Name), (name: Lit.String) :: Nil), (registrationBlock: Term.Block) :: Nil)
         if isTermApplyNestedRegistrator(word) => Some(generate(name = name, nestedRegistrations = registrationBlock.stats))
       case _ => None
     }

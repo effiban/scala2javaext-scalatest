@@ -1,0 +1,14 @@
+package testfiles.TermApply.TestRegistration.FunSuite.test.One.WithSpacesInName;
+
+import org.scalatest.funsuite.AnyFunSuite;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("check that everything works")
+    public void checkThatEverythingWorks() {
+        final int x = 3;
+    }
+}

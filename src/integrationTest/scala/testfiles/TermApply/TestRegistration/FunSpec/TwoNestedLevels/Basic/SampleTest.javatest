@@ -1,0 +1,25 @@
+package testfiles.TermApply.TestRegistration.FunSpec.TwoNestedLevels.Basic;
+
+import org.scalatest.funspec.AnyFunSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("air conditioner")
+    public class AirConditioner {
+
+        @Nested
+        @DisplayName("when cooling selected")
+        public class WhenCoolingSelected {
+
+            @Test
+            @DisplayName("should lower temperature")
+            public void shouldLowerTemperature() {
+                final int x = 3;
+            }
+        }
+    }
+}

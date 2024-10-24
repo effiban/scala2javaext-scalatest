@@ -1,0 +1,22 @@
+package testfiles.TermApply.BasicAssertion.withClue.WithMultipleStatements;
+
+import io.vavr.control.Try.of;
+import java.util.function.Supplier;
+import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Assertions.fail;
+
+public class SampleTest {
+
+    public void dummy() {
+        of(() -> ((Supplier<Object>)() ->  {
+                final int x = 1;
+                1 / 0;
+             }
+             ).get())
+         .recover(e -> switch (e) {
+                 case AssertionFailedError ex -> fail("special clue", ex);
+                 default -> throw e;
+             }
+             );
+    }
+}
