@@ -1,0 +1,12 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.startWith;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.startsWith;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = "abcd";
+        assertThat(result, startsWith("abc"));
+    }
+}

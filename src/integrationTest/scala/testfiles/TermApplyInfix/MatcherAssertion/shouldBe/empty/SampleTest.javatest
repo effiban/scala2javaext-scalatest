@@ -1,0 +1,14 @@
+package testfiles.TermApplyInfix.MatcherAssertion.shouldBe.empty;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = List.of();
+        assertThat(result, empty());
+    }
+}

@@ -1,0 +1,5 @@
+package testfiles.FileName.EndsInBla.ExtendsSpec;
+
+public class SampleBlaTest {
+    private final int x = 3;
+}

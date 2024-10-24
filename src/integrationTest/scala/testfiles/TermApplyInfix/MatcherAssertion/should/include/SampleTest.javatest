@@ -1,0 +1,12 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.include;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = "xabcx";
+        assertThat(result, containsString("abc"));
+    }
+}

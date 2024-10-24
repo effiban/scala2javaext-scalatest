@@ -1,0 +1,12 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.equal;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int result = 3;
+        assertThat(result, is(3));
+    }
+}

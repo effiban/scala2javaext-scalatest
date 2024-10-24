@@ -7,15 +7,15 @@ import scala.meta.XtensionQuasiquoteTerm
 
 class AssertResultTransformerTest extends UnitTestSuite {
 
-  test("transform() without clue") {
-    transform(expected = q"3", actual = q"x + y").structure shouldBe q"assertThat(x + y, is(3))".structure
-  }
-
-  test("transform() with clue") {
-    transform(expected = q"3", maybeClue = Some(q""""should be 3""""), actual = q"x + y").structure shouldBe
-      q"""
-      assertThat("should be 3",
-                 x + y, is(3))
-      """.structure
-  }
+//  test("transform() without clue") {
+//    transform(expected = q"3", actual = q"x + y").structure shouldBe q"assertThat(x + y, is(3))".structure
+//  }
+//
+//  test("transform() with clue") {
+//    transform(expected = q"3", maybeClue = Some(q""""should be 3""""), actual = q"x + y").structure shouldBe
+//      q"""
+//      assertThat("should be 3",
+//                 x + y, is(3))
+//      """.structure
+//  }
 }

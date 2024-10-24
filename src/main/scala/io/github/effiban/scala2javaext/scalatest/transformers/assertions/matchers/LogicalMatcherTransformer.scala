@@ -17,7 +17,7 @@ private[transformers] class LogicalMatcherTransformer(nestedTransformer: => Matc
     }
   }
 
-  private def transformBinary(hamcrestWord: Term.Name, lhsMatcher: Term, rhsMatcher: Term) = {
+  private def transformBinary(hamcrestWord: Term.Select, lhsMatcher: Term, rhsMatcher: Term) = {
     (transformNested(lhsMatcher), transformNested(rhsMatcher)) match {
       case (Some(hamcrestLhsMatcher), Some(hamcrestRhsMatcher)) => Some(Term.Apply(hamcrestWord, List(hamcrestLhsMatcher, hamcrestRhsMatcher)))
       case _ => None

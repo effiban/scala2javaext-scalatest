@@ -1,0 +1,14 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.contain.inOrder;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInRelativeOrder;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var result = List.of(3, 4, 5);
+        assertThat(result, containsInRelativeOrder(3, 4));
+    }
+}

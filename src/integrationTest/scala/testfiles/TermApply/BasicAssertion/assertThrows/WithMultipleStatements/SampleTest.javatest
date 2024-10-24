@@ -1,0 +1,14 @@
+package testfiles.TermApply.BasicAssertion.assertThrows.WithMultipleStatements;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class SampleTest {
+
+    public void dummy() {
+        assertThrows(IllegalStateException.class, () ->  {
+                final int x = 1;
+                final int y = 1 / 0;
+            }
+            );
+    }
+}

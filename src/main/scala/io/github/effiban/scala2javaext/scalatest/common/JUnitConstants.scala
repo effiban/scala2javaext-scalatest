@@ -6,9 +6,9 @@ object JUnitConstants {
 
   val TestClassSuffix: String = "Test"
 
-  val TestAnnotationType: Type.Name = t"Test"
-  val NestedAnnotationType: Type.Name = t"Nested"
-  val DisplayNameAnnotationType: Type.Name = t"DisplayName"
-  val TagAnnotationType: Type.Name = t"Tag"
-  val DisabledAnnotationType: Type.Name = t"Disabled"
+  val TestAnnotationType: Type.Select = t"org.junit.jupiter.api.Test"
+  val NestedAnnotationType: Type.Select = t"org.junit.jupiter.api.Nested"
+  val DisplayNameAnnotationType: Type.Select = t"org.junit.jupiter.api.DisplayName"
+  val TagAnnotationType: Type.Select = t"org.junit.jupiter.api.Tag"
+  val DisabledAnnotationType: Type.Select = t"org.junit.jupiter.api.Disabled"
 }

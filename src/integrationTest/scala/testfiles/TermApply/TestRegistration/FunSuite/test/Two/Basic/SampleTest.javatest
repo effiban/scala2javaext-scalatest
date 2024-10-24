@@ -1,0 +1,19 @@
+package testfiles.TermApply.TestRegistration.FunSuite.test.Two.Basic;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("check1")
+    public void check1() {
+        final int x = 3;
+    }
+
+    @Test
+    @DisplayName("check2")
+    public void check2() {
+        final int y = 4;
+    }
+}
