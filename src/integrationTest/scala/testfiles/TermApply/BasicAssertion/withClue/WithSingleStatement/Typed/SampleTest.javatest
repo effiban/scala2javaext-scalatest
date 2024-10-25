@@ -1,0 +1,18 @@
+package testfiles.TermApply.BasicAssertion.withClue.WithSingleStatement.Typed;
+
+import io.vavr.control.Try;
+import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.Assertions.fail;
+
+public class SampleTest {
+
+    public int calculateShouldReturnResult() {
+        return Try.<int>ofSupplier(() -> 1 + 2)
+                .recover(e -> switch (e) {
+                    case AssertionFailedError ex -> fail("error in calculation", ex);
+                    default -> throw e;
+                }
+        )
+        .get();
+    }
+}

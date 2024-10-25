@@ -14,18 +14,17 @@ class SubjectInfoExtractorImplTest extends UnitTestSuite {
 
   private val subjectInfoExtractor = new SubjectInfoExtractorImpl(registrationWordClassifier)
 
-
-  test("when subject is the Term.Name 'it' should return the literal 'it' and ignored=false") {
-    subjectInfoExtractor.extract(q"it").value should equalSpecInfo(SpecInfo(q""""it""""))
+  test("when subject is the Term.Select 'x.it', should return the literal 'it' and ignored=false") {
+    subjectInfoExtractor.extract(q"x.it").value should equalSpecInfo(SpecInfo(q""""it""""))
   }
 
-  test("when subject is the Term.Name 'they' should return the literal 'they' and ignored=false") {
-    subjectInfoExtractor.extract(q"they").value should equalSpecInfo(SpecInfo(q""""they""""))
+  test("when subject is the Term.Select 'x.they', should return the literal 'they' and ignored=false") {
+    subjectInfoExtractor.extract(q"x.they").value should equalSpecInfo(SpecInfo(q""""they""""))
   }
 
-  test("when subject is the Term.Name 'ignore' should return the 'it' and ignored=true") {
-    val subject = q"ignore"
-    when(registrationWordClassifier.isIgnore(eqTree(subject))).thenReturn(true)
+  test("when subject is the Term.Select 'x.ignore', should return the literal 'it' and ignored=true") {
+    val subject = q"x.ignore"
+    when(registrationWordClassifier.isIgnore(eqTree(q"ignore"))).thenReturn(true)
 
     subjectInfoExtractor.extract(subject).value should equalSpecInfo(SpecInfo(q""""it"""", ignored = true))
   }

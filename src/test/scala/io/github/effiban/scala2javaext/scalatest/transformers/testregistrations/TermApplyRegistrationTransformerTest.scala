@@ -19,7 +19,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when valid and not ignored, and one argument - should return equivalent JUnit '@Test' method") {
     val registration =
       q"""
-      test("check me") {
+      super.test("check me") {
         doCheck()
       }
       """
@@ -35,9 +35,9 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
     val junitTestMethod =
       q"""
-      @Test
-      @DisplayName("check me")
-      def checkMe(): Unit = doCheck()
+      @org.junit.jupiter.api.Test
+      @org.junit.jupiter.api.DisplayName("check me")
+      def checkMe(): scala.Unit = doCheck()
       """
 
     when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
@@ -50,7 +50,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when valid and ignored, and one argument - should return equivalent JUnit '@Test' method") {
     val registration =
       q"""
-      ignore("check me") {
+      super.ignore("check me") {
         doCheck()
       }
       """
@@ -66,10 +66,10 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
     val junitTestMethod =
       q"""
-      @Test
-      @DisplayName("check me")
-      @Disabled
-      def checkMe(): Unit = doCheck()
+      @org.junit.jupiter.api.Test
+      @org.junit.jupiter.api.DisplayName("check me")
+      @org.junit.jupiter.api.Disabled
+      def checkMe(): scala.Unit = doCheck()
       """
 
     when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
@@ -82,7 +82,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when valid with two arguments should return equivalent JUnit '@Test' method") {
     val registration =
       q"""
-      test("check me", "tag") {
+      super.test("check me", "tag") {
         doCheck()
       }
       """
@@ -98,10 +98,10 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
 
     val junitTestMethod =
       q"""
-      @Test
-      @DisplayName("check me")
-      @Tag("tag")
-      def checkMe(): Unit = doCheck()
+      @org.junit.jupiter.api.Test
+      @org.junit.jupiter.api.DisplayName("check me")
+      @org.junit.jupiter.api.Tag("tag")
+      def checkMe(): scala.Unit = doCheck()
       """
 
     when(registrationWordClassifier.isTermApplyRegistrator(eqTree(registrator))).thenReturn(true)
@@ -111,20 +111,20 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
     transformer.transform(registration).value.structure shouldBe junitTestMethod.structure
   }
 
-  test("transform() when the registration term is not a single word should return None") {
-    val registration = q"""some.test("check me")(body1, body2)"""
-
-    transformer.transform(registration) shouldBe None
-  }
-
-  test("transform() when has two bodies should return None") {
+  test("transform() when the registration term is unqualified (a Term.Name)- should return None") {
     val registration = q"""test("check me")(body1, body2)"""
 
     transformer.transform(registration) shouldBe None
   }
 
+  test("transform() when has two bodies should return None") {
+    val registration = q"""super.test("check me")(body1, body2)"""
+
+    transformer.transform(registration) shouldBe None
+  }
+
   test("transform() when has no body should return None") {
-    val registration = q"""test("check me")"""
+    val registration = q"""super.test("check me")"""
 
     transformer.transform(registration) shouldBe None
   }
@@ -132,7 +132,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when registration word is invalid should return None") {
     val registration =
       q"""
-      bla("check me") {
+      super.bla("check me") {
         doCheck()
       }
       """
@@ -147,7 +147,7 @@ class TermApplyRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when nested test name is missing should return None") {
     val registration =
       q"""
-      test() {
+      super.test() {
         doCheck()
       }
       """

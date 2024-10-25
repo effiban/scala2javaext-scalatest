@@ -18,8 +18,8 @@ class MatcherAssertionTransformerImplTest extends UnitTestSuite {
     val assertionWord = q"shouldEqual"
     val matcher = q"3"
     val expectedAdjustedMatcher = q"equal(3)"
-    val expectedHamcrestMatcher = q"is(3)"
-    val expectedAssertion = q"assertThat(x, is(3))"
+    val expectedHamcrestMatcher = q"org.hamcrest.Matchers.is(3)"
+    val expectedAssertion = q"org.hamcrest.MatcherAssert.assertThat(x, org.hamcrest.Matchers.is(3))"
 
     when(assertionWordClassifier.isEqualAssertionWord(eqTree(assertionWord))).thenReturn(true)
     when(matcherTransformer.transform(eqTree(expectedAdjustedMatcher))).thenReturn(Some(expectedHamcrestMatcher))
@@ -32,8 +32,8 @@ class MatcherAssertionTransformerImplTest extends UnitTestSuite {
     val assertionWord = q"shouldBe"
     val matcher = q"3"
     val expectedAdjustedMatcher = q"be(3)"
-    val expectedHamcrestMatcher = q"is(3)"
-    val expectedAssertion = q"assertThat(x, is(3))"
+    val expectedHamcrestMatcher = q"org.hamcrest.Matchers.is(3)"
+    val expectedAssertion = q"org.hamcrest.MatcherAssert.assertThat(x, org.hamcrest.Matchers.is(3))"
 
     when(assertionWordClassifier.isBeAssertionWord(eqTree(assertionWord))).thenReturn(true)
     when(matcherTransformer.transform(eqTree(expectedAdjustedMatcher))).thenReturn(Some(expectedHamcrestMatcher))
@@ -45,8 +45,8 @@ class MatcherAssertionTransformerImplTest extends UnitTestSuite {
     val actual = q"x"
     val assertionWord = q"should"
     val matcher = q"equal(3)"
-    val expectedHamcrestMatcher = q"is(3)"
-    val expectedAssertion = q"assertThat(x, is(3))"
+    val expectedHamcrestMatcher = q"org.hamcrest.Matchers.is(3)"
+    val expectedAssertion = q"org.hamcrest.MatcherAssert.assertThat(x, org.hamcrest.Matchers.is(3))"
 
     when(assertionWordClassifier.isEqualAssertionWord(eqTree(assertionWord))).thenReturn(false)
     when(matcherTransformer.transform(eqTree(matcher))).thenReturn(Some(expectedHamcrestMatcher))

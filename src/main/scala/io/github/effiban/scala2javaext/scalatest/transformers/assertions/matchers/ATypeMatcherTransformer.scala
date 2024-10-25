@@ -11,7 +11,8 @@ private[matchers] class ATypeMatcherTransformer(matcherWordClassifier: Scalatest
   override def transform(matcher: Term): Option[Term] = {
     import matcherWordClassifier._
     matcher match {
-      case Term.Apply(Term.ApplyType(word: Term.Name, List(tpe)), Nil) if isATypeWord(word) => Some(Term.Apply(IsA, List(Term.ApplyType(q"classOf", List(tpe)))))
+      case Term.Apply(Term.ApplyType(Term.Select(_, word: Term.Name), List(tpe)), Nil) if isATypeWord(word) =>
+        Some(Term.Apply(IsA, List(Term.ApplyType(q"classOf", List(tpe)))))
       case _ => None
     }
   }

@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.should.endWith.regex;
+
+import org.scalatest.matchers.should.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.matchesRegex;
+
+public class SampleTest {
+
+    public void dummy() {
+        final String result = "123abc";
+        assertThat(result, matchesRegex("[a-z]+$"));
+    }
+}

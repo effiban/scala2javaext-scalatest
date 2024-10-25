@@ -1,5 +1,7 @@
 package io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic
 
+import io.github.effiban.scala2java.spi.entities.QualifiedTermApply
+import io.github.effiban.scala2java.test.utils.matchers.QualifiedTermApplyScalatestMatcher.equalQualifiedTermApply
 import io.github.effiban.scala2javaext.scalatest.testsuites.UnitTestSuite
 import io.github.effiban.scala2javaext.scalatest.transformers.assertions.basic.WithClueTransformer.transform
 
@@ -15,22 +17,28 @@ class WithClueTransformerTest extends UnitTestSuite {
       }
       """
 
-    val expectedResult =
+    val expectedQualifiedTermApply = QualifiedTermApply(
       q"""
-      Try.of(() => {
+      io.vavr.control.Try.of(() => {
         doSomething()
-      }).recover(e => e match {
-        case ex: AssertionFailedError => fail("special clue", ex)
-        case _ => throw e
-      })
-      """
+      }).recover
+      """,
+      List(
+        q"""
+        e => e match {
+          case ex: org.opentest4j.AssertionFailedError => org.junit.jupiter.api.Assertions.fail("special clue", ex)
+          case _ => throw e
+        }
+        """
+      )
+    )
 
-    transform(clue = clue, body = body).structure shouldBe expectedResult.structure
+    transform(clue = clue, body = body) should equalQualifiedTermApply(expectedQualifiedTermApply)
   }
 
 
   test("transform() with type") {
-    val returnType = t"Int"
+    val returnType = t"int"
     val clue = q""""special clue""""
     val body =
       q"""{
@@ -38,16 +46,18 @@ class WithClueTransformerTest extends UnitTestSuite {
       }
       """
 
-    val expectedResult =
+    val expectedQualifiedTermApply = QualifiedTermApply(
       q"""
-      Try.ofSupplier[Int](() => {
+      io.vavr.control.Try.ofSupplier[int](() => {
         doSomething()
       }).recover(e => e match {
-        case ex: AssertionFailedError => fail("special clue", ex)
+        case ex: org.opentest4j.AssertionFailedError => org.junit.jupiter.api.Assertions.fail("special clue", ex)
         case _ => throw e
-      }).get()
-      """
+      }).get
+      """,
+      Nil
+    )
 
-    transform(Some(returnType), clue, body).structure shouldBe expectedResult.structure
+    transform(Some(returnType), clue, body) should equalQualifiedTermApply(expectedQualifiedTermApply)
   }
 }

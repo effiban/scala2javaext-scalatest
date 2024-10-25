@@ -32,7 +32,7 @@ private[generators] class JUnitTestMethodGeneratorImpl(junitAnnotationGenerator:
       name = Term.Name(identifierNormalizer.toMemberName(name)),
       tparams = Nil,
       paramss = List(Nil),
-      decltpe = Some(t"Unit"),
+      decltpe = Some(t"scala.Unit"),
       body = innerBody
     )
   }
@@ -46,7 +46,7 @@ private[generators] class JUnitTestMethodGeneratorImpl(junitAnnotationGenerator:
 
   private def tagNamesOf(tags: List[Term]): List[String] = {
     tags.collect {
-      case Term.Apply(q"Tag", List(Lit.String(tagName))) => tagName
+      case Term.Apply(q"org.scalatest.Tag" | q"Tag", List(Lit.String(tagName))) => tagName
       case tag: Term.Name => tag.value
     }
   }

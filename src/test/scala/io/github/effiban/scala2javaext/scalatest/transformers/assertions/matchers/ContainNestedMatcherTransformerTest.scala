@@ -9,16 +9,22 @@ class ContainNestedMatcherTransformerTest extends UnitTestSuite {
 
   private val ValidItemsScenarios = Table(
     ("Word", "Items", "ExpectedHamcrestMatcher"),
-    (q"allOf", List(q"3", q"4"), q"hasItems(3, 4)"),
-    (q"atLeastOneOf", List(q"3", q"4"), q"anyOf(hasItem(3), hasItem(4))"),
-    (q"inOrder", List(q"3", q"4"), q"containsInRelativeOrder(3, 4)"),
-    (q"noneOf", List(q"3", q"4"), q"not(hasItems(3, 4))")
+    (q"allOf", List(q"3", q"4"), q"org.hamcrest.Matchers.hasItems(3, 4)"),
+    (q"atLeastOneOf",
+      List(q"3", q"4"),
+      q"org.hamcrest.Matchers.anyOf(org.hamcrest.Matchers.hasItem(3), org.hamcrest.Matchers.hasItem(4))"),
+    (q"inOrder", List(q"3", q"4"), q"org.hamcrest.Matchers.containsInRelativeOrder(3, 4)"),
+    (q"noneOf", List(q"3", q"4"), q"org.hamcrest.Matchers.not(org.hamcrest.Matchers.hasItems(3, 4))")
   )
 
   private val ValidCollectionScenarios = Table(
     ("Word", "CollectionArg", "ExpectedHamcrestMatcher"),
-    (q"theSameElementsAs", q"expectedList", q"containsInAnyOrder(expectedList.map(item => is(item)))"),
-    (q"theSameElementsInOrderAs", q"expectedList", q"contains(expectedList.map(item => is(item)))")
+    (q"theSameElementsAs",
+      q"expectedList",
+      q"org.hamcrest.Matchers.containsInAnyOrder(expectedList.map(item => org.hamcrest.Matchers.is(item)))"),
+    (q"theSameElementsInOrderAs",
+      q"expectedList",
+      q"org.hamcrest.Matchers.contains(expectedList.map(item => org.hamcrest.Matchers.is(item)))")
   )
 
   private val InvalidMultiCollectionScenarios = Table(

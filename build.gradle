@@ -7,7 +7,7 @@ plugins {
 }
 
 project.ext.scalaMajorVersion = "2.13"
-project.ext.scala2javaVersion = "8.0.0"
+project.ext.scala2javaVersion = "10.1.0"
 
 java {
     toolchain {
@@ -27,6 +27,8 @@ repositories {
 
 dependencies {
     implementation "io.github.effiban:scala2java-spi_$scalaMajorVersion:$scala2javaVersion"
+    runtimeOnly "org.hamcrest:hamcrest:2.2"
+    runtimeOnly 'io.vavr:vavr:0.10.4'
 }
 
 testing {

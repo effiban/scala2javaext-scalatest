@@ -1,0 +1,7 @@
+package testfiles.Class.Mixin.OptionValues;
+
+import org.scalatest.OptionValues;
+
+public class SampleTest {
+    private final int x = 3;
+}

@@ -10,6 +10,7 @@ private[transformers] class EqualMatcherTransformer(matcherWordClassifier: Scala
   override def transform(matcher: Term): Option[Term] = {
     import matcherWordClassifier._
     matcher match {
+      case Term.Apply(Term.Select(_, word: Term.Name), List(expected)) if isEqualWord(word) => Some(Term.Apply(Is, List(expected)))
       case Term.Apply(word: Term.Name, List(expected)) if isEqualWord(word) => Some(Term.Apply(Is, List(expected)))
       case _ => None
     }

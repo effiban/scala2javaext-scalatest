@@ -18,12 +18,12 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   test("transform() valid with one argument should return equivalent JUnit '@Nested' class") {
     val testRegistration =
       q"""
-      Feature("check all") {      
-        Scenario("check 1") { 
+      super.Feature("check all") {
+        super.Scenario("check 1") {
           doCheck1()
         }
 
-        Scenario("check 2") { 
+        super.Scenario("check 2") {
           doCheck2()
         }
       }
@@ -34,12 +34,12 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
     val nestedRegistrations =
       List(
         q"""
-        Scenario("check 1") {
+        super.Scenario("check 1") {
           doCheck1()
         }
         """,
         q"""
-        Scenario("check 2") {
+        super.Scenario("check 2") {
           doCheck2()
         }
         """
@@ -47,14 +47,14 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
 
     val junitNestedTestClass =
       q"""
-      @Nested
-      @DisplayName("check all")
+      @org.junit.jupiter.api.Nested
+      @org.junit.jupiter.api.DisplayName("check all")
       class CheckAll {
-        Scenario("check 1") {
+        super.Scenario("check 1") {
           doCheck1()
         }
 
-        Scenario("check 2") {
+        super.Scenario("check 2") {
           doCheck2()
         }
       }
@@ -66,10 +66,10 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
     transformer.transform(testRegistration).value.structure shouldBe junitNestedTestClass.structure
   }
 
-  test("transform() when the registration term is not a single word should return None") {
+  test("transform() when the registration term is unqualified (a Term.Name) - should return None") {
     val testRegistration =
       q"""
-      My.Feature("check all") {
+      Feature("check all") {
         Scenario("check 1") {
           doCheck1()
         }
@@ -86,12 +86,12 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when there are two names should return None") {
     val testRegistration =
       q"""
-      Feature("check something", "check something else") {
-        Scenario("check 1") {
+      super.Feature("check something", "check something else") {
+        super.Scenario("check 1") {
           doCheck1()
         }
 
-        Scenario("check 2") {
+        super.Scenario("check 2") {
           doCheck2()
         }
       }
@@ -103,14 +103,14 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when has two bodies should return None") {
     val testRegistration =
       q"""
-      Feature("check all")(
+      super.Feature("check all")(
         {
-          Scenario("check 1") {
+          super.Scenario("check 1") {
             doCheck1()
           }
         },
         {
-          Scenario("check 2") {
+          super.Scenario("check 2") {
             doCheck2()
           }
         }
@@ -121,7 +121,7 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   }
 
   test("transform() when has no body should return None") {
-    val testRegistration = q"""Feature("check all")"""
+    val testRegistration = q"""super.Feature("check all")"""
 
     transformer.transform(testRegistration) shouldBe None
   }
@@ -129,12 +129,12 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when registration word is invalid should return None") {
     val testRegistration =
       q"""
-      blabla("check all") {      
-        Scenario("check 1") { 
+      super.blabla("check all") {
+        super.Scenario("check 1") {
           doCheck1()
         }
 
-        Scenario("check 2") { 
+        super.Scenario("check 2") {
           doCheck2()
         }
       }
@@ -150,12 +150,12 @@ class TermApplyNestedRegistrationTransformerTest extends UnitTestSuite {
   test("transform() when test name is missing should return None") {
     val testRegistration =
       q"""
-      Feature() {
-        Scenario("check 1") {
+      super.Feature() {
+        super.Scenario("check 1") {
           doCheck1()
         }
 
-        Scenario("check 2") {
+        super.Scenario("check 2") {
           doCheck2()
         }
       }

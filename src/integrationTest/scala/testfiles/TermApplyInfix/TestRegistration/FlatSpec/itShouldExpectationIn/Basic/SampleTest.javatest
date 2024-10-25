@@ -1,0 +1,14 @@
+package testfiles.TermApplyInfix.TestRegistration.FlatSpec.itShouldExpectationIn.Basic;
+
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+
+public class SampleTest {
+
+    @Test
+    @DisplayName("it should save")
+    public void itShouldSave() {
+        final int x = 3;
+    }
+}

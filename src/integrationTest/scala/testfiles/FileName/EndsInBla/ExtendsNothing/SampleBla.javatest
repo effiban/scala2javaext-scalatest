@@ -1,0 +1,6 @@
+package testfiles.FileName.EndsInBla.ExtendsNothing;
+
+
+public class SampleBla {
+    private final int x = 3;
+}

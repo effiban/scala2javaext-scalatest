@@ -18,6 +18,6 @@ object ContainNestedMatcherTransformer extends WordAndValuesMatcherTransformer {
   }
 
   private def toHamcrestIsPerItem(collection: Term): Term.Apply = {
-    Term.Apply(Term.Select(collection, q"map"), List(q"item => is(item)"))
+    Term.Apply(Term.Select(collection, q"map"), List(q"item => org.hamcrest.Matchers.is(item)"))
   }
 }

@@ -1,0 +1,13 @@
+package testfiles.TermApplyInfix.MatcherAssertion.must.equal;
+
+import org.scalatest.matchers.must.Matchers;
+import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers.is;
+
+public class SampleTest {
+
+    public void dummy() {
+        final int result = 3;
+        assertThat(result, is(3));
+    }
+}

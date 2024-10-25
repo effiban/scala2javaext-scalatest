@@ -1,0 +1,15 @@
+package testfiles.TermApply.BasicAssertion.intercept.WithMultipleStatements;
+
+import org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.function.Supplier;
+
+public class SampleTest {
+
+    public void dummy() {
+        final var exception = assertThrows(ArithmeticException.class, () -> ((Supplier<Object>)() ->  {
+                final int x = 1;
+                1 / 0;
+            }
+            ).get());
+    }
+}

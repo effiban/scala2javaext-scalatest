@@ -4,8 +4,6 @@ import io.github.effiban.scala2java.spi.transformers._
 
 trait ScalatestTransformers extends ExtendedTransformers {
 
-  override def fileNameTransformer(): FileNameTransformer = ScalatestFileNameTransformer
-
   override def classTransformer(): ClassTransformer = ScalatestClassTransformer
 
   override def defnDefTransformer(): DefnDefTransformer = ScalatestDefnDefTransformer
@@ -16,5 +14,5 @@ trait ScalatestTransformers extends ExtendedTransformers {
 
   override def termApplyInfixToTermApplyTransformer(): TermApplyInfixToTermApplyTransformer = ScalatestTermApplyInfixToTermApplyTransformer
 
-  override def termApplyTransformer(): TermApplyTransformer = ScalatestTermApplyTransformer
+  override def qualifiedTermApplyTransformer(): QualifiedTermApplyTransformer = ScalatestQualifiedTermApplyTransformer
 }

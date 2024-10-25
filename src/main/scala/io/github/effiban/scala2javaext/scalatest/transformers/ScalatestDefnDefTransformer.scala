@@ -8,10 +8,10 @@ object ScalatestDefnDefTransformer extends DefnDefTransformer {
 
   override def transform(defnDef: Defn.Def): Defn.Def = {
     defnDef.name match {
-      case q"beforeEach" => annotateWith(defnDef, mod"@BeforeEach")
-      case q"afterEach" => annotateWith(defnDef, mod"@AfterEach")
-      case q"beforeAll" => annotateWith(defnDef, mod"@BeforeAll")
-      case q"afterAll" => annotateWith(defnDef, mod"@AfterAll")
+      case q"beforeEach" => annotateWith(defnDef, mod"@org.junit.jupiter.api.BeforeEach")
+      case q"afterEach" => annotateWith(defnDef, mod"@org.junit.jupiter.api.AfterEach")
+      case q"beforeAll" => annotateWith(defnDef, mod"@org.junit.jupiter.api.BeforeAll")
+      case q"afterAll" => annotateWith(defnDef, mod"@org.junit.jupiter.api.AfterAll")
       case _ => defnDef
     }
   }

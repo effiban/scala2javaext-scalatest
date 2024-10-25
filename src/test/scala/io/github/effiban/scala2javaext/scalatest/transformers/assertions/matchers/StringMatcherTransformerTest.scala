@@ -10,7 +10,7 @@ class StringMatcherTransformerTest extends UnitTestSuite {
   test("transform for 'startWith' should return Hamcrest 'startsWith'") {
     val word = q"startWith"
     val expected = q""""abc""""
-    val expectedHamcrestMatcher = q"""startsWith("abc")"""
+    val expectedHamcrestMatcher = q"""org.hamcrest.Matchers.startsWith("abc")"""
 
     transform(word, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
@@ -18,7 +18,7 @@ class StringMatcherTransformerTest extends UnitTestSuite {
   test("transform for 'endWith' should return Hamcrest 'endsWith'") {
     val word = q"endWith"
     val expected = q""""abc""""
-    val expectedHamcrestMatcher = q"""endsWith("abc")"""
+    val expectedHamcrestMatcher = q"""org.hamcrest.Matchers.endsWith("abc")"""
 
     transform(word, expected).value.structure shouldBe expectedHamcrestMatcher.structure
   }
@@ -26,7 +26,7 @@ class StringMatcherTransformerTest extends UnitTestSuite {
   test("transform for 'include' should return Hamcrest 'containsString'") {
     val word = q"include"
     val expected = q""""abc""""
-    val hamcrestMatcher = q"""containsString("abc")"""
+    val hamcrestMatcher = q"""org.hamcrest.Matchers.containsString("abc")"""
 
     transform(word, expected).value.structure shouldBe hamcrestMatcher.structure
   }

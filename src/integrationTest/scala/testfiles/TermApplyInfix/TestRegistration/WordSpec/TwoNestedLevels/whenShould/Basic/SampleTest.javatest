@@ -1,0 +1,25 @@
+package testfiles.TermApplyInfix.TestRegistration.WordSpec.TwoNestedLevels.whenShould.Basic;
+
+import org.scalatest.wordspec.AnyWordSpec;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class SampleTest {
+
+    @Nested
+    @DisplayName("Air conditioner")
+    public class AirConditioner {
+
+        @Nested
+        @DisplayName("when cooling selected")
+        public class WhenCoolingSelected {
+
+            @Test
+            @DisplayName("should lower temperature")
+            public void shouldLowerTemperature() {
+                final int x = 3;
+            }
+        }
+    }
+}

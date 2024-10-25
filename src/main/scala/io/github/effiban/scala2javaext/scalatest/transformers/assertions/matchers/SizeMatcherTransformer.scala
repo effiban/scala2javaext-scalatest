@@ -10,7 +10,8 @@ private[transformers] class SizeMatcherTransformer(matcherWordClassifier: Scalat
   override def transform(matcher: Term): Option[Term] = {
     import matcherWordClassifier._
     matcher match {
-      case Term.Apply(word: Term.Name, List(expected)) if isSizeWord(word) => Some(Term.Apply(HasSize, List(expected)))
+      case Term.Apply(Term.Select(_, word: Term.Name), List(expected)) if isSizeWord(word) => Some(Term.Apply(HasSize, List(expected)))
+      case Term.Apply(word : Term.Name, List(expected)) if isSizeWord(word) => Some(Term.Apply(HasSize, List(expected)))
       case _ => None
     }
   }
