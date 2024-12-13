@@ -1,6 +1,5 @@
 package testfiles.FileName.EndsInSuite.ExtendsSuite;
 
-import org.scalatest.funsuite.AnyFunSuite;
 
 public class SampleTest {
     private final int x = 3;

@@ -1,6 +1,5 @@
 package testfiles.FileName.EndsInSpec.ExtendsSpec;
 
-import org.scalatest.funspec.AnyFunSpec;
 
 public class SampleTest {
     private final int x = 3;

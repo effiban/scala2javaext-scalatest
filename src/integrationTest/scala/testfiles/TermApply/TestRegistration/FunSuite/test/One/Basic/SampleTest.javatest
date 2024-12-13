@@ -1,6 +1,5 @@
 package testfiles.TermApply.TestRegistration.FunSuite.test.One.Basic;
 
-import org.scalatest.funsuite.AnyFunSuite;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 

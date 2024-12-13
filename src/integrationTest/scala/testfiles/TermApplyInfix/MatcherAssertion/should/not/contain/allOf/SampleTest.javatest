@@ -1,15 +1,15 @@
 package testfiles.TermApplyInfix.MatcherAssertion.should.not.contain.allOf;
 
-import org.scalatest.matchers.should.Matchers;
 import java.util.List;
 import java.util.List.of;
 import org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers.not;
+import org.hamcrest.Matchers;
 
 public class SampleTest {
 
     public void dummy() {
         final List<int> result = of(1, 2);
-        assertThat(result, not(org.hamcrest.Matchers.hasItems(3, 4)));
+        assertThat(result, not(Matchers.hasItems(3, 4)));
     }
 }
