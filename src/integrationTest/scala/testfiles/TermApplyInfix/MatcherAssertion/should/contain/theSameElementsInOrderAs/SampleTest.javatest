@@ -1,6 +1,5 @@
 package testfiles.TermApplyInfix.MatcherAssertion.should.contain.theSameElementsInOrderAs;
 
-import org.scalatest.matchers.should.Matchers;
 import java.util.List;
 import java.util.List.of;
 import org.hamcrest.MatcherAssert.assertThat;

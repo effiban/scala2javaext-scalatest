@@ -15,7 +15,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
   private val ExpectedOutputBeforeEach =
     q"""
     @org.junit.jupiter.api.BeforeEach
-    override protected def beforeEach(): Unit = {
+    override protected def doBeforeEach(): Unit = {
     }
     """
 
@@ -28,7 +28,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
   private val ExpectedOutputAfterEach =
     q"""
     @org.junit.jupiter.api.AfterEach
-    override protected def afterEach(): Unit = {
+    override protected def doAfterEach(): Unit = {
     }
     """
 
@@ -41,7 +41,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
   private val ExpectedOutputBeforeAll =
     q"""
     @org.junit.jupiter.api.BeforeAll
-    override protected def beforeAll(): Unit = {
+    override protected def doBeforeAll(): Unit = {
     }
     """
 
@@ -54,7 +54,7 @@ class ScalatestDefnDefTransformerTest extends UnitTestSuite {
   private val ExpectedOutputAfterAll =
     q"""
     @org.junit.jupiter.api.AfterAll
-    override protected def afterAll(): Unit = {
+    override protected def doAfterAll(): Unit = {
     }
     """
 

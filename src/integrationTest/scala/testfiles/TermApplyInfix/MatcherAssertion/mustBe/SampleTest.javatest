@@ -1,6 +1,5 @@
 package testfiles.TermApplyInfix.MatcherAssertion.mustBe;
 
-import org.scalatest.matchers.must.Matchers;
 import org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers.is;
 

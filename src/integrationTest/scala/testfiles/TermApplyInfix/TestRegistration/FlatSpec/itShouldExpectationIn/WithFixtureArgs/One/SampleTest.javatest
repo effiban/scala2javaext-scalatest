@@ -1,6 +1,5 @@
 package testfiles.TermApplyInfix.TestRegistration.FlatSpec.itShouldExpectationIn.WithFixtureArgs.One;
 
-import org.scalatest.flatspec.AnyFlatSpec;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 

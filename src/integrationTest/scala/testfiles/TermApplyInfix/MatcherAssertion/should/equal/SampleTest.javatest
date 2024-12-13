@@ -1,6 +1,5 @@
 package testfiles.TermApplyInfix.MatcherAssertion.should.equal;
 
-import org.scalatest.matchers.should.Matchers;
 import org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.Matchers.is;
 

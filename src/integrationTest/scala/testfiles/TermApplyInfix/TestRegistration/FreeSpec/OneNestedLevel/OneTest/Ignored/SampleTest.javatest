@@ -1,6 +1,5 @@
 package testfiles.TermApplyInfix.TestRegistration.FreeSpec.OneNestedLevel.OneTest.Ignored;
 
-import org.scalatest.freespec.AnyFreeSpec;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

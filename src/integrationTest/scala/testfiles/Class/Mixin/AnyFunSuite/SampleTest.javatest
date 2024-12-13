@@ -1,6 +1,5 @@
 package testfiles.Class.Mixin.AnyFunSuite;
 
-import org.scalatest.funsuite.AnyFunSuite;
 
 public class SampleTest {
     private final int x = 3;

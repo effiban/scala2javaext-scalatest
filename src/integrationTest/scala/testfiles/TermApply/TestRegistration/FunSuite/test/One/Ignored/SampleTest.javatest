@@ -1,6 +1,5 @@
 package testfiles.TermApply.TestRegistration.FunSuite.test.One.Ignored;
 
-import org.scalatest.funsuite.AnyFunSuite;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Disabled;

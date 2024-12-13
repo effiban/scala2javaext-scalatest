@@ -1,9 +1,9 @@
 package testfiles.TermApplyInfix.MatcherAssertion.should.contain.inOrder;
 
-import org.scalatest.matchers.should.Matchers;
 import java.util.List;
 import java.util.List.of;
 import org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
 
 public class SampleTest {
 
@@ -11,6 +11,6 @@ public class SampleTest {
         final List<int> result = of(3,
             4,
             5);
-        assertThat(result, org.hamcrest.Matchers.containsInRelativeOrder(3, 4));
+        assertThat(result, Matchers.containsInRelativeOrder(3, 4));
     }
 }
